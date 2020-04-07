@@ -47,7 +47,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">欢迎：<span class="text-primary">${sessionScope.admin.name} </span></a></li>
+                <li><a href="#">管理员：<span class="text-primary">${sessionScope.admin.name} </span></a></li>
                 <li><a   id="logout" type="button">退出登录 <span  class="glyphicon glyphicon-log-out"></span></a>
                 </li>
 
@@ -73,7 +73,7 @@
                             <li><a href="javascript:$('#changeContent').load('department/department.jsp')">科室列表</a></li>
                         </div>
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('department.jsp')">科室列2表</a></li>
+                            <li><a href="javascript:$('#changeContent').load('department.jsp')">添加</a></li>
                         </div>
                     </div>
 
@@ -128,7 +128,7 @@
         </div>
         <div id="changeContent" class="col-xs-10">
             <div class="jumbotron">
-                <h2>欢迎来到预约挂号后台管理系统</h2>
+                <h3>欢迎来到线上挂号后台管理系统,选择左侧项目进行管理</h3>
             </div>
 
         </div>

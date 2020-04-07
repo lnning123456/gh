@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Date" %><%--
   Created by IntelliJ IDEA.
   User: 李宁
   Date: 2020/3/18
@@ -45,6 +45,9 @@
 </head>
 <body>
 ffdeffer
+<%=
+    new Date()
+%>
 <div id="time">
     <table border="1px" id="table" cellpadding="0" cellspacing="0">
 

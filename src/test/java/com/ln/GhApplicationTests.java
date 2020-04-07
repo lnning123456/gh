@@ -56,7 +56,7 @@ public class GhApplicationTests {
     }
     @Test
     public  void  deleteDepartment(){
-       departmentDao.deleteDepartment("14");
+        System.out.println(departmentService.deleteDepartment("1"));
     }
     @Test
     public  void  departmentCount(){
@@ -69,14 +69,14 @@ public class GhApplicationTests {
             System.out.println("department = " + department);
         }
     }
-    @Test
+   /* @Test
     public  void  departmentServicePage(){
         Map<String, Object> map = departmentService.queryByPage(1, 3);
         Set<Map.Entry<String, Object>> entries = map.entrySet();
         for (Map.Entry<String, Object> entry : entries) {
             System.out.println("entry = " + entry);
         }
-    }
+    }*/
     @Test
     public  void  allDepartment1(){
         List<Department> departments = departmentDao.findAllDepartment1();
@@ -113,4 +113,5 @@ public class GhApplicationTests {
             System.out.println("entry = " + entry);
         }
     }
+
 }

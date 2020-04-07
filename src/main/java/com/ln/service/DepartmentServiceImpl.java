@@ -19,7 +19,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     DepartmentDao departmentDao;
 @Autowired
     DoctorDao doctorDao;
-    @Override
+   /* @Override
     public Map<String, Object> queryByPage(Integer page, Integer rows) {
         System.out.println("department service");
         Map<String, Object> map = new HashMap<>();
@@ -32,7 +32,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         map.put("page", page);
         map.put("rows", departments);
         return map;
-    }
+    }*/
 
     @Override
     public List<Department> findAllDepartment() {
@@ -40,9 +40,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<Department> findDepartment1(String departmentId) {
+    public List<Department> findAllDepartment1() {
 
-        return departmentDao.findAllDepartment();
+        return departmentDao.findAllDepartment1();
     }
 
     @Override
@@ -58,26 +58,26 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public String deleteDepartment(Department department) {
-
-      if (department.getLevels()==1){
-        List<Department> department2 = findDepartment2ByDepartment1(department.getId());
-          if(department2.size()!=0){
-              return  department.getDepartmentName()+"下还有二级科室，不能删除";
+    public String deleteDepartment(String departmentId) {
+        System.out.println("departmentId = " + departmentId);
+        List<Doctor> doctors = doctorDao.findDoctorByDepartment(departmentId);
+        Department department= departmentDao.findByDepartmentId(departmentId);
+        System.out.println("department = " + department);
+        List<Department> departments = findDepartment2ByDepartment1(departmentId);
+          if(departments.size()!=0){
+              return  department.getDepartmentName()+"下还有"+departments.size()+"个二级科室，不能删除";
           }else {
-              departmentDao.deleteDepartment(department.getId());
-              return department.getDepartmentName()+"删除成功";
+              if(doctors.size()!=0){
+                  return  department.getDepartmentName()+"科室下还有"+doctors.size()+"名医生，不能删除";
+              }else{
+                  departmentDao.deleteDepartment(departmentId);
+                  return department.getDepartmentName()+"删除成功";
+              }
           }
-      }else{
-          List<Doctor> doctors = doctorDao.findDoctorByDepartment(department.getId());
-          if(doctors.size()!=0){
-              return  department.getDepartmentName()+"下还有医生，不能删除";
-          }else{
-              departmentDao.deleteDepartment(department.getId());
-              return department.getDepartmentName()+"删除成功";
-          }
-      }
+    }
 
-
+    @Override
+    public Department findByDepartmentName(String departmentName) {
+        return departmentDao.findByDepartmentName(departmentName);
     }
 }

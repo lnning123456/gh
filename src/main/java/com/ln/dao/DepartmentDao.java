@@ -13,8 +13,8 @@ public interface DepartmentDao {
     Integer getLevelsCount(Integer levels);
     List<Department> findAllDepartment();
     Department findByDepartmentId(String departmentId);
+    Department findByDepartmentName(String departmentName);
     List<Department> findAllDepartment1();
-    List<Department> findAllDepartment2();
     List<Department> findAllDepartment2ByDepartment1Id(String departmentId);
     void  addDepartment(Department department);
     void deleteDepartment(String departmentId);
