@@ -22,13 +22,13 @@
         <include refid="department"></include>
         where levels=1
     </select>
-    <select id="findAllDepartment2ByDepartment1Id" resultType="Department">
+    <select id="findDepartment2ByDepartment1Id" resultType="Department">
         <include refid="department"></include>
         where levels=2 and parent_id=#{departmentId}
     </select>
     <select id="findByDepartmentName" resultType="Department">
         <include refid="department"></include>
-        where parent_name=#{departmentName}
+        where department_name=#{departmentName}
     </select>
     <select id="findByDepartmentId" resultType="Department">
         <include refid="department"></include>

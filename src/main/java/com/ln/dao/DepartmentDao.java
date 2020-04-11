@@ -15,7 +15,7 @@ public interface DepartmentDao {
     Department findByDepartmentId(String departmentId);
     Department findByDepartmentName(String departmentName);
     List<Department> findAllDepartment1();
-    List<Department> findAllDepartment2ByDepartment1Id(String departmentId);
+    List<Department> findDepartment2ByDepartment1Id(String departmentId);
     void  addDepartment(Department department);
     void deleteDepartment(String departmentId);
 }

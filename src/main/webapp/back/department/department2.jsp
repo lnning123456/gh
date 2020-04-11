@@ -9,8 +9,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
-uytresxrdftgh
+
+
 <table id="departmentTable" type="button" class="table  table-bordered">
     <tr>
         <td>科室编号</td>
@@ -18,5 +18,5 @@ uytresxrdftgh
         <td></td>
     </tr>
 </table>
-</body>
+</buytresxrdftghody>
 </html>

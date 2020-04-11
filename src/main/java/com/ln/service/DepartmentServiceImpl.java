@@ -5,6 +5,7 @@ import com.ln.dao.DoctorDao;
 import com.ln.entity.Department;
 import com.ln.entity.Doctor;
 import com.ln.util.PageUtil;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,37 +42,54 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> findAllDepartment1() {
-
         return departmentDao.findAllDepartment1();
     }
 
     @Override
-    public List<Department> findDepartment2ByDepartment1(String departmentId) {
-
-        return departmentDao.findAllDepartment2ByDepartment1Id(departmentId);
+    public Map<String,Object> findDepartment2ByDepartment1(String departmentId) {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        Department department = departmentDao.findByDepartmentId(departmentId);
+        List<Department> department2= departmentDao.findDepartment2ByDepartment1Id(departmentId);
+        map.put("department1Name",department.getDepartmentName());
+        map.put("department2",department2);
+        return map;
     }
 
     @Override
-    public void addDepartment(Department department) {
-        department.setId(UUID.randomUUID().toString());
-        departmentDao.addDepartment(department);
+    public Map<String,String> addDepartment(Department department) {
+        HashMap<String, String> map = new HashMap<>();
+        Department byDepartmentName = departmentDao.findByDepartmentName(department.getDepartmentName());
+        if (byDepartmentName!= null){
+            map.put("msg","添加失败,该科室名已经存在，请重新输入");
+        }else{
+            department.setId(UUID.randomUUID().toString());
+            departmentDao.addDepartment(department);
+            map.put("ok","ok");
+            map.put("msg",department.getDepartmentName()+"添加成功");
+
+        }
+
+       return  map;
     }
 
     @Override
-    public String deleteDepartment(String departmentId) {
-        System.out.println("departmentId = " + departmentId);
+    public Map<String,String> deleteDepartment(String departmentId) {
+        HashMap<String, String> map = new HashMap<String,String>();
         List<Doctor> doctors = doctorDao.findDoctorByDepartment(departmentId);
         Department department= departmentDao.findByDepartmentId(departmentId);
-        System.out.println("department = " + department);
-        List<Department> departments = findDepartment2ByDepartment1(departmentId);
+        List<Department> departments = departmentDao.findDepartment2ByDepartment1Id(departmentId);
           if(departments.size()!=0){
-              return  department.getDepartmentName()+"下还有"+departments.size()+"个二级科室，不能删除";
+               map.put("msg",  department.getDepartmentName()+"下还有"+departments.size()+"个二级科室，不能删除");
+               return map;
           }else {
               if(doctors.size()!=0){
-                  return  department.getDepartmentName()+"科室下还有"+doctors.size()+"名医生，不能删除";
+                  map.put("msg",department.getDepartmentName()+"科室下还有"+doctors.size()+"名医生，不能删除");
+                  return  map;
               }else{
                   departmentDao.deleteDepartment(departmentId);
-                  return department.getDepartmentName()+"删除成功";
+                  map.put("msg",department.getDepartmentName()+"删除成功");
+                  map.put("ok","ok");
+                  return map;
               }
           }
     }

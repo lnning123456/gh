@@ -12,7 +12,7 @@
                 $("#department1Table").append(tr);
             }
         });
-        $("table ").on("click", "a", function () {
+        $("table").on("click", "a", function () {
             var a = $(this).text();
             var tr = $(this).parent().parent();
             var departmentId = $(this).parent().parent().children().eq(0).text();
@@ -114,7 +114,7 @@
 <div id="department1TableDiv" style="display: block">
     <table id="department1Table" style="table-layout: fixed;margin: auto" type="button" class="table  table-bordered">
         <tr>
-            <td align="center" colspan="3"><span style="size: A5;font-weight: bold"> 一级科室列表</span></td>
+            <td align="center" colspan="3"><span id="title" style="size: A5;font-weight: bold"> 一级科室列表</span></td>
         </tr>
         <tr>
             <td>科室编号</td>
@@ -122,31 +122,4 @@
             <td>操作</td>
         </tr>
     </table>
-</div>
-<div id="department2TableDiv" style="display: none">
-    <table id="department2Table" type="button" class="table  table-bordered">
-        <tr>
-            <td align="center" colspan="3"><span id="department1Name" style="size: A5;font-weight: bold"> </span></td>
-        </tr>
-        <tr>
-            <td>科室编号</td>
-            <td>科室名</td>
-            <td>操作</td>
-        </tr>
-    </table>
-    <button class="back" type="button">返回上首页</button>
-</div>
-
-<div id="findTableDiv" style="display: none">
-    <table id="findTable" class="table  table-bordered">
-        <tbody id="findTbody">
-        <tr>
-            <td>科室编号</td>
-            <td>科室名</td>
-            <td>科室级别</td>
-            <td>操作</td>
-        </tr>
-        </tbody>
-    </table>
-    <button class="back" type="button">返回上首页</button>
 </div>

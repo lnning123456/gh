@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @SpringBootTest(classes = GhApplication.class)
 @RunWith(SpringRunner.class)
@@ -85,8 +83,8 @@ public class GhApplicationTests {
         }
     }
     @Test
-    public  void  allDepartment2(){
-        List<Department> departments = departmentDao.findAllDepartment2ByDepartment1Id("1");
+    public  void  findDepartment2ByDepartment1Id(){
+        List<Department> departments = departmentDao.findDepartment2ByDepartment1Id("1");
         for (Department department : departments) {
             System.out.println("department = " + department);
         }
@@ -94,6 +92,11 @@ public class GhApplicationTests {
     @Test
     public  void  findDepartmentById(){
         Department department= departmentDao.findByDepartmentId("8");
+        System.out.println("department = " + department);
+    }
+    @Test
+    public  void  findByDepartmentName(){
+        Department department= departmentService.findByDepartmentName("口腔种植科");
         System.out.println("department = " + department);
     }
     @Test
@@ -112,6 +115,20 @@ public class GhApplicationTests {
         for (Map.Entry<String, Object> entry : entries) {
             System.out.println("entry = " + entry);
         }
+    }
+
+    @Test
+    public  void testTime(){
+       // DateTime.Now.ToString().SubString(0,2)>12?( "下午"+ DateTime.Now):( "上午"+
+        Date date = new Date();
+        System.out.println("date = " + date);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("simpleDateFormat = " + simpleDateFormat.format(date));
+
+        Calendar c = Calendar.getInstance();
+        c.set(date.getYear(),date.getMonth(),date.getDate());
+        c.set(Calendar.HOUR_OF_DAY,1);
+        System.out.println("c = " + c.get(Calendar.HOUR_OF_DAY));
     }
 
 }

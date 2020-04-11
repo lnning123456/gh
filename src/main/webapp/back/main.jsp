@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="../jqgrid/css/jquery-ui.css">
     <link rel="stylesheet" href="../jqgrid/css/trirand/ui.jqgrid-bootstrap.css">
     <script src="../boot/js/jquery-2.2.1.min.js"></script>
+    <script src="../boot/js/jquery.validate.min.js"></script>
     <script src="../boot/js/jQuerysession.js"></script>
     <script src="../boot/js/bootstrap.min.js"></script>
-    <script src="../jqgrid/js/trirand/jquery.jqGrid.min.js"></script>
-    <script src="../jqgrid/js/trirand/i18n/grid.locale-cn.js"></script>
+
     <script type="text/javascript" language="JavaScript">
 
         $(function () {
@@ -70,10 +70,10 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('department/department.jsp')">科室列表</a></li>
+                            <li><a href="javascript:$('#changeContent').load('department/departmentList.jsp')">科室列表</a></li>
                         </div>
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('department.jsp')">添加</a></li>
+                            <li><a href="javascript:$('#changeContent').load('department/addDepartment.jsp')">科室添加</a></li>
                         </div>
                     </div>
 
@@ -89,7 +89,10 @@
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('testTime.jsp')">医生列表</a></li>
+                            <li><a href="javascript:$('#changeContent').load('doctor/doctor.jsp')">医生列表</a></li>
+                        </div>
+                        <div class="panel-body">
+                            <li><a href="javascript:$('#changeContent').load('doctor/addDoctor.jsp')">添加医生</a></li>
                         </div>
                     </div>
                 </div>
