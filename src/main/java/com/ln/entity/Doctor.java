@@ -11,12 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Doctor{
-    String id;
+    String doctorId;
     String doctorName;
     String departmentId;
     String position;
     String presentation;
     String src;
     String status;
-   List<Work> works;
+    Department department;
 }

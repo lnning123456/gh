@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
-    String id;
+    String orderId;
     String usernameId;
     String workId;
     String status;

@@ -1,29 +1,54 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ln.dao.DoctorDao">
-<sql id="doctor">
-    select id,doctor_name doctorName,department_id departmentId,position,presentation,src ,status from doctor
+    <sql id="doctor">
+    select d.doctor_id doctorId,d.doctor_name doctorName,d.department_id
+     departmentId,d.position position,d.presentation presentation,d.src src,d.status status,
+
+     t.department_id departmentId, t.department_name departmentName,t.levels levels,t.parent_id parentId
+
+    from doctor   d left join department t
+    on d.department_id=t.department_id
 </sql>
-<select id="queryByPage" resultType="Doctor">
-    <include refid="doctor"></include> limit #{start},#{rows}
-</select>
-    <select id="getCount" resultType="Integer">
-        select  count(id) from doctor
+    <resultMap id="doctorList" type="Doctor">
+        <result property="doctorId" column="doctorId"/>
+        <result property="doctorName" column="doctorName"/>
+        <result property="departmentId" column="departmentId"/>
+        <result property="position" column="position"/>
+        <result property=" presentation" column=" presentation"/>
+        <result property="src" column="src"/>
+        <result property="status" column="status"/>
+        <association property="department" javaType="Department">
+            <result property="departmentId" column="departmentId"/>
+            <result property="departmentName" column="departmentName"/>
+            <result property="levels" column="levels"/>
+            <result property="parentId" column="parentId"/>
+        </association>
+
+    </resultMap>
+    <select id="findDoctorByDepartmentId" resultType="Doctor">
+        <include refid="doctor"></include>
+        where d.department_id=#{departmentId}
     </select>
-    <select id="findDoctorByDepartment"  resultType="Doctor">
-        <include refid="doctor"></include> where department_id=#{departmentId}
-    </select>
-    <select id="findAllDoctor"  resultType="Doctor">
+    <select id="findAllDoctor" resultMap="doctorList">
         <include refid="doctor"></include>
     </select>
+    <select id="findDoctorByDoctorId" resultType="Doctor">
+        <include refid="doctor"></include>
+        where d.doctor_Id=#{doctorId}
+    </select>
+    <select id="findDoctorByDoctorName" resultMap="doctorList">
+        <include refid="doctor"></include>
+        where d.doctor_name=#{doctorName}
+    </select>
     <insert id="addDoctor">
-        insert into doctor values (#{id},#{doctorName},#{departmentId},#{position},#{presentation},#{src},#{status})
+        insert into doctor values (#{doctorId},#{doctorName},#{departmentId},#{position},#{presentation},#{src},#{status})
     </insert>
     <delete id="deleteDoctor">
-        delete from doctor where id=#{doctorId}
+        delete from doctor where  doctor_id=#{doctorId}
     </delete>
     <update id="updateDoctor">
         update doctor set department_id=#{departmentId},position=#{position},presentation=#{presentation},src=#{src} ,status=#{status}
-        where id={id}
+        where doctor_id=#{doctorId}
     </update>
 </mapper>

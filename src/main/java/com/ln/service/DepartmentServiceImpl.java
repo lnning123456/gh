@@ -62,7 +62,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         if (byDepartmentName!= null){
             map.put("msg","添加失败,该科室名已经存在，请重新输入");
         }else{
-            department.setId(UUID.randomUUID().toString());
+            department.setDepartmentId(UUID.randomUUID().toString());
             departmentDao.addDepartment(department);
             map.put("ok","ok");
             map.put("msg",department.getDepartmentName()+"添加成功");
@@ -75,7 +75,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Map<String,String> deleteDepartment(String departmentId) {
         HashMap<String, String> map = new HashMap<String,String>();
-        List<Doctor> doctors = doctorDao.findDoctorByDepartment(departmentId);
+        List<Doctor> doctors = doctorDao.findDoctorByDepartmentId(departmentId);
         Department department= departmentDao.findByDepartmentId(departmentId);
         List<Department> departments = departmentDao.findDepartment2ByDepartment1Id(departmentId);
           if(departments.size()!=0){

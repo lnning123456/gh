@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ln.dao.DepartmentDao">
     <sql id="department">
-        select id , department_name departmentName,levels,parent_id parentId from department
+        select  department_id departmentId, department_name departmentName,levels,parent_id parentId from department
     </sql>
     <select id="queryByPage" resultType="Department">
         <include refid="department"></include>   where  levels=#{levels}
         limit #{start},#{rows}
     </select>
     <select id="getLevelsCount" resultType="Integer">
-    select count(id) from department where  levels=#{levels}
+    select count(department_id) from department where  levels=#{levels}
 </select>
     <select id="findAllDepartment" resultType="Department">
         <include refid="department"></include>
@@ -32,14 +32,14 @@
     </select>
     <select id="findByDepartmentId" resultType="Department">
         <include refid="department"></include>
-        where id= #{departmentId}
+        where department_id= #{departmentId}
     </select>
     <insert id="addDepartment">
-     insert  into department(id,department_name,levels,parent_id) values
-     (#{id},#{departmentName},#{levels},#{parentId})
+     insert  into department(department_id,department_name,levels,parent_id) values
+     (#{departmentId},#{departmentName},#{levels},#{parentId})
     </insert>
      <delete id="deleteDepartment">
-          delete from department where   id=#{departmentId}
+          delete from department where  department_id=#{departmentId}
 
       </delete>
 </mapper>

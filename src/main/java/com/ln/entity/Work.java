@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Work {
-    String id;
+    String workId;
     Date time;
     String doctorId;
     Double price;

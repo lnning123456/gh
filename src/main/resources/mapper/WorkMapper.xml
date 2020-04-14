@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ln.dao.WorkDao">
+   <sql id="work">
+    select work_id workId,time,doctor_id doctorId,price,remain,user_count userCount from work
+</sql>
+    <select id="findWorkByDoctorId" resultType="Work">
+        <include refid="work"></include>
+         where doctor_id=#{doctorId}
+    </select>
+</mapper>

@@ -70,7 +70,7 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('department/departmentList.jsp')">科室列表</a></li>
+                            <li><a href="javascript:$('#changeContent').load('department/department.jsp')">科室列表</a></li>
                         </div>
                         <div class="panel-body">
                             <li><a href="javascript:$('#changeContent').load('department/addDepartment.jsp')">科室添加</a></li>

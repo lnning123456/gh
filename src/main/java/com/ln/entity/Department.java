@@ -10,9 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
-    String id;
+    String departmentId;
     String departmentName;
     Integer levels;
     String parentId;
-   // Department department2;
 }

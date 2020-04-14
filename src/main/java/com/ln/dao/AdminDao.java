@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Primary;
 
 @Primary
 public interface AdminDao {
-    @Select("select * from admin where name = #{name}")
-    public Admin findByName(@Param("name") String name);
+    @Select("select admin_id adminId,name,password from admin where name = #{name}")
+     Admin findByName(@Param("name") String name);
 
 }
