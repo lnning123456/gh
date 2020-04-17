@@ -8,7 +8,6 @@ import com.ln.entity.Department;
 import com.ln.entity.Doctor;
 import com.ln.service.DepartmentService;
 import com.ln.service.DoctorService;
-import com.ln.util.PageUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,6 @@ public class GhApplicationTests {
     DepartmentDao departmentDao;
     @Autowired
     DepartmentService departmentService;
-    @Autowired
-    PageUtil pageUtil;
     @Autowired
     DoctorDao doctorDao;
     @Autowired
@@ -117,24 +114,6 @@ public class GhApplicationTests {
         System.out.println("department = " + department);
     }
 
-    @Test
-    public void pageTest() {
-        Map myMap = PageUtil.getMyMap(10);
-        Set keySet = myMap.keySet();
-        for (Object o : keySet) {
-            System.out.println("o = " + o);
-            System.out.println("result" + myMap.get(o));
-        }
-    }
-
-    @Test
-    public void pageTest2() {
-        Map<String, Object> pageMap = pageUtil.getPageMap(1, 2, 3);
-        Set<Map.Entry<String, Object>> entries = pageMap.entrySet();
-        for (Map.Entry<String, Object> entry : entries) {
-            System.out.println("entry = " + entry);
-        }
-    }
 
     @Test
     public void testTime() {
@@ -164,6 +143,16 @@ public class GhApplicationTests {
     public void  findDoctorByDoctorName() {
         Doctor allDoctor = doctorService.findDoctorByDoctorName("华佗");
         System.out.println("allDoctor = " + allDoctor);
+    }
+    @Test
+    public void  findDoctor() {
+        Doctor doctor = new Doctor();
+        doctor.setDoctorName("李时珍");
+        Department department = new Department();
+        department.setDepartmentName("外科");
+        doctor.setDepartment(department);
+        List<Doctor> doctors = doctorService.findDoctor(doctor);
+        System.out.println("allDoctor = " + doctors);
     }
     @Test
     public void  findDoctorByDoctorId() {
