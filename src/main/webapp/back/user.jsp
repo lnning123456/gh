@@ -1,14 +1,12 @@
-<%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
-<!doctype html>
-<html lang="en">
+<!-- 根标签 -->
+<html>
+<!--  头标签  内容不做为展示内容  对页面进行设置(作者、关键字、标题、js、css)-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <tiTle>this is my first page</titLe>
+    <meta charset="GBK"/>
 </head>
+<!--  体标签   为用户展示数据 -->
 <body>
-This is main
+
 </body>
 </html>

@@ -7,9 +7,9 @@
             success: function (data) {
                 var tr;
                 for (i = 0; i < data.length; i++) {
-                    tr = "<tr><td>" + data[i].id + "</td><td>" + data[i].departmentName + "</td><td><a style='margin-right: 50px' type='button' >删除</a>&nbsp&nbsp<a type='button'>查看所属下级科室</a></td></tr>" + tr;
+                    tr = "<tr><td>" + data[i].departmentId + "</td><td>" + data[i].departmentName + "</td><td><a style='margin-right: 50px' type='button' >删除</a>&nbsp&nbsp<a type='button'>查看所属下级科室</a></td></tr>" + tr;
                 }
-                $("#department1Table").append(tr);
+                $("#department1Tbody").append(tr);
             }
         });
         $("table ").on("click", "a", function () {
@@ -43,14 +43,15 @@
                         var department2 = data.department2;
                         var tr;
                         for (i = 0; i < department2.length; i++) {
-                            tr = "<tr><td>" + department2[i].id + "</td><td>" + department2[i].departmentName + "</td><td><a  type='button'  " + department2[i].id + ">删除</td></tr>" + tr;
+                            tr = "<tr><td>" + department2[i].departmentId + "</td><td>" + department2[i].departmentName + "</td><td><a  type='button'  " + department2[i].id + ">删除</td></tr>" + tr;
                         }
                         console.log(department1Name);
                         $("#department1Name").text(department1Name);
                         $("#department1TableDiv").css("display", "none");
                         $("#findTableDiv").css("display", "none");
                         $("#department2TableDiv").css("display", "block");
-                        $("#department2Table").append(tr);
+                       $("#department2Table  tr :gt(4)").remove();
+                        $("#department2Tbody").append(tr);
                     }
                 })
 
@@ -68,13 +69,13 @@
                 success: function (data) {
                     var tr;
                     if (data.levels === 1) {
-                        tr = "<tr><td>" + data.id + "</td><td>" + data.departmentName + "</td><td>一级科室</td><td><a style='margin-right: 50px' type='button'  " + data.id + ">删除</a>&nbsp&nbsp<a type='button'>查看所属科室下级</a></td></tr>";
+                        tr = "<tr><td>" + data.departmentId + "</td><td>" + data.departmentName + "</td><td>一级科室</td><td><a style='margin-right: 50px' type='button'  " + data.id + ">删除</a>&nbsp&nbsp<a type='button'>查看所属科室下级</a></td></tr>";
                     } else {
-                        tr = "<tr><td>" + data.id + "</td><td>" + data.departmentName + "</td><td>二级科室</td><td><a  type='button'  " + data.id + ">删除</td></tr>";
+                        tr = "<tr><td>" + data.departmentId+ "</td><td>" + data.departmentName + "</td><td>二级科室</td><td><a  type='button'  " + data.id + ">删除</td></tr>";
                     }
 
-                    $("#findTbody").children().eq(1).remove();
-                    $("#findTable").append(tr);
+                    $("#findTbody tr :gt(3)").remove();
+                    $("#findTbody").append(tr);
                 }
             });
             $("#department1TableDiv").css("display", "none");
@@ -103,6 +104,7 @@
                     </div>
                 </div>
                 <button type="button" id="findDepartmentButton" class="btn btn-primary">查询</button>
+
             </form>
 
         </div>
@@ -112,7 +114,8 @@
     <span id="msg" style="color: red;margin-left: 20px"></span>
 </div>
 <div id="department1TableDiv" style="display: block">
-    <table id="department1Table" style="table-layout: fixed;margin: auto" type="button" class="table  table-bordered">
+    <table id="department1Table" style="table-layout: fixed;margin: auto"  class="table  table-bordered">
+        <tbody  id="department1Tbody">
         <tr>
             <td align="center" colspan="3"><span style="size: A5;font-weight: bold"> 一级科室列表</span></td>
         </tr>
@@ -121,10 +124,12 @@
             <td>科室名</td>
             <td>操作</td>
         </tr>
+        </tbody>
     </table>
 </div>
 <div id="department2TableDiv" style="display: none">
-    <table id="department2Table" type="button" class="table  table-bordered">
+    <table id="department2Table"  class="table  table-bordered">
+        <tbody  id="department2Tbody">
         <tr>
             <td align="center" colspan="3"><span id="department1Name" style="size: A5;font-weight: bold"> </span></td>
         </tr>
@@ -133,8 +138,12 @@
             <td>科室名</td>
             <td>操作</td>
         </tr>
+        </tbody>
     </table>
-    <button class="back" type="button">返回上首页</button>
+    <div style="text-align: center">
+        <button class="back"  type="button">返回上首页</button>
+    </div>
+
 </div>
 
 <div id="findTableDiv" style="display: none">
@@ -148,5 +157,8 @@
         </tr>
         </tbody>
     </table>
-    <button class="back" type="button">返回上首页</button>
+    <div style="text-align: center">
+        <button class="back"   type="button">返回上首页</button>
+    </div>
+
 </div>

@@ -3,9 +3,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../boot/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../jqgrid/css/jquery-ui.css">
+    <link rel="stylesheet" href="../jqgrid/css/trirand/ui.jqgrid-bootstrap.css">
+    <script src="../boot/js/jquery-2.2.1.min.js"></script>
+    <script src="../boot/js/jquery.validate.min.js"></script>
+    <script src="../boot/js/jQuerysession.js"></script>
     <script src="../boot/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../boot/js/jquery-2.2.1.min.js"></script>
-    <script type="text/javascript" src="../boot/js/jquery.validate.min.js"></script>
     <script type="text/javascript">
         function changeImage() {
             $("#imgCode").prop("src", "/gh/code/code?time=" + new Date().getTime());
@@ -52,36 +56,53 @@
         });
     </script>
 </head>
-<body>
-<center>
-    <h1 style="color:red">
-        欢迎来到挂号后台管理系统，请输入管理名和密码！
-    </h1>
-   <span style="color: red" id="msg"></span>
-    <form  action="#" method="post" id="loginForm">
-        <table border="0">
-            <tr>
-                <td>管理名：</td>
-                <td> <input style="height: 35px;width: 200px" type="text" name="name" placeholder="请输入管理名..." id="username"></td>
-            </tr>
-            <tr>
-                <td>密 码：</td>
-                <td><input  style="height: 35px;width: 200px" type="password" name="password" placeholder="请输入密码..."
-                            id="password">
-                </td>
-            </tr>
-            <tr>
-                <td>验证码：</td>
-                <td><img id="imgCode" src="${pageContext.request.contextPath}/code/code " onClick="changeImage()" >
-                    <a id="vcodeImgBtn" name="change_code_link"  class="code_picww"  onclick="changeImage()">换一张图</a>
-                    <input type="text" style="height: 35px;width: 100px" sty name="code" id="code" placeholder="请输入验证码...">
-                </td>
-            </tr>
-        </table>
-        <br>
+<div id="loginDiv" class="row">
+    <div class="col-md-12" style="text-align: center">
+        <h1 style="color:red">
+            欢迎来到挂号后台管理系统，请输入管理名和密码！
+        </h1>
+        <br/>
+        <br/>
+    </div>
 
-        <input type="button"  id="loginButton" value="登录" style="color:#3960bc; height:35px;width: 100px"></button>
-    </form>
-</center>
-</body>
+    <div class="col-md-4"></div>
+    <div class="col-md-6">
+        <span style="color: red" id="msg"></span>
+        <form class="form-horizontal" method="post" id="loginForm">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="adminName"> 管理名：</label>
+                <div class="col-sm-10 form-inline">
+                    <input type="text" style="height: 35px;width: 265px" class="form-control" name="name"
+                           placeholder="请输入管理名..." id="adminName">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="password"> 密 码：</label>
+                <div class="col-sm-10 form-inline">
+                    <input class="form-control" style="height: 35px;width: 265px" type="password" name="password"
+                           placeholder="请输入密码..." id="password">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="code"> 验证码：</label>
+                <div class="col-sm-10 form-inline">
+                    <img id="imgCode" src="${pageContext.request.contextPath}/code/code " onClick="changeImage()">
+                    <a id="vcodeImgBtn" name="change_code_link" class="code_picww" onclick="changeImage()">换一张图</a>
+                    <input class="form-control" type="text" style="height: 35px;width: 120px" sty name="code" id="code"
+                           placeholder="输入验证码...">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-4" style="margin-left: 23px">
+                    <button class="btn btn-primary" type="button" id="loginButton">登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
 </html>

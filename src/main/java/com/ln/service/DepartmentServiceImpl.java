@@ -4,8 +4,6 @@ import com.ln.dao.DepartmentDao;
 import com.ln.dao.DoctorDao;
 import com.ln.entity.Department;
 import com.ln.entity.Doctor;
-import com.ln.util.PageUtil;
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

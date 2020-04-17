@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface DoctorDao {
     List<Doctor> findDoctorByDepartmentId(String departmentId);
+    List<Doctor> findDoctor(Doctor doctor);
     List<Doctor> findAllDoctor();
     Doctor findDoctorByDoctorId(String doctorId);
     Doctor findDoctorByDoctorName(String doctorName);

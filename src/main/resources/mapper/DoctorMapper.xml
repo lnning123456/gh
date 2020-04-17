@@ -41,6 +41,17 @@
         <include refid="doctor"></include>
         where d.doctor_name=#{doctorName}
     </select>
+    <select id="findDoctor" resultMap="doctorList">
+        <include refid="doctor"></include>
+        <where>
+            <if test="doctorName !=null">
+                d.doctor_name=#{doctorName}
+            </if>
+            <if test="department !=null">
+                or t.department_name=#{department.departmentName}
+            </if>
+        </where>
+    </select>
     <insert id="addDoctor">
         insert into doctor values (#{doctorId},#{doctorName},#{departmentId},#{position},#{presentation},#{src},#{status})
     </insert>

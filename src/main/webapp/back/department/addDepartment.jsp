@@ -1,20 +1,20 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
 <style type="text/css">
-   label.error {
+    label.error {
         color: red;
-       margin-left: 50px;
+        margin-left: 50px;
     }
 </style>
 <script>
     $(function () {
         $("#addDepartmentFrom").validate({
-            errorPlacement: function(error, element) {
-                if (element.is(":radio")){
+            errorPlacement: function (error, element) {
+                if (element.is(":radio")) {
                     console.log(error);
                     console.log(element);
                     error.appendTo(element.parent().next().parent());
                 } else {
-                    error.appendTo(element.parent());//默认，这个必须些，不写会影响其他样式问题
+                    error.appendTo(element.parent());
                 }
             },
             rules: {
@@ -26,34 +26,32 @@
         });
         $(":radio").click(function () {
             var levels = parseInt($(":radio:checked").val());
-            console.log(levels);
             var option;
             if (levels === 1) {
                 $("#department1").empty().attr("disabled", "disabled");
-                option = "<option >不可选择</option>"
-            } else {
-                $("#department1").removeAttr("disabled").empty().attr("required", "true");
+                option = "<option >二级科室才可选择</option>";
+                $("#department1").append(option);
 
+            } else {
+                $("#department1").removeAttr("disabled").empty();
                 $.ajax({ //一级科室
                     url: "${pageContext.request.contextPath}/department/findAllDepartment1",
                     success: function (data) {
-                        option = "<option value=''>请选择上级科室</option>"
-
+                        option = "<option disabled selected hidden>请选择上级科室</option>"
                         for (i = 0; i < data.length; i++) {
-                            option = option+"<option value=" + data[i].id + ">" + data[i].departmentName + "</option>"  ;
+                            option = option + "<option value=" + data[i].departmentId + ">" + data[i].departmentName + "</option>";
                         }
                         $("#department1").append(option);
                     }
                 });
-
             }
-            $("#department1").append(option);
+
 
         });
         $("button").click(function () {
             var flag = $("#addDepartmentFrom").valid();
-            var levels = parseInt($(":radio:checked").val());
-            var parentId = $("#department1 :selected").val();
+            var levels = parseInt($(":radio:checked").value);
+            var parentId = $("#department1  :selected").val();
             var departmentName = $("#departmentName").val();
             console.log("parentId " + parentId);
             if (flag) {
@@ -63,7 +61,7 @@
                     type: "post",
                     data: {levels: levels, parentId: parentId, departmentName: departmentName},
                     success: function (data) {
-                        console.log(data);//972128
+                        //   console.log(data);//972128
                         if (data.ok === "ok") {
 
                         }
@@ -87,11 +85,11 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">科室级别</label>
                 <div class="col-sm-10 form-inline">
-                    <label class="radio-inline" >
-                        <input type="radio" name="levels" id="levels1" value="1"  title="请选择科室级别" required> 一级科室
+                    <label class="radio-inline">
+                        <input type="radio" name="levels" id="levels1" value="1" title="请选择科室级别" required> 一级科室
                     </label>
-                    <label class="radio-inline" >
-                        <input type="radio" name="levels"  id="levels2" value="2" > 二级科室
+                    <label class="radio-inline">
+                        <input type="radio" name="levels" id="levels2" value="2"> 二级科室
                     </label>
                 </div>
             </div>
@@ -99,8 +97,8 @@
                 <label for="department1" class="col-sm-2 control-label">上级科室</label>
                 <div class="col-sm-10 form-inline">
                     <select disabled="disabled" style="width: 170px" id="department1" name="department1"
-                            title="请选择上级科室" class="form-control">
-                        <option>不可选择</option>
+                            class="form-control">
+                        <option>二级科室才可选择</option>
                     </select>
                 </div>
             </div>

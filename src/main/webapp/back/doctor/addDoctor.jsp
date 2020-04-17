@@ -1,21 +1,35 @@
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="UTF-8" %>
+
 <script>
-    $("#file").change(function () {
+    $(function () {
+        $("#selectButton").click(function () {
+            $("#img").click();
+        });
+        $("#img").change(function () {
+            $("#src").attr("src", URL.createObjectURL($(this)[0].files[0]));
+        });
+        $("#addDoctorButton").click(function () {
+            var doctorName = $("#doctorName").val();
+            var file = $("#img")[0].files[0];
+            var formData = new FormData()
+            formData.append("img", file);
+            $.ajax({
+                url: "${pageContext.request.contextPath}/doctor/addDoctor",
+                datatype: "json",
+                type: "post",
+                processData: false,// 不加会报错
+                contentType: false,// 不加会报错
+                data: formData,
+                success: function (data) {
 
-        var r = new FileReader();
-        var f = document.getElementById('file').files[0];
-        console.log(f);
 
-        r.readAsDataURL(f);
-        console.log(f);
-        console.log(r);
-        r.onload = function (e) {
-            document.getElementById('src').src = this.result;
-
-        };
+                }
+            });
+            // console.log(  $("#addDoctorFrom").serialize());
+        })
     })
+
 </script>
-<body>
 <div class="row">
     <div class="col-md-12" style="margin: auto">
         <h1 style="color: #0f0f0f;text-align: center">添加科室</h1>
@@ -35,14 +49,13 @@
 
             </div>
             <div class="form-group">
-                <label for="doctorName" class="col-sm-2 control-label">医生头像</label>
+                <label for="src" class="col-sm-2 control-label">医生头像</label>
                 <div class="col-sm-10 form-inline">
-                    <img style="width: 120px;height: 150px" id="src" src="" class="img-thumbnail">
+                    <img class="img-thumbnail" style="width: 120px;height: 150px" name="src" id="src" src="" alt="">
                     <br>
                     <br>
-                    <label for="file">
-                        <input type="file" id="file" accept="image/*" hidden>
-                    </label>
+                    <button id="selectButton">选择医生头像</button>
+                    <input style="display: none" type="file" name="img" id="img" accept="image/*">
                 </div>
 
             </div>
@@ -50,15 +63,15 @@
 
                 <label for="department1" class="col-sm-2 control-label">选择科室</label>
                 <div class="col-sm-10 form-inline">
-                    <select  style="width: 170px" id="department1" name="department1"
+                    <select style="width: 170px" id="department1" name="department1"
                             title="请选择一级科室" class="form-control">
-                        <option>请选择一级科室</option>
+                        <option disabled selected hidden>请选择一级科室</option>
                     </select>
                     <br>
                     <br>
-                    <select  style="width: 170px" id="department2" name="department2"
+                    <select style="width: 170px" id="department2" name="departmentId"
                             title="请选择二级科室" class="form-control">
-                        <option>请选择二级科室</option>
+                        <option disabled selected hidden>请选择二级科室</option>
                     </select>
                 </div>
             </div>
@@ -73,16 +86,21 @@
             <div class="form-group">
                 <label for="presentation" class="col-sm-2 control-label">医生简介</label>
                 <div class="col-sm-10 form-inline">
-                    <textarea  style="width: 300px;height: 200px" class="form-control"
-                               id="presentation" name="presentation" placeholder="医生简介"></textarea>
+                    <textarea style="width: 300px;height: 200px" class="form-control"
+                              id="presentation" name="presentation" placeholder="医生简介"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+
+                <div class="col-sm-2 form-inline"></div>
+                <div class="col-sm-10 form-inline">
+                    <button id="addDoctorButton" type="button" class="btn btn-primary">确定添加</button>
                 </div>
 
             </div>
-
         </from>
     </div>
 </div>
 
-</body>
 
 

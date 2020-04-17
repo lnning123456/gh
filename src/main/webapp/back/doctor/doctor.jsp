@@ -1,14 +1,25 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-This is main
-</body>
-</html>
+<script>
+
+</script>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class=" glyphicon glyphicon-search"></span></div>
+                        <input type="text" class="form-control" id="findDoctorInput" placeholder="输入科室名/医生名字">
+                    </div>
+                </div>
+                <button type="button" id="findDoctorButton" class="btn btn-primary">查询</button>
+            </form>
+
+        </div>
+    </div>
+</nav>
+<div>
+<table >
+
+</table>
+</div>

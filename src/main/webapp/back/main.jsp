@@ -2,11 +2,13 @@
 <!doctype html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>gh</title>
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
+    <title>挂号后台</title>
     <link rel="stylesheet" href="../boot/css/bootstrap.min.css">
     <link rel="stylesheet" href="../jqgrid/css/jquery-ui.css">
     <link rel="stylesheet" href="../jqgrid/css/trirand/ui.jqgrid-bootstrap.css">
@@ -14,47 +16,35 @@
     <script src="../boot/js/jquery.validate.min.js"></script>
     <script src="../boot/js/jQuerysession.js"></script>
     <script src="../boot/js/bootstrap.min.js"></script>
-
+    <style type="text/css">
+        body { padding-top: 70px; }
+    </style>
     <script type="text/javascript" language="JavaScript">
 
         $(function () {
-              $("#logout").click(function (){
+            $("#logout").click(function () {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/admin/logout",
                     success: function () {
                         location.href = "${pageContext.request.contextPath}/back/login.jsp"
                     }
                 })
-              })
+            })
         })
 
     </script>
 </head>
-<body>
 <br/>
-
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-
-            </button>
-            <a class="navbar-brand" href="#">线上挂号后台管理系统</a>
-        </div>
-
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">管理员：<span class="text-primary">${sessionScope.admin.name} </span></a></li>
-                <li><a   id="logout" type="button">退出登录 <span  class="glyphicon glyphicon-log-out"></span></a>
-                </li>
-
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+<nav class="navbar navbar-default navbar-fixed-top" style="height: 60px">
+    <div class="container">
+        <h3 class="navbar-text">线上挂号后台管理系统</h3>
+        <div class="navbar-text navbar-right" >
+               管理员：<span class="text-primary">${sessionScope.admin.name} </span>
+                <a id="logout" type="button">退出登录 <span class="glyphicon glyphicon-log-out"></span></a>
+    </div>
+    </div>
 </nav>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-2">
@@ -73,10 +63,10 @@
                             <li><a href="javascript:$('#changeContent').load('department/department.jsp')">科室列表</a></li>
                         </div>
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('department/addDepartment.jsp')">科室添加</a></li>
+                            <li><a href="javascript:$('#changeContent').load('department/addDepartment.jsp')">科室添加</a>
+                            </li>
                         </div>
                     </div>
-
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingTwo">
@@ -137,8 +127,5 @@
         </div>
     </div>
 </div>
-<br/>
 
-
-</body>
 </html>

@@ -8,6 +8,7 @@ import java.util.Map;
 public interface DoctorService {
     List<Doctor> findAllDoctor();
     List<Doctor> findDoctorByDepartment(String departmentId);
+    List<Doctor> findDoctor(Doctor doctor);
     Doctor findDoctorByDoctorName(String doctorName);
     Doctor findDoctorByDoctorId(String doctorId);
     String addDoctor(Doctor doctor);

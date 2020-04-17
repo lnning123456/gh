@@ -28,6 +28,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public List<Doctor> findDoctor(Doctor doctor) {
+        return doctorDao.findDoctor(doctor);
+    }
+
+    @Override
     public Doctor findDoctorByDoctorName(String doctorName) {
         return doctorDao.findDoctorByDoctorName(doctorName);
     }
