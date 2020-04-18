@@ -115,4 +115,5 @@
     <input id="fromButton" type="button">
 </from>
     <a href="${pageContext.request.contextPath }/doctor/addDoctor"> sfsdf</a>
+
 </html>

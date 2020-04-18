@@ -38,7 +38,6 @@
                     type: "post",
                     data: {departmentId: departmentId},
                     success: function (data) {
-                        console.log(data);
                         var department1Name = data.department1Name;
                         var department2 = data.department2;
                         var tr;

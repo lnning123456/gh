@@ -8,5 +8,5 @@ public interface UserDao {
     User findUserByUsernameAndPassword(String username,String password);
     void addUser(User user);
     void updateUser(User user);
-
+List<User> findUser();
 }

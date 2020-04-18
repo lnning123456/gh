@@ -22,10 +22,7 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorDao.findAllDoctor();
     }
 
-    @Override
-    public List<Doctor> findDoctorByDepartment(String departmentId) {
-        return doctorDao.findDoctorByDepartmentId(departmentId);
-    }
+
 
     @Override
     public List<Doctor> findDoctor(Doctor doctor) {
@@ -33,14 +30,10 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public Doctor findDoctorByDoctorName(String doctorName) {
-        return doctorDao.findDoctorByDoctorName(doctorName);
-    }
-
-    @Override
     public Doctor findDoctorByDoctorId(String doctorId) {
         return doctorDao.findDoctorByDoctorId(doctorId);
     }
+
 
     @Override
     public String addDoctor(Doctor doctor) {

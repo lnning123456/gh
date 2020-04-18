@@ -22,37 +22,32 @@ public class DoctorController {
     @Autowired
     DoctorService doctorService;
 
+
     @ResponseBody
-    @RequestMapping("findDoctorByDepartment")
-    List<Doctor> findDoctorByDepartment(String departmentId) {
-        return doctorService.findDoctorByDepartment(departmentId);
+    @RequestMapping("findDoctor")
+    List<Doctor> findDoctor(Doctor doctor) {
+        return doctorService.findDoctor(doctor);
     }
     @ResponseBody
-    @RequestMapping("findDoctorByDoctorName")
-    Doctor findDoctorByDoctorName(String doctorName) {
-        return doctorService.findDoctorByDoctorName(doctorName);
-    }
-    @ResponseBody
-    @RequestMapping("addDoctor")
-    String addDoctor(@RequestParam(value = "img") MultipartFile img, HttpSession session, Doctor doctor, String doctorName, String src, String position) {
+    @RequestMapping( value = "addDoctor"/*,method = RequestMethod.POST*/)
+    String addDoctor(@RequestParam(value = "img") MultipartFile img, HttpSession session, Doctor doctor) {
         System.out.println("doctor = " + doctor);
-        if (img.isEmpty()) {
-            System.out.println("文件为空空");
-        }
-        System.out.println("doctorName = " + doctorName);
         System.out.println("img = " + img);
-        System.out.println("position = " + position);
-       String realPath = session.getServletContext().getRealPath("/img/");
-        File file = new File(realPath);
-        String filename = img.getOriginalFilename();
-        String newFileName = new Date().getTime() + "_" + filename;
-        try {
-            img.transferTo(new File(file, newFileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       if (!img.isEmpty()) {
+           String realPath = session.getServletContext().getRealPath("/img/");
+           File file = new File(realPath);
+           String filename = img.getOriginalFilename();
+           String newFileName = new Date().getTime() + "_" + filename;
+           try {
+               img.transferTo(new File(file, newFileName));
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+           doctor.setSrc(newFileName);
+        }else {
+           doctor.setSrc("doctor_default.png");
+       }
         return  doctorService.addDoctor(doctor);
-     //   return "back/main";
     }
     @ResponseBody
     @RequestMapping("updateDoctor")

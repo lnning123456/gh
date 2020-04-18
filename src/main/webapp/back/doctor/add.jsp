@@ -3,11 +3,11 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="../boot/css/bootstrap.min.css">
-    <script src="../boot/js/jquery-2.2.1.min.js"></script>
-    <script src="../boot/js/jquery.validate.min.js"></script>
-    <script src="../boot/js/jQuerysession.js"></script>
-    <script src="../boot/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../boot/css/bootstrap.min.css">
+    <script src="../../boot/js/jquery-2.2.1.min.js"></script>
+    <script src="../../boot/js/jquery.validate.min.js"></script>
+    <script src="../../boot/js/jQuerysession.js"></script>
+    <script src="../../boot/js/bootstrap.min.js"></script>
     <style type="text/css">
         label.error {
             color: red;
@@ -62,14 +62,6 @@
     </script>
 </head>
 <div id="loginDiv" class="row">
-    <div class="col-md-12" style="text-align: center">
-        <h1 style="color:red">
-            欢迎来到挂号后台管理系统，请输入管理名和密码！
-        </h1>
-        <br/>
-        <br/>
-    </div>
-
     <div class="col-md-4"></div>
     <div class="col-md-6">
         <span style="color: red" id="msg"></span>

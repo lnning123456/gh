@@ -43,12 +43,15 @@
     </select>
     <select id="findDoctor" resultMap="doctorList">
         <include refid="doctor"></include>
+        left join department t2
+        on   t.parent_id= t2.department_id
         <where>
             <if test="doctorName !=null">
                 d.doctor_name=#{doctorName}
             </if>
             <if test="department !=null">
                 or t.department_name=#{department.departmentName}
+                or t2.department_name=#{department.departmentName}
             </if>
         </where>
     </select>

@@ -135,13 +135,12 @@ public class GhApplicationTests {
         System.out.println("allDoctor = " + allDoctor);
     }
     @Test
-    public void  findDoctorByDepartmentId() {
-        List<Doctor> allDoctor = doctorService. findDoctorByDepartment("5");
-        System.out.println("allDoctor = " + allDoctor);
-    }
-    @Test
-    public void  findDoctorByDoctorName() {
-        Doctor allDoctor = doctorService.findDoctorByDoctorName("华佗");
+    public void finDDoctor() {
+        Doctor doctor = new Doctor();
+        Department department = new Department();
+        department.setDepartmentName("内科");
+        doctor.setDepartment(department);
+        List<Doctor> allDoctor = doctorService.findDoctor(doctor);
         System.out.println("allDoctor = " + allDoctor);
     }
     @Test

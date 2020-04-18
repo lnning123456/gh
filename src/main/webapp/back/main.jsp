@@ -3,19 +3,13 @@
 <html lang="en">
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
-    <title>挂号后台</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="../boot/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../jqgrid/css/jquery-ui.css">
-    <link rel="stylesheet" href="../jqgrid/css/trirand/ui.jqgrid-bootstrap.css">
     <script src="../boot/js/jquery-2.2.1.min.js"></script>
     <script src="../boot/js/jquery.validate.min.js"></script>
     <script src="../boot/js/jQuerysession.js"></script>
     <script src="../boot/js/bootstrap.min.js"></script>
+    <title>挂号后台</title>
     <style type="text/css">
         body { padding-top: 70px; }
     </style>

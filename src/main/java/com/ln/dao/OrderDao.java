@@ -9,5 +9,5 @@ public interface OrderDao {
     void  deleteOrder(String orderId);
     void  updateOrder(Order order);
     List<Order> findOrderByUsername(String usernameId);
-    List<Order> findOrderByDoctor(String doctorId);
+    List<Order> findOrderByWork(String workId);
  }
