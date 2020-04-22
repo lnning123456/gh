@@ -7,7 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" isELIgnored="false" pageEncoding="utf-8" %>
 
+<link rel="stylesheet" href="../boot/css/bootstrap.min.css">
 <script src="../boot/js/jquery-2.2.1.min.js"></script>
+<script src="../boot/js/jquery.validate.min.js"></script>
+<script src="../boot/js/jQuerysession.js"></script>
+<script src="../boot/js/bootstrap.min.js"></script>
 <title>Title</title>
 
 <script>
@@ -68,9 +72,24 @@ ffdeffer
             <td>无预约</td>
             <td>无预约</td>
         </tr>
-        ﻿
 
     </table>
 </div>
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputEmail3">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="exampleInputPassword3">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Remember me
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">Sign in</button>
+    </form>
 
 

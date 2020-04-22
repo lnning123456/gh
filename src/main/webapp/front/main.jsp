@@ -29,10 +29,10 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-addon"><span class=" glyphicon glyphicon-search"></span></div>
-                            <input type="text"  class="form-control" id="findDoctorInput" placeholder="输入科室名/医生名">
+                            <input type="text"  class="form-control" id="queryDoctorInput" placeholder="输入科室名/医生名">
                         </div>
                     </div>
-                    <button type="button" id="findDoctorButton" class="btn btn-primary">查询</button>
+                    <button type="button" id="queryDoctorButton" class="btn btn-primary">查询</button>
                 </form>
                     <div class="navbar-text navbar-right" >
                         <c:if test="${sessionScope.username==null}">

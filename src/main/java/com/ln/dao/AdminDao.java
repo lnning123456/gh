@@ -8,6 +8,6 @@ import org.springframework.context.annotation.Primary;
 @Primary
 public interface AdminDao {
     @Select("select admin_id adminId,name,password from admin where name = #{name}")
-     Admin findByName(@Param("name") String name);
+     Admin queryByName(@Param("name") String name);
 
 }

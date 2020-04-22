@@ -1,13 +1,13 @@
 package com.ln;
 
-import com.ln.dao.AdminDao;
-import com.ln.dao.DepartmentDao;
-import com.ln.dao.DoctorDao;
+import com.ln.dao.*;
 import com.ln.entity.Admin;
 import com.ln.entity.Department;
 import com.ln.entity.Doctor;
 import com.ln.service.DepartmentService;
 import com.ln.service.DoctorService;
+import com.ln.util.PageService;
+import com.ln.util.PageUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,21 +30,26 @@ public class GhApplicationTests {
     DoctorDao doctorDao;
     @Autowired
     DoctorService doctorService;
-
+    @Autowired
+    Doctor2Dao doctor2Dao;
+    @Autowired
+    PageUtil pageUtil;
+@Autowired
+    PageService pageService;
     @Test
     public void MyTest() {
         System.out.println("true = " + true);
     }
 
     @Test
-    public void findAdmin() {
-        Admin byName = adminDao.findByName("ln");
+    public void queryAdmin() {
+        Admin byName = adminDao.queryByName("ln");
         System.out.println("byName = " + byName);
     }
 
     @Test
-    public void findAllDepartment() {
-        List<Department> allDepartment = departmentDao.findAllDepartment();
+    public void queryAllDepartment() {
+        List<Department> allDepartment = departmentDao.queryAllDepartment();
         for (Department department : allDepartment) {
             System.out.println("department = " + department);
         }
@@ -88,29 +93,29 @@ public class GhApplicationTests {
      }*/
     @Test
     public void allDepartment1() {
-        List<Department> departments = departmentDao.findAllDepartment1();
+        List<Department> departments = departmentDao.queryAllDepartment1();
         for (Department department : departments) {
             System.out.println("department = " + department);
         }
     }
 
     @Test
-    public void findDepartment2ByDepartment1Id() {
-        List<Department> departments = departmentDao.findDepartment2ByDepartment1Id("1");
+    public void queryDepartment2ByDepartment1Id() {
+        List<Department> departments = departmentDao.queryDepartment2ByDepartment1Id("1");
         for (Department department : departments) {
             System.out.println("department = " + department);
         }
     }
 
     @Test
-    public void findDepartmentById() {
-        Department department = departmentDao.findByDepartmentId("8");
+    public void queryDepartmentById() {
+        Department department = departmentDao.queryByDepartmentId("8");
         System.out.println("department = " + department);
     }
 
     @Test
-    public void findByDepartmentName() {
-        Department department = departmentService.findByDepartmentName("口腔种植科");
+    public void queryByDepartmentName() {
+        Department department = departmentService.queryByDepartmentName("口腔种植科");
         System.out.println("department = " + department);
     }
 
@@ -130,49 +135,113 @@ public class GhApplicationTests {
     }
 
     @Test
-    public void findAllDoctor() {
-        List<Doctor> allDoctor = doctorService.findAllDoctor();
+    public void queryAllDoctor() {
+        List<Doctor> allDoctor = doctorService.queryAllDoctor();
         System.out.println("allDoctor = " + allDoctor);
     }
+
     @Test
-    public void finDDoctor() {
+    public void queryDoctor() {
         Doctor doctor = new Doctor();
+        //    doctor.setDoctorName("华佗");
         Department department = new Department();
+//department.setLevels(1);
+//department.setDepartmentName("内科");
+        doctor.setDepartment(department);
+        List<Doctor> doctors = doctorDao.queryDoctor(doctor, 0);
+        System.out.println("sacdasfwwf   " + doctors.size());
+        for (Doctor doctor1 : doctors) {
+            System.out.println("doctor1 = " + doctor1);
+
+        }
+
+    }
+
+    @Test
+    public void query2Doctor() {
+        Doctor doctor = new Doctor();
+        // doctor.setDoctorName("华佗");
+        Department department = new Department();
+        department.setLevels(1);
         department.setDepartmentName("内科");
         doctor.setDepartment(department);
-        List<Doctor> allDoctor = doctorService.findDoctor(doctor);
+        Map<String, Object> map = doctorService.queryDoctor(doctor, 1);
+        Set<Map.Entry<String, Object>> entries = map.entrySet();
+        for (Map.Entry<String, Object> entry : entries) {
+            System.out.println("entry = " + entry);
+        }
+    }
+
+    @Test
+    public void queryDoctorByDoctorId() {
+        Doctor allDoctor = doctorDao.queryDoctorByDoctorId("3");
         System.out.println("allDoctor = " + allDoctor);
     }
+
     @Test
-    public void  findDoctor() {
-        Doctor doctor = new Doctor();
-        doctor.setDoctorName("李时珍");
-        Department department = new Department();
-        department.setDepartmentName("外科");
-        doctor.setDepartment(department);
-        List<Doctor> doctors = doctorService.findDoctor(doctor);
-        System.out.println("allDoctor = " + doctors);
-    }
-    @Test
-    public void  findDoctorByDoctorId() {
-        Doctor allDoctor = doctorDao.findDoctorByDoctorId("3");
-        System.out.println("allDoctor = " + allDoctor);
-    }
-    @Test
-    public void  addDoctor() {
+    public void addDoctor() {
         Doctor doctor = new Doctor();
         doctor.setDoctorName("孙思邈");
         doctor.setDepartmentId("5");
         doctor.setPosition("sfesdf");
         doctorService.addDoctor(doctor);
     }
+
     @Test
-    public void  deleteDoctor() {
-        System.out.println("dsfsdg"+doctorService.deleteDoctor("3"));
+    public void count() {
+        Doctor doctor = new Doctor();
+        //    doctor.setDoctorName("华佗");
+        Department department = new Department();
+//department.setLevels(1);
+//department.setDepartmentName("内科");
+        doctor.setDepartment(department);
+      //  Integer count = doctor2Dao.count(doctor);
+        Integer count = pageService.count(doctor2Dao,doctor);
+      //  PageDao p=null;
+       // System.out.println("doctor2Dao = " + p.getClass());
+        System.out.println("count = " + count);
+        // pageUtil.page(doctor2Dao);
+    }
+
+
+    @Test
+    public void query() {
+        Doctor doctor = new Doctor();
+        //    doctor.setDoctorName("华佗");
+        Department department = new Department();
+//department.setLevels(1);
+//department.setDepartmentName("内科");
+        doctor.setDepartment(department);
+        List<Doctor> doctors = doctor2Dao.query(doctor, 1);
+        System.out.println("sacdasfwwf   " + doctors.size());
+        for (Object o : doctors) {
+            System.out.println("o = " + o);
+        }
+
     }
 
     @Test
-    public void  updateDoctor() {
+    public void page() {
+        Doctor doctor = new Doctor();
+        //    doctor.setDoctorName("华佗");
+        Department department = new Department();
+//department.setLevels(1);
+//department.setDepartmentName("内科");
+        doctor.setDepartment(department);
+      /*  Map<String, Object> page = pageUtil.page(doctor2Dao, 1, doctor);
+        Set<Map.Entry<String, Object>> entries = page.entrySet();
+        for (Map.Entry<String, Object> entry : entries) {
+            System.out.println("entry = " + entry);
+        }*/
+    }
+
+    @Test
+    public void deleteDoctor() {
+        System.out.println("dsfsdg" + doctorService.deleteDoctor("3"));
+    }
+
+    @Test
+    public void updateDoctor() {
         Doctor doctor = new Doctor();
         doctor.setDoctorId("2");
         doctor.setDepartmentId("7");
@@ -180,6 +249,6 @@ public class GhApplicationTests {
         doctor.setPresentation("sfdsfd");
         doctor.setSrc("tff");
         doctor.setStatus("休息");
-        System.out.println("dsfsdg"+doctorService.updateDoctor(doctor));
+        System.out.println("dsfsdg" + doctorService.updateDoctor(doctor));
     }
 }

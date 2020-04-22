@@ -11,11 +11,11 @@ import java.util.List;
 public interface DepartmentDao {
     List<Department> queryByPage(@Param("levels")Integer levels, @Param("start") Integer start, @Param("rows") Integer rows);
     Integer getLevelsCount(Integer levels);
-    List<Department> findAllDepartment();
-    Department findByDepartmentId(String departmentId);
-    Department findByDepartmentName(String departmentName);
-    List<Department> findAllDepartment1();
-    List<Department> findDepartment2ByDepartment1Id(String departmentId);
+    List<Department> queryAllDepartment();
+    Department queryByDepartmentId(String departmentId);
+    Department queryByDepartmentName(String departmentName);
+    List<Department> queryAllDepartment1();
+    List<Department> queryDepartment2ByDepartment1Id(String departmentId);
     void  addDepartment(Department department);
     void deleteDepartment(String departmentId);
 }

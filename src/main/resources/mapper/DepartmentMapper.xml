@@ -11,26 +11,26 @@
     <select id="getLevelsCount" resultType="Integer">
     select count(department_id) from department where  levels=#{levels}
 </select>
-    <select id="findAllDepartment" resultType="Department">
+    <select id="queryAllDepartment" resultType="Department">
         <include refid="department"></include>
 </select>
-    <select id="findAllDepartment1" resultType="Department">
+    <select id="queryAllDepartment1" resultType="Department">
         <include refid="department"></include>
         where levels=1
     </select>
-    <select id="findAllDepartment2" resultType="Department">
+    <select id="queryAllDepartment2" resultType="Department">
         <include refid="department"></include>
         where levels=1
     </select>
-    <select id="findDepartment2ByDepartment1Id" resultType="Department">
+    <select id="queryDepartment2ByDepartment1Id" resultType="Department">
         <include refid="department"></include>
         where levels=2 and parent_id=#{departmentId}
     </select>
-    <select id="findByDepartmentName" resultType="Department">
+    <select id="queryByDepartmentName" resultType="Department">
         <include refid="department"></include>
         where department_name=#{departmentName}
     </select>
-    <select id="findByDepartmentId" resultType="Department">
+    <select id="queryByDepartmentId" resultType="Department">
         <include refid="department"></include>
         where department_id= #{departmentId}
     </select>

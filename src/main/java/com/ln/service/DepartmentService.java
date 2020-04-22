@@ -7,10 +7,10 @@ import java.util.Map;
 
 public interface DepartmentService {
 
-    List<Department> findAllDepartment();
-    List<Department> findAllDepartment1();
-    Map<String,Object>findDepartment2ByDepartment1(String departmentId);
+    List<Department> queryAllDepartment();
+    List<Department> queryAllDepartment1();
+    Map<String,Object> queryDepartment2ByDepartment1(String departmentId);
     Map<String,String> addDepartment(Department department);
     Map<String,String> deleteDepartment(String departmentId);
-    Department findByDepartmentName(String departmentName);
+    Department queryByDepartmentName(String departmentName);
 }

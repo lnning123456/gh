@@ -11,6 +11,7 @@ public class User {
     String userId;
     String username;
     String password;
+    String call;
     String status;
 
 }

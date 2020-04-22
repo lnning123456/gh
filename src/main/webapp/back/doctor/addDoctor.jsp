@@ -1,12 +1,6 @@
 <%@ page pageEncoding="UTF-8" isELIgnored="false" contentType="text/html; utf-8" %>
-<html>
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="../../boot/css/bootstrap.min.css">
-    <script src="../../boot/js/jquery-2.2.1.min.js"></script>
-    <script src="../../boot/js/jquery.validate.min.js"></script>
-    <script src="../../boot/js/jQuerysession.js"></script>
-    <script src="../../boot/js/bootstrap.min.js"></script>
     <style type="text/css">
         label.error {
             color: red;
@@ -39,9 +33,10 @@
             });
             $("#img").change(function () {
                 $("#src").attr("src", URL.createObjectURL($(this)[0].files[0]));
+                console.log($("#src").attr("src"));
             });
             $.ajax({
-                url: "${pageContext.request.contextPath}/department/findAllDepartment1",
+                url: "${pageContext.request.contextPath}/department/queryAllDepartment1",
                 success: function (data) {
                     var option;
                     for (i = 0; i < data.length; i++) {
@@ -55,7 +50,7 @@
                 if (departmentId!=="") {
                     $("#departmentId :gt(0)").remove();
                     $.ajax({
-                        url: "${pageContext.request.contextPath}/department/findDepartment2ByDepartment1",
+                        url: "${pageContext.request.contextPath}/department/queryDepartment2ByDepartment1",
                         datatype: "json",
                         type: "post",
                         data: {departmentId: departmentId},
@@ -90,6 +85,7 @@
                         cache: false,
                         async: false,
                         success: function (data) {
+                           // window.location.reload()
                             $("#msg").text(data)
                         }
                     });
@@ -136,7 +132,6 @@
                 </div>
             </div>
             <div class="form-group">
-
                 <label class="col-sm-2 control-label">选择科室</label>
                 <div class="col-sm-10 form-inline">
                     <select style="width: 170px" id="department1" name="department1"
@@ -182,7 +177,5 @@
 
 </div>
 
-
-</html>
 
 

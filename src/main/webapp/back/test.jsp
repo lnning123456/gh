@@ -6,20 +6,43 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>登录界面</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../boot/css/bootstrap.min.css">
+    <script src="../boot/js/jquery-2.2.1.min.js"></script>
+    <script src="../boot/js/jquery.validate.min.js"></script>
+    <script src="../boot/js/jQuerysession.js"></script>
+    <script src="../boot/js/bootstrap.min.js"></script>
 </head>
 <script src="../boot/js/jquery-2.2.1.min.js"></script>
 <script>
+
+    function test(data){
+        console.log(data.get("page"));
+        return 2;
+    }
     $(function () {
         $("#deleteTrButton").click(function () {
             console.log("fffxf");
            $("#deleteTr tr :gt(7)").remove();
         });
         $("#fromButton").click(function () {
-            console.log(  $("input").val());
+          //  console.log(  $("input").val());
           //  console.log(  $("#from").serializeArray());
-            console.log(new FormData( $("#from")[0]) );
+         var forData=   new FormData;
+          forData.append("page",1);
+          var t=  test(forData);
+            console.log(t);
+            console.log($("#img").attr("src"));
+         //   $("#img").attr("src","../img/doctor_default.png");
+            console.log($("#img").attr("src"));
+
+            /*   console.log(new FormData( $("#from")[0]) );*/
         })
-    })
+
+    });
+
+
+   // console.log($("#img").prop("src"));
 
 </script>
 <head>
@@ -114,6 +137,11 @@
     <input type="text" name="name">
     <input id="fromButton" type="button">
 </from>
-    <a href="${pageContext.request.contextPath }/doctor/addDoctor"> sfsdf</a>
 
+    <a href="javascript:$('#update').load('doctor/updateDoctor.jsp?id=7c6')"> sfsdf</a>
+    <a href="${pageContext.request.contextPath }/doctor/gotoUpdateDoctor?doctorId=7981f85d-94d3-4e1f-99da-1b7c451539c6"> ssgegf</a>
+<img style="height: 80px;width: 70px" id="img" src="../img/1587391257276_1.png">gvesdgvsedges
+    <div id="update">
+       sfbfd gvgbv
+    </div>
 </html>

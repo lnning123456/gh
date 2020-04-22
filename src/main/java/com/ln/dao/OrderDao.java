@@ -1,13 +1,17 @@
 package com.ln.dao;
 
 import com.ln.entity.Order;
+import com.ln.entity.Work;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface OrderDao {
     void  addOrder(Order order);
-    void  deleteOrder(String orderId);
+    void  deleteOrder(String[] orderIds);
     void  updateOrder(Order order);
-    List<Order> findOrderByUsername(String usernameId);
-    List<Order> findOrderByWork(String workId);
+    List<Order> queryOrderByUsername(@Param("order") Order order,@Param("start")Integer start);
+   Integer   getOrderCount(Order order);
+    List<Order> queryOrderByWorkId(String workId);
+
  }

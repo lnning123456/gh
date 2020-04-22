@@ -35,7 +35,7 @@
             } else {
                 $("#department1").removeAttr("disabled").empty();
                 $.ajax({ //一级科室
-                    url: "${pageContext.request.contextPath}/department/findAllDepartment1",
+                    url: "${pageContext.request.contextPath}/department/queryAllDepartment1",
                     success: function (data) {
                         option = "<option disabled selected hidden>请选择上级科室</option>"
                         for (i = 0; i < data.length; i++) {

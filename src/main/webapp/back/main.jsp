@@ -14,7 +14,6 @@
         body { padding-top: 70px; }
     </style>
     <script type="text/javascript" language="JavaScript">
-
         $(function () {
             $("#logout").click(function () {
                 $.ajax({
@@ -114,7 +113,7 @@
             </div>
         </div>
         <div id="changeContent" class="col-xs-10">
-            <div class="jumbotron">
+            <div class="jumbotron" style="height: 175px">
                 <h3>欢迎来到线上挂号后台管理系统,选择左侧项目进行管理</h3>
             </div>
 

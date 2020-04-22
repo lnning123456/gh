@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -23,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
         Map<String, Object> map = new HashMap<>();
         String imgCode = (String) session.getAttribute("code");
         if (code.equals(imgCode)) {
-            Admin admin = adminDao.findByName(name);
+            Admin admin = adminDao.queryByName(name);
             if (admin != null) {
                 if (password.equals(admin.getPassword())) {
                     map.put("msg", "ok");

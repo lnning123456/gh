@@ -3,7 +3,7 @@
 <script>
     $(function () {
         $.ajax({ //一级科室
-            url: "${pageContext.request.contextPath}/department/findAllDepartment1",
+            url: "${pageContext.request.contextPath}/department/queryAllDepartment1",
             success: function (data) {
                 var tr;
                 for (i = 0; i < data.length; i++) {
@@ -33,7 +33,7 @@
 
             } else {  //查看所属下级科室
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/department/findDepartment2ByDepartment1",
+                    url: "${pageContext.request.contextPath}/department/queryDepartment2ByDepartment1",
                     datatype: "json",
                     type: "post",
                     data: {departmentId: departmentId},
@@ -47,7 +47,7 @@
                         console.log(department1Name);
                         $("#department1Name").text(department1Name);
                         $("#department1TableDiv").css("display", "none");
-                        $("#findTableDiv").css("display", "none");
+                        $("#queryTableDiv").css("display", "none");
                         $("#department2TableDiv").css("display", "block");
                        $("#department2Table  tr :gt(4)").remove();
                         $("#department2Tbody").append(tr);
@@ -57,11 +57,11 @@
             }
         });
         //查询
-        $("#findDepartmentButton").click(function () {
-            var departmentName = $("#findDepartmentInput").val();
+        $("#queryDepartmentButton").click(function () {
+            var departmentName = $("#queryDepartmentInput").val();
             console.log(departmentName);
             $.ajax({
-                url: "${pageContext.request.contextPath}/department/findByDepartmentName",
+                url: "${pageContext.request.contextPath}/department/queryByDepartmentName",
                 datatype: "json",
                 type: "post",
                 data: {departmentName: departmentName},
@@ -73,19 +73,19 @@
                         tr = "<tr><td>" + data.departmentId+ "</td><td>" + data.departmentName + "</td><td>二级科室</td><td><a  type='button'  " + data.id + ">删除</td></tr>";
                     }
 
-                    $("#findTbody tr :gt(3)").remove();
-                    $("#findTbody").append(tr);
+                    $("#queryTbody tr :gt(3)").remove();
+                    $("#queryTbody").append(tr);
                 }
             });
             $("#department1TableDiv").css("display", "none");
             $("#department2TableDiv").css("display", "none");
-            $("#findTableDiv").css("display", "block");
+            $("#queryTableDiv").css("display", "block");
         });
         //返回
         $(".back").click(function () {
             $("#department1TableDiv").css("display", "block");
             $("#department2TableDiv").css("display", "none");
-            $("#findTableDiv").css("display", "none");
+            $("#queryTableDiv").css("display", "none");
 
         });
     })
@@ -95,14 +95,14 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left form-inline ">
                 <div class="form-group">
-                    <div class="input-group">
+                    <div class="input-group" >
                         <div class="input-group-addon"><span class=" glyphicon glyphicon-search"></span></div>
-                        <input type="text" class="form-control" id="findDepartmentInput" placeholder="输入科室名">
+                        <input type="text" class="form-control" id="queryDepartmentInput" placeholder="输入科室名">
                     </div>
                 </div>
-                <button type="button" id="findDepartmentButton" class="btn btn-primary">查询</button>
+                <button type="button" id="queryDepartmentButton" class="btn btn-primary">查询</button>
 
             </form>
 
@@ -145,9 +145,9 @@
 
 </div>
 
-<div id="findTableDiv" style="display: none">
-    <table id="findTable" class="table  table-bordered">
-        <tbody id="findTbody">
+<div id="queryTableDiv" style="display: none">
+    <table id="queryTable" class="table  table-bordered">
+        <tbody id="queryTbody">
         <tr>
             <td>科室编号</td>
             <td>科室名</td>

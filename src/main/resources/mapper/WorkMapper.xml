@@ -2,10 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ln.dao.WorkDao">
    <sql id="work">
-    select work_id workId,time,doctor_id doctorId,price,remain,user_count userCount from work
+    select work_id workId,time,doctor_id doctorId,price,remain,
+    user_count userCount from work
 </sql>
-    <select id="findWorkByDoctorId" resultType="Work">
+    <select id="queryWorkByDoctorId" resultType="Work">
         <include refid="work"></include>
          where doctor_id=#{doctorId}
     </select>
+    <insert id="addWork">
+        insert into  work values (#{workId},#{ time},#{doctorId},#{price},#{remain},#{userCount})
+    </insert>
+    <update id="updateWork">
+update work set remain=#{remain},user_count=#{userCount} where work_id= #{workId}
+    </update>
+    <delete id="deleteWork">
+        delete from work  where work_id= #{workId}
+    </delete>
 </mapper>

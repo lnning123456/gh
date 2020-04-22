@@ -34,20 +34,20 @@ public class DepartmentServiceImpl implements DepartmentService {
     }*/
 
     @Override
-    public List<Department> findAllDepartment() {
-        return departmentDao.findAllDepartment();
+    public List<Department> queryAllDepartment() {
+        return departmentDao.queryAllDepartment();
     }
 
     @Override
-    public List<Department> findAllDepartment1() {
-        return departmentDao.findAllDepartment1();
+    public List<Department> queryAllDepartment1() {
+        return departmentDao.queryAllDepartment1();
     }
 
     @Override
-    public Map<String,Object> findDepartment2ByDepartment1(String departmentId) {
+    public Map<String,Object> queryDepartment2ByDepartment1(String departmentId) {
         HashMap<String, Object> map = new HashMap<String, Object>();
-        Department department = departmentDao.findByDepartmentId(departmentId);
-        List<Department> department2= departmentDao.findDepartment2ByDepartment1Id(departmentId);
+        Department department = departmentDao.queryByDepartmentId(departmentId);
+        List<Department> department2= departmentDao.queryDepartment2ByDepartment1Id(departmentId);
         map.put("department1Name",department.getDepartmentName());
         map.put("department2",department2);
         return map;
@@ -56,7 +56,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Map<String,String> addDepartment(Department department) {
         HashMap<String, String> map = new HashMap<>();
-        Department byDepartmentName = departmentDao.findByDepartmentName(department.getDepartmentName());
+        Department byDepartmentName = departmentDao.queryByDepartmentName(department.getDepartmentName());
         if (byDepartmentName!= null){
             map.put("msg","添加失败,该科室名已经存在，请重新输入");
         }else{
@@ -73,9 +73,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public Map<String,String> deleteDepartment(String departmentId) {
         HashMap<String, String> map = new HashMap<String,String>();
-        List<Doctor> doctors = doctorDao.findDoctorByDepartmentId(departmentId);
-        Department department= departmentDao.findByDepartmentId(departmentId);
-        List<Department> departments = departmentDao.findDepartment2ByDepartment1Id(departmentId);
+        List<Doctor> doctors = doctorDao.queryDoctorByDepartmentId(departmentId);
+        Department department= departmentDao.queryByDepartmentId(departmentId);
+        List<Department> departments = departmentDao.queryDepartment2ByDepartment1Id(departmentId);
           if(departments.size()!=0){
                map.put("msg",  department.getDepartmentName()+"下还有"+departments.size()+"个二级科室，不能删除");
                return map;
@@ -93,7 +93,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department findByDepartmentName(String departmentName) {
-        return departmentDao.findByDepartmentName(departmentName);
+    public Department queryByDepartmentName(String departmentName) {
+        return departmentDao.queryByDepartmentName(departmentName);
     }
 }

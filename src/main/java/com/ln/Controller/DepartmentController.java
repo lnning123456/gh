@@ -17,9 +17,9 @@ public class DepartmentController {
     @Autowired
     DepartmentService departmentService;
 
-    @RequestMapping("findAllDepartment")
-    public List<Department> findAllDepartment() {
-        return departmentService.findAllDepartment();
+    @RequestMapping("queryAllDepartment")
+    public List<Department> queryAllDepartment() {
+        return departmentService.queryAllDepartment();
     }
 
     @RequestMapping("deleteDepartment")
@@ -28,19 +28,19 @@ public class DepartmentController {
         return departmentService.deleteDepartment(departmentId);
     }
 
-    @RequestMapping("findAllDepartment1")
-    public List<Department> findAllDepartment1() {
-        return departmentService.findAllDepartment1();
+    @RequestMapping("queryAllDepartment1")
+    public List<Department> queryAllDepartment1() {
+        return departmentService.queryAllDepartment1();
     }
 
-    @RequestMapping("findDepartment2ByDepartment1")
-    public Map<String, Object> findDepartment2ByDepartment1(String departmentId) {
-        return departmentService.findDepartment2ByDepartment1(departmentId);
+    @RequestMapping("queryDepartment2ByDepartment1")
+    public Map<String, Object> queryDepartment2ByDepartment1(String departmentId) {
+        return departmentService.queryDepartment2ByDepartment1(departmentId);
     }
 
-    @RequestMapping("findByDepartmentName")
-    public Department findByDepartmentName(String departmentName) {
-        return departmentService.findByDepartmentName(departmentName);
+    @RequestMapping("queryByDepartmentName")
+    public Department queryByDepartmentName(String departmentName) {
+        return departmentService.queryByDepartmentName(departmentName);
     }
     @RequestMapping("addDepartment")
     public Map<String, String> addDepartment(Department department) {
