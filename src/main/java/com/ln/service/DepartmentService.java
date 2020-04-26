@@ -10,7 +10,7 @@ public interface DepartmentService {
     List<Department> queryAllDepartment();
     List<Department> queryAllDepartment1();
     Map<String,Object> queryDepartment2ByDepartment1(String departmentId);
-    Map<String,String> addDepartment(Department department);
-    Map<String,String> deleteDepartment(String departmentId);
+    String addDepartment(Department department);
+    String  deleteDepartment(String departmentId);
     Department queryByDepartmentName(String departmentName);
 }

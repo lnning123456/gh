@@ -34,7 +34,7 @@ public class GhApplicationTests {
     Doctor2Dao doctor2Dao;
     @Autowired
     PageUtil pageUtil;
-@Autowired
+     @Autowired
     PageService pageService;
     @Test
     public void MyTest() {

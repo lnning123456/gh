@@ -1,5 +1,6 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
-<script type="text/javascript">
+
+<script>
     $(function () {
 //查询部门1
         $.ajax({
@@ -24,7 +25,6 @@
                     data: {departmentId: departmentId},
                     success: function (data) {
                         var department = data.department2;
-                        console.log(department);
                         var option;
                         for (i = 0; i < department.length; i++) {
                             option = option + "<option value=" + department[i].departmentId + ">" + department[i].departmentName + "</option>";
@@ -38,7 +38,7 @@
             }
         });
 
-        //查询全部医生
+        //查询医生
         function queryDoctor(formData) {
             $.ajax({
                 url: "${pageContext.request.contextPath}/doctor/queryDoctor",
@@ -48,25 +48,29 @@
                 contentType: false,
                 data: formData,
                 success: function (data) {
-                    var option;
                     var tr = null;
                     var doctor = data.doctor;
                     var department;
                     for (i = 0; i < doctor.length; i++) {
-                        src = doctor[i].src;
-                        console.log(src);
+                        console.log(doctor[i]);
                         tr = tr + "<tr><td>" + doctor[i].doctorId + "</td><td>" + doctor[i].doctorName
-                            + "</td><td><img style=\"height: 80px;width: 70px\" src='${pageContext.request.contextPath}/img/" + doctor[i].src + "'</td><td>"
+                            + "</td><td><img style='height: 80px;width: 70px' src='${pageContext.request.contextPath}/img/" + doctor[i].src + "'</td><td>"
                             + doctor[i].department.departmentName + "</td><td>" + doctor[i].position + "</td><td>" + doctor[i].status
-                            + "</td><td></tr></tr>"
+                            + "</td><td ><a  >详情</a>" +
+                            "<a style=\"margin-left: 50px\" >值班</a><a  onclick='deleteDoctor(this)' style=\"margin-left: 30px\" >删除</a></td></tr>"
                     }
                     $("#doctorTable tr  ").eq(0).after(tr);
-                    console.log(data);
+                    $("#sum").empty().append(data.sum);
+                    $("#total").empty().append(data.total);
+                    $("#page").empty();
+                    for (i = 1; i <=data.total; i++) {
+                        $("#page").append("<option>" + i + "</option>");
+                    }
                 }
             });
         }
 
-        //调用查询全部医生
+        //调用查询医生
         var forData = new FormData();
         forData.append("page", 1);
         queryDoctor(forData);
@@ -79,7 +83,7 @@
             if ($("#department2 :selected").val() != "") {
                 forData.append("departmentName", department2Name);
                 forData.append("levels", 2);
-            } else {
+            } else if ($("#department2 :selected").val() != "") {
                 forData.append("levels", 1);
                 forData.append("departmentName", departmentName);
             }
@@ -93,11 +97,9 @@
             forData = queryDoctorMsg();
             forData.append("page", 1);
             queryDoctor(forData);
-            /*
-             $("#doctorTable tr  ").eq(0).after("");
-             $("#page").append(8);*/
 
         });
+
         //分页
         $("#page").change(function () {
             var forData = new FormData();
@@ -105,10 +107,54 @@
             forData.append("page", parseInt($("#page :selected").text()));
             queryDoctor(forData);
             console.log(typeof page);
+        });
+        //模态框关闭
+        $('#deleteDoctorModal').on('hide.bs.modal', function () {
+            console.log('模态框关闭了');
+            $(".deleteTr").removeClass("deleteTr")
+        });
+        //确定删除
+        $('#sure').click(function () {
+            console.log($(".deleteTr"));
+            var doctorId = $(".deleteTr").children().eq(0).text();
+            console.log(doctorId);
+            $.ajax({
+                url: "${pageContext.request.contextPath}/doctor/deleteDoctor",
+                datatype: "json",
+                type: "post",
+                data: {doctorId: doctorId},
+                success: function (data) {
+                    alert(data);
+                    if (data.endsWith("删除成功")) {
+                        $(".deleteTr").remove();
+                    }
+
+                }
+            })
         })
     });
 
+    //删除
+    function deleteDoctor(a) {
+        var id = $(a).parent().parent().children().eq(0).text();
+        console.log($(a).parent().parent().addClass("deleteTr"));
+        console.log(id);
+        var name = $(a).parent().parent().children().eq(1).text();
+        $("#deleteDoctorMsg").empty().append(name);
+        $('#deleteDoctorModal').modal('show');
+        //  $('#sure').attr('onclick','sureDelete()');
+    }
+
+
+    //修改
 </script>
+<style type="text/css">
+    td {
+        text-align: center;
+       vertical-align: middle;
+
+    }
+</style>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -118,6 +164,7 @@
                         <select style="width: 170px" id="department1" name="department1" class="form-control">
                             <option value="">请选择一级科室</option>
                         </select>
+
                         <select style="width: 170px" id="department2" name="department2" class="form-control">
                             <option value="">请选择二级科室</option>
                         </select>
@@ -134,10 +181,10 @@
     </div>
 </nav>
 
-<div>
+<div id="doctorDiv">
     <table id="doctorTable" class="table table-bordered">
         <tr>
-            <td>医生编号</td>
+            <td >医生编号</td>
             <td>医生姓名</td>
             <td>医生头像</td>
             <td>所在部门</td>
@@ -148,11 +195,28 @@
 
         <tr>
             <td colspan="7" style="text-align: center">
-                <span></span> <span>第&nbsp&nbsp
-                <select style="width: 35px" id="page"><option>1</option><option>2</option></select>&nbsp&nbsp页</span>
-                <span id="sum">总条数：</span>&nbsp&nbsp<span id="total">总页数</span></td>
+                <span>第&nbsp&nbsp
+                <select style="width: 35px" id="page"></select>&nbsp&nbsp页</span>
+                总页数: <span id="total"></span> &nbsp&nbsp总条数：<span id="sum"></span></td>
         </tr>
     </table>
-
-
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteDoctorModal" tabindex="-1" role="dialog" aria-labelledby="deleteDoctorModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 style="text-align: center;color: red" class="modal-title" id="deleteDoctorModalLabel">删除医生</h4>
+            </div>
+            <div class="modal-body">
+                确定删除<span id="deleteDoctorMsg"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="sure" class="btn btn-danger">确定</button>
+            </div>
+        </div>
+    </div>
 </div>

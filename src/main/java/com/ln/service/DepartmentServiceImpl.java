@@ -7,10 +7,9 @@ import com.ln.entity.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import javax.xml.crypto.Data;
+import java.io.Serializable;
+import java.util.*;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -54,40 +53,39 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Map<String,String> addDepartment(Department department) {
-        HashMap<String, String> map = new HashMap<>();
+    public String addDepartment(Department department) {
+
         Department byDepartmentName = departmentDao.queryByDepartmentName(department.getDepartmentName());
         if (byDepartmentName!= null){
-            map.put("msg","添加失败,该科室名已经存在，请重新输入");
+            return  "添加失败,该科室名已经存在，请重新输入";
         }else{
-            department.setDepartmentId(UUID.randomUUID().toString());
+
+            department.setDepartmentId(new Date()+"");
             departmentDao.addDepartment(department);
-            map.put("ok","ok");
-            map.put("msg",department.getDepartmentName()+"添加成功");
+
+            return  department.getDepartmentName()+"添加成功";
 
         }
 
-       return  map;
+
     }
 
     @Override
-    public Map<String,String> deleteDepartment(String departmentId) {
-        HashMap<String, String> map = new HashMap<String,String>();
+    public String deleteDepartment(String departmentId) {
+
         List<Doctor> doctors = doctorDao.queryDoctorByDepartmentId(departmentId);
         Department department= departmentDao.queryByDepartmentId(departmentId);
         List<Department> departments = departmentDao.queryDepartment2ByDepartment1Id(departmentId);
           if(departments.size()!=0){
-               map.put("msg",  department.getDepartmentName()+"下还有"+departments.size()+"个二级科室，不能删除");
-               return map;
+          return      department.getDepartmentName()+"下还有"+departments.size()+"个二级科室，不能删除";
+
           }else {
               if(doctors.size()!=0){
-                  map.put("msg",department.getDepartmentName()+"科室下还有"+doctors.size()+"名医生，不能删除");
-                  return  map;
+                  return  department.getDepartmentName()+"科室下还有"+doctors.size()+"名医生，不能删除";
+
               }else{
                   departmentDao.deleteDepartment(departmentId);
-                  map.put("msg",department.getDepartmentName()+"删除成功");
-                  map.put("ok","ok");
-                  return map;
+                  return  department.getDepartmentName()+"删除成功";
               }
           }
     }

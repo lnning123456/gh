@@ -62,10 +62,7 @@
                     data: {levels: levels, parentId: parentId, departmentName: departmentName},
                     success: function (data) {
                         //   console.log(data);//972128
-                        if (data.ok === "ok") {
-
-                        }
-                        $("#msg").text(data.msg);
+                        alert(data.msg)
                     }
                 })
             }

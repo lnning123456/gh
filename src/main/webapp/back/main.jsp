@@ -91,25 +91,11 @@
                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
                          aria-labelledby="headingThree">
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('user.jsp')">用户列表</a></li>
+                            <li><a href="javascript:$('#changeContent').load('user/user.jsp')">用户列表</a></li>
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingF">
-                        <h4 class="panel-title">
-                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
-                               href="#collapseF" aria-expanded="false" aria-controls="collapseF">
-                                预约管理
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseF" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingF">
-                        <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('order.jsp')">预约列表</a></li>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div id="changeContent" class="col-xs-10">

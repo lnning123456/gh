@@ -86,7 +86,7 @@
                         async: false,
                         success: function (data) {
                            // window.location.reload()
-                            $("#msg").text(data)
+                           alert(data)
                         }
                     });
                 }
@@ -103,7 +103,7 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <br>
-        <span id="msg" style="color: red;font-size: 20px "></span>
+
         <br>
         <form class="form-horizontal" id="addDoctorForm" method="post" enctype="multipart/form-data">
             <div class="form-group">

@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class Order {
     String orderId;
-    String usernameId;
+    String userId;
     String workId;
     String status;
     Date createTime;

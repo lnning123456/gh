@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ln.dao.OrderDao">
     <sql id="order">
-        select  order_id orderId,username_id usernameId,
+        select  order_id orderId,user_id userId,
         work_id workId,status,create_time createTime
-        from order
+        from `order`
 
     </sql>
     <insert id="addOrder">
-    insert into  order values (#{orderId},#{usernameId},#{workId},#{status},#{createTime})
+    insert into  order values (#{orderId},#{userId},#{workId},#{status},#{createTime})
 </insert>
     <delete id="deleteOrder">
     delete  from order where order_id in
@@ -23,7 +23,7 @@
         <include refid="order"></include>
         <where>
             <if test="order.usernameId!=null">
-                username_id=#{username}
+                user_id=#{userId}
             </if>
             <if test="order.status!=null">
               and  status=#{status}
@@ -36,18 +36,16 @@
         select count(order_id) from order
         <where>
             <if test="order.usernameId!=null">
-                username_id=#{usernameId}
+                user_id=#{userId}
             </if>
             <if test="order.status!=null">
                 and  status=#{status}
             </if>
-            <if test="order.usernameId!=null">
-                username_id=#{username}
-            </if>
+
         </where>
     </select>
     <select id="queryOrderByWorkId" resultType="Order">
         <include refid="order"></include>
-      where  work_id=#{work}
+      where  work_id=#{workId}
     </select>
 </mapper>

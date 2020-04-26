@@ -23,7 +23,7 @@ public class DepartmentController {
     }
 
     @RequestMapping("deleteDepartment")
-    public Map<String, String> deleteDepartment(String departmentId) {
+    public String deleteDepartment(String departmentId) {
         System.out.println("departmentId = " + departmentId);
         return departmentService.deleteDepartment(departmentId);
     }
@@ -43,7 +43,7 @@ public class DepartmentController {
         return departmentService.queryByDepartmentName(departmentName);
     }
     @RequestMapping("addDepartment")
-    public Map<String, String> addDepartment(Department department) {
+    public String addDepartment(Department department) {
         System.out.println("department = " + department);
         return departmentService.addDepartment(department);
     }

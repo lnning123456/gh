@@ -10,8 +10,8 @@ public interface OrderDao {
     void  addOrder(Order order);
     void  deleteOrder(String[] orderIds);
     void  updateOrder(Order order);
-    List<Order> queryOrderByUsername(@Param("order") Order order,@Param("start")Integer start);
-   Integer   getOrderCount(Order order);
-    List<Order> queryOrderByWorkId(String workId);
+    List<Order> queryOrder(@Param("order") Order order,@Param("start")Integer start);
+    Integer   getOrderCount(Order order);
+
 
  }

@@ -10,7 +10,7 @@
          where doctor_id=#{doctorId}
     </select>
     <insert id="addWork">
-        insert into  work values (#{workId},#{ time},#{doctorId},#{price},#{remain},#{userCount})
+        insert into  work values (#{workId},#{time},#{doctorId},#{price},#{remain},#{userCount})
     </insert>
     <update id="updateWork">
 update work set remain=#{remain},user_count=#{userCount} where work_id= #{workId}

@@ -7,10 +7,7 @@ import com.ln.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
@@ -29,10 +26,10 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public Map<String,Object> queryDoctor(Doctor doctor, Integer page ) {
         HashMap<String, Object> map = new HashMap<>();
-        Integer start = (page - 1) * 10;
+        Integer start = (page - 1) * 5;
         List<Doctor> doctors = doctorDao.queryDoctor(doctor, start);
         Integer sum=doctorDao.queryDoctorCount(doctor);
-        Integer total = sum % 10 == 0 ? sum / 10 : sum / 10+ 1;
+        Integer total = sum % 5== 0 ? sum / 5 : sum / 5+ 1;
         map.put("doctor",doctors);
         map.put("sum",sum);
         map.put("total",total);
@@ -48,7 +45,8 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public String addDoctor(Doctor doctor) {
-        doctor.setDoctorId(UUID.randomUUID().toString());
+
+        doctor.setDoctorId(new Date().getTime()+"");
         doctor.setStatus("工作");
         doctorDao.addDoctor(doctor);
         return doctor.getDoctorName() + "添加成功";
@@ -57,6 +55,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public String updateDoctor(Doctor doctor) {
         List<Work> works = workDao.queryWorkByDoctorId(doctor.getDoctorId());
+
         doctorDao.updateDoctor(doctor);
         System.out.println("doctor = " + doctor);
         if (works.size()!=0&&doctor.getStatus().equals("休息")){

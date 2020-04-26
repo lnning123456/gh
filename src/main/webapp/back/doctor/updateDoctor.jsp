@@ -9,7 +9,7 @@
     }
     var id = $("#id").text();
 
-    console.log(id);
+    console.log(id+"gcfgcg");
 /*$(function () {
 
     $.ajax({
@@ -23,10 +23,13 @@
         }
     });
 })*/
+//var id="=request.getParameter(\"id\")%>";
+  //  console.log(id);
 
 </script>
 
-
-<span id="id" style="display: none"><%=
-request.getParameter("id")
-%></span>
+hgcffgc fg
+<br>
+<span id="id" ><%=request.getParameter("id")%></span>
+<br>
+${id}
