@@ -16,11 +16,11 @@
 
 <script>
     var d = new Date();
-    var arr_week = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+    var arr_week = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '期六');
     var table;
     var td1 = null;
     var td2 = null;
-    for (i = 0; i < 7; i++) {
+    for (i = 0; i < 10; i++) {
         // var time=d.getTime()+i*24*60*60*1000;
 
         //d=d.setTime(time);

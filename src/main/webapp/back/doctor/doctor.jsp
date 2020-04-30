@@ -38,76 +38,25 @@
             }
         });
 
-        //查询医生
-        function queryDoctor(formData) {
-            $.ajax({
-                url: "${pageContext.request.contextPath}/doctor/queryDoctor",
-                datatype: "json",
-                type: "post",
-                processData: false,
-                contentType: false,
-                data: formData,
-                success: function (data) {
-                    var tr = null;
-                    var doctor = data.doctor;
-                    var department;
-                    for (i = 0; i < doctor.length; i++) {
-                        console.log(doctor[i]);
-                        tr = tr + "<tr><td>" + doctor[i].doctorId + "</td><td>" + doctor[i].doctorName
-                            + "</td><td><img style='height: 80px;width: 70px' src='${pageContext.request.contextPath}/img/" + doctor[i].src + "'</td><td>"
-                            + doctor[i].department.departmentName + "</td><td>" + doctor[i].position + "</td><td>" + doctor[i].status
-                            + "</td><td ><a  >详情</a>" +
-                            "<a style=\"margin-left: 50px\" >值班</a><a  onclick='deleteDoctor(this)' style=\"margin-left: 30px\" >删除</a></td></tr>"
-                    }
-                    $("#doctorTable tr  ").eq(0).after(tr);
-                    $("#sum").empty().append(data.sum);
-                    $("#total").empty().append(data.total);
-                    $("#page").empty();
-                    for (i = 1; i <=data.total; i++) {
-                        $("#page").append("<option>" + i + "</option>");
-                    }
-                }
-            });
-        }
-
-        //调用查询医生
-        var forData = new FormData();
-        forData.append("page", 1);
-        queryDoctor(forData);
-
-        //获取查询信息
-        function queryDoctorMsg() {
-            var forData = new FormData();
-            var departmentName = $("#department1 :selected").text();
-            var department2Name = $("#department2 :selected").text();
-            if ($("#department2 :selected").val() != "") {
-                forData.append("departmentName", department2Name);
-                forData.append("levels", 2);
-            } else if ($("#department2 :selected").val() != "") {
-                forData.append("levels", 1);
-                forData.append("departmentName", departmentName);
-            }
-            return forData;
-        }
 
         //查询
         $("#queryDoctorButton").click(function () {
-            $("#doctorTable tr:not(:last ):not(:first)").remove();
+            /*  $("#doctorTable tr:not(:last ):not(:first)").remove();*/
             var forData = new FormData();
             forData = queryDoctorMsg();
             forData.append("page", 1);
-            queryDoctor(forData);
+            query(forData);
 
         });
 
-        //分页
-        $("#page").change(function () {
-            var forData = new FormData();
-            forData = queryDoctorMsg();
-            forData.append("page", parseInt($("#page :selected").text()));
-            queryDoctor(forData);
-            console.log(typeof page);
-        });
+
+        /* $("#page").change(function () {
+             var forData = new FormData();
+             forData = queryDoctorMsg();
+             forData.append("page", parseInt($("#page :selected").text()));
+             queryDoctor(forData);
+             console.log(typeof page);
+         });*/
         //模态框关闭
         $('#deleteDoctorModal').on('hide.bs.modal', function () {
             console.log('模态框关闭了');
@@ -134,6 +83,71 @@
         })
     });
 
+    //查询医生
+    function query(formData) {
+        $.ajax({
+            url: "${pageContext.request.contextPath}/doctor/queryDoctor",
+            datatype: "json",
+            type: "post",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (data) {
+                var tr = null;
+                var doctor = data.doctor;
+                var option = null;
+                for (i = 0; i < doctor.length; i++) {
+                    tr = tr + "<tr><td>" + doctor[i].doctorId + "</td><td>" + doctor[i].doctorName
+                        + "</td><td><img style='height: 80px;width: 70px' src='${pageContext.request.contextPath}/img/" + doctor[i].src + "'</td><td>"
+                        + doctor[i].department.departmentName + "</td><td>" + doctor[i].position + "</td><td>" + doctor[i].status
+                        + "</td><td ><a style=\"margin-left: 30px\" onclick='updateDoctor(this)'>修改信息</a>" +
+                        "<a style=\"margin-left: 30px\"  onclick='doctorWork(this)'>值班</a>" +
+                        "<a  onclick='deleteDoctor(this)' style=\"margin-left: 30px\" >删除</a></td></tr>"
+                }
+                $("#doctorTable tr ").not(":first").not(":last").empty("");
+                $("#doctorTable tr  ").eq(0).after(tr);
+                $("#sum").empty().append("总条数：" + data.sum);
+                $("#total").empty().append("总页数：" + data.total);
+                $("#page").empty();
+                for (i = 1; i <= data.total; i++) {
+                    if (parseInt(data.page) === i) {
+                        option = option + "<option  selected='selected'>" + i + "</option>";
+                    } else {
+                        option = option + "<option>" + i + "</option>";
+                    }
+                }
+                $("#page").append(option);
+            }
+        });
+    }
+
+    //获取查询信息
+    function queryDoctorMsg() {
+        var forData = new FormData();
+        var doctorName = $("#queryDoctorName").val();
+        console.log(doctorName);
+
+        var departmentName = $("#department1 :selected").text();
+        var department2Name = $("#department2 :selected").text();
+        if (doctorName != "") {
+            forData.append("doctorName", doctorName);
+        }
+        if ($("#department1 :selected").val() != "") {
+            forData.append("levels", 1);
+            forData.append("departmentName", departmentName);
+        } else if ($("#department2 :selected").val() != "") {
+            forData.append("levels", 2);
+            forData.append("departmentName", department2Name);
+        }
+        console.log(forData.get("departmentName"));
+        return forData;
+    }
+
+    //调用查询医生
+    var forData = new FormData();
+    forData.append("page", 1);
+    query(forData);
+
     //删除
     function deleteDoctor(a) {
         var id = $(a).parent().parent().children().eq(0).text();
@@ -145,16 +159,66 @@
         //  $('#sure').attr('onclick','sureDelete()');
     }
 
+    //上一页
+    function previousPage() {
+        var forData = new FormData();
+        var page = parseInt($("#page :selected").text());
+        console.log(page);
+        if (page === 1) {
+            alert("已经是首页")
+        } else {
+            page = page - 1;
+            forData = queryDoctorMsg();
+            formData.append("page", page);
+            query(formData);
+        }
+    }
+
+    //下一页
+    function nextPage() {
+        var formData = new FormData();
+        var page = parseInt($("#page :selected").text());
+        var total = $("#total").text();
+        total = parseInt(total.substr(total.length - 1, 1));
+        if (page === total) {
+            alert("已经是尾页");
+        } else {
+            page = page + 1;
+            forData = queryDoctorMsg();
+            formData.append("page", page);
+            query(formData);
+        }
+    }
+
+    //点击
+    function page() {
+        var page = parseInt($("#page :selected").text());
+        console.log(page);
+        var formData = new FormData();
+        forData = queryDoctorMsg();
+        formData.append("page", page);
+        query(formData);
+    }
 
     //修改
+    function  updateDoctor(a) {
+        var doctorId = $(a).parent().parent().children().eq(0).text();
+        $("#changeContent").load("doctor/updateDoctor.jsp?doctorId="+doctorId)
+    }
+    //值班
+    function doctorWork(a) {
+        var doctorId = $(a).parent().parent().children().eq(0).text();
+        $("#changeContent").load("doctor/work.jsp?doctorId="+doctorId)
+    }
 </script>
 <style type="text/css">
     td {
         text-align: center;
-       vertical-align: middle;
+        vertical-align: middle;
 
     }
 </style>
+<div id="doctorDiv">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -168,7 +232,7 @@
                         <select style="width: 170px" id="department2" name="department2" class="form-control">
                             <option value="">请选择二级科室</option>
                         </select>
-                        <input type="text" class="form-control" id="queryDoctorInput" placeholder="输入医生名字">
+                        <input type="text" class="form-control" id="queryDoctorName" placeholder="输入医生名字">
 
                     </div>
 
@@ -181,10 +245,10 @@
     </div>
 </nav>
 
-<div id="doctorDiv">
+
     <table id="doctorTable" class="table table-bordered">
         <tr>
-            <td >医生编号</td>
+            <td>医生编号</td>
             <td>医生姓名</td>
             <td>医生头像</td>
             <td>所在部门</td>
@@ -195,23 +259,27 @@
 
         <tr>
             <td colspan="7" style="text-align: center">
-                <span>第&nbsp&nbsp
-                <select style="width: 35px" id="page"></select>&nbsp&nbsp页</span>
-                总页数: <span id="total"></span> &nbsp&nbsp总条数：<span id="sum"></span></td>
+                <span style="float: left;margin-right: 50px" id="total"></span>
+                <span style="float: left" id="sum"></span>
+                <a onclick="previousPage()">上 一页</a><span>&nbsp&nbsp
+                第&nbsp&nbsp
+                <select style="width: 35px" id="page" onchange="page()"></select>
+                &nbsp&nbsp页</span>
+                <a onclick="nextPage()">下一页</a>
+            </td>
         </tr>
     </table>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="deleteDoctorModal" tabindex="-1" role="dialog" aria-labelledby="deleteDoctorModalLabel">
+<div class="modal fade" id="deleteDoctorModal" tabindex="-1" role="dialog" aria-labelledby="deleteDoctorModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
-                <h4 style="text-align: center;color: red" class="modal-title" id="deleteDoctorModalLabel">删除医生</h4>
+                <h4 style="text-align: center;color: red" class="modal-title" id="deleteDoctorLabel">添加值班</h4>
             </div>
             <div class="modal-body">
-                确定删除<span id="deleteDoctorMsg"></span>
+确定删除<span id="deleteDoctorMsg"></span>医生
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

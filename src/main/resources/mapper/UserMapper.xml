@@ -5,7 +5,7 @@
    select  user_id userId,username,`password`,`call`,`status`
     from  user
 </sql>
-    <select id="queryUserByCallOrUsername" resultType="User">
+    <select id="queryUser" resultType="User">
         <include refid="user"></include>
         <where>
             <if test="username!=null">
@@ -15,27 +15,29 @@
                 `call`=#{call}
             </if>
         </where>
-
-
+    </select>
+    <select id="queryByUserId" resultType="User">
+        <include refid="user"></include>
+        where  user_id=#{userId}
     </select>
     <insert id="addUser">
         insert into user values (#{userId},#{username},#{password},#{call},#{status})
     </insert>
     <update id="updateUser">
         update user set
-            <if test="password!=null">
-                password=#{password}
-            </if>
-            <if test="call!=null">
-                `call`=#{call}
-            </if>
-            <if test="status!=null">
-                status=#{status}
-            </if>
+        <if test="password!=null">
+            password=#{password}
+        </if>
+        <if test="call!=null">
+            `call`=#{call}
+        </if>
+        <if test="status!=null">
+            status=#{status}
+        </if>
         where user_id=#{userId}
     </update>
     <select id="queryPageUser" resultType="User">
-<include refid="user"></include>
+        <include refid="user"></include>
         limit #{start},5
     </select>
     <select id="getUserCount" resultType="Integer">

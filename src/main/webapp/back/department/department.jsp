@@ -1,5 +1,11 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
+<style type="text/css">
+    td {
+        text-align: center;
+        vertical-align: middle;
 
+    }
+</style>
 <script >
     $(function () {
         $.ajax({ //一级科室
@@ -24,10 +30,12 @@
                     type: "post",
                     data: {departmentId: departmentId},
                     success: function (data) {
-                        if (data.ok === "ok") {
+                        if (data.endsWith("删除成功")) {
                             tr.remove();
                         }
-                        $("#msg").text(data.msg);
+
+                        alert(data)
+
                     }
                 })
 
@@ -66,6 +74,7 @@
                 type: "post",
                 data: {departmentName: departmentName},
                 success: function (data) {
+                    console.log(data);
                     var tr;
                     if (data.levels === 1) {
                         tr = "<tr><td>" + data.departmentId + "</td><td>" + data.departmentName + "</td><td>一级科室</td><td><a style='margin-right: 50px' type='button'  " + data.id + ">删除</a>&nbsp&nbsp<a type='button'>查看所属科室下级</a></td></tr>";
@@ -73,7 +82,7 @@
                         tr = "<tr><td>" + data.departmentId+ "</td><td>" + data.departmentName + "</td><td>二级科室</td><td><a  type='button'  " + data.id + ">删除</td></tr>";
                     }
 
-                    $("#queryTbody tr :gt(3)").remove();
+                    $("#queryTbody tr ").not(":first").remove();
                     $("#queryTbody").append(tr);
                 }
             });
@@ -157,7 +166,7 @@
         </tbody>
     </table>
     <div style="text-align: center">
-        <button class="back"   type="button">返回上首页</button>
+        <button class="back"   type="button">返回首页</button>
     </div>
 
 </div>

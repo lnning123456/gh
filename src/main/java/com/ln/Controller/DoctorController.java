@@ -66,7 +66,7 @@ public class DoctorController {
    
     @RequestMapping("updateDoctor")
     String updateDoctor(@RequestParam(value = "img") MultipartFile img, HttpSession session,Doctor doctor) {
-        System.out.println("doctor = " + doctor);
+        System.out.println("updateDoctor doctor = " + doctor);
         if (!img.isEmpty()) {
             String filename = img.getOriginalFilename();
             String realPath = session.getServletContext().getRealPath("/img/");
@@ -78,7 +78,9 @@ public class DoctorController {
                 e.printStackTrace();
             }
             doctor.setSrc(newFileName);
-        }
+        }/*else if(img.isEmpty()&&doctor.getSrc()==null){
+            doctor.setSrc("doctor_default.png");
+        }*/
         return doctorService.updateDoctor(doctor);
     }
 

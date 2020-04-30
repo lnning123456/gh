@@ -49,7 +49,7 @@
                             if ('ok' === data.msg) {
                                 location.href = "${pageContext.request.contextPath}/back/main.jsp"
                             } else {
-                                $("#msg").html(data.msg)
+                                $("#msg").html(data.msg);
                                 console.log(data.msg);
 
                             }

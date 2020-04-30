@@ -30,9 +30,9 @@ public class OrderController {
         return orderService.updateOrder(order);
     }
     @RequestMapping("queryOrder")
-    Map<String,Object> queryOrder(Order order, Integer start){
+    Map<String,Object> queryOrder(Order order, Integer page){
         System.out.println("order = " + order);
-        System.out.println("start = " + start);
-        return  orderService.queryOrder(order,start);
+        System.out.println("page = " + page);
+        return  orderService.queryOrder(order,page);
     }
 }

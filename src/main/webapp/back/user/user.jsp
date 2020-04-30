@@ -19,7 +19,8 @@
             console.log(user);
             for (i = 0; i < user.length; i++) {
                 tr = tr + "<tr><td>" + user[i].userId + "</td><td>" + user[i].username + "</td><td>" + user[i].call + "</td><td>" + user[i].status +
-                    "</td><td><a type='button' onclick='updateUser(this)' >修改状态</a><a style='margin-left: 50px' >挂号记录</a></td></tr>"
+                    "</td><td><a type='button' onclick='updateUser(this)' >修改状态</a>" +
+                    "<a style='margin-left: 50px' onclick=order(this)>挂号记录</a></td></tr>"
             }
             $("#userTable tr  ").eq(0).after(tr);
             $("#sum").empty().append(data.sum);
@@ -41,12 +42,11 @@
                 alert("修改状态不能一样")
             } else {
                 $.ajax({
-                    url: "${pageContext.request.contextPath}/user/updateUserStatus",
+                    url: "${pageContext.request.contextPath}/order/updateOrder",
                     datatype: "json",
                     type: "post",
-                    data: {userId:id,status:status},
+                    data: {userId: id, status: status},
                     success: function (data) {
-
                         $(".updateId").parent().children().eq(3).text(status);
                         $('#updateUserModal').modal('hide');
                         alert(data);
@@ -71,23 +71,32 @@
         $("#current").empty().append(name + "用户状态为：" + parent.children().eq(3).text());
         $('#updateUserModal').modal('show');
     }
+
+    function order(a) {
+        var userId = $(a).parent().parent().children().eq(0).text();
+        var username = $(a).parent().parent().children().eq(1).text();
+        console.log(userId);
+
+      $("#changeContent").load("user/order.jsp?userId="+userId)
+    }
 </script>
+<div id="userDiv">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <form class="navbar-form " id="queryDoctorFrom">
+            <form class="navbar-form " id="queryUserFrom">
                 <div class="form-group">
                     <div class="form-inline">
-                        <input type="text" class="form-control" id="queryDoctorInput" placeholder="输入用户名字/手机号">
+                        <input type="text" class="form-control" id="queryUserInput" placeholder="输入用户名字/手机号">
                     </div>
                 </div>
-                <button type="button" id="queryDoctorButton" class="btn btn-primary">查询</button>
+                <button type="button" id="queryUserButton" class="btn btn-primary">查询</button>
             </form>
 
         </div>
     </div>
 </nav>
-<div id="userDiv">
+
     <table id="userTable" class="table table-bordered">
         <tr>
             <td>用户编号</td>
@@ -105,7 +114,7 @@
         </tr>
     </table>
 </div>
-
+<div id="orderDiv"></div>
 <!-- Modal -->
 <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel">
     <div class="modal-dialog" role="document">

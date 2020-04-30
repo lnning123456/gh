@@ -54,17 +54,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public String addDepartment(Department department) {
-
         Department byDepartmentName = departmentDao.queryByDepartmentName(department.getDepartmentName());
         if (byDepartmentName!= null){
             return  "添加失败,该科室名已经存在，请重新输入";
         }else{
-
-            department.setDepartmentId(new Date()+"");
+            department.setDepartmentId(new Date().getTime()+"");
             departmentDao.addDepartment(department);
-
             return  department.getDepartmentName()+"添加成功";
-
         }
 
 

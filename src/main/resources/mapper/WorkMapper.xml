@@ -1,21 +1,91 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ln.dao.WorkDao">
-   <sql id="work">
-    select work_id workId,time,doctor_id doctorId,price,remain,
-    user_count userCount from work
+    <sql id="work">
+    select w.work_id workId,w.time `time`,w.doctor_id doctorId,w.price price,w.remain remain,
+    w.user_count userCount,d.doctor_id doctorId,d.doctor_name doctorName,d.department_id
+     departmentId,d.position `position`,d.presentation presentation,d.src src,d.status status
+    from `work`  w left join  doctor d
+    on w.doctor_id=d.doctor_id
 </sql>
-    <select id="queryWorkByDoctorId" resultType="Work">
+    <resultMap id="workList" type="Work">
+        <result property="workId" column="workId"/>
+        <result property="time" column="time"/>
+        <result property="doctorId" column="doctorId"/>
+        <result property="price" column="price"/>
+        <result property="remain" column="remain"/>
+        <result property="userCount" column="userCount"/>
+        <association property="doctor"  javaType="Doctor">
+            <result property="doctorId" column="doctorId"/>
+            <result property="doctorName" column="doctorName"/>
+            <result property="departmentId" column="departmentId"/>
+            <result property="position" column="position"/>
+            <result property=" presentation" column=" presentation"/>
+            <result property="src" column="src"/>
+            <result property="status" column="status"/>
+        </association>
+    </resultMap>
+    <select id="queryWorkByDoctorId" resultMap="workList">
         <include refid="work"></include>
-         where doctor_id=#{doctorId}
+        where w.doctor_id=#{doctorId}
+    </select>
+    <select id="queryWork" resultMap="workList">
+        <include refid="work"></include>
+        <where>
+            <if test="work.doctorId!=null">
+                w.doctor_id=#{work.doctorId}
+            </if>
+          <if test="compare==1">
+             and   w.time &lt; now()
+          </if>
+            <if test="compare==2">
+                and   w.time &gt; now()
+            </if>
+
+        </where>
+        limit #{start},5
+    </select>
+    <select id="getWorkCount" resultType="Integer">
+       select count(work_id)  from `work`
+        <where>
+            <if test="work.doctorId!=null">
+                doctor_id=#{work.doctorId}
+            </if>
+            <if test="compare==1">
+                and   `time` &lt; now()
+            </if>
+            <if test="compare==2">
+                and   `time`  &gt; now()
+            </if>
+        </where>
+    </select>
+    
+    
+    <select id="queryWorkByWorkId" resultMap="workList">
+        <include refid="work"></include>
+        where w.work_id=#{workId}
     </select>
     <insert id="addWork">
-        insert into  work values (#{workId},#{time},#{doctorId},#{price},#{remain},#{userCount})
+        insert into  `work` values (#{workId},#{time,jdbcType=TIMESTAMP},#{doctorId},#{price},#{remain},#{userCount})
     </insert>
     <update id="updateWork">
-update work set remain=#{remain},user_count=#{userCount} where work_id= #{workId}
+        update `work` set
+        <if test="price!=null">
+            price=#{peice}
+        </if>
+        <if test="remain!=null">
+            remain=#{remain}
+        </if>
+        <if test="userCount!=null">
+            user_count=#{userCount}
+        </if>
+        where work_id= #{workId}
     </update>
     <delete id="deleteWork">
-        delete from work  where work_id= #{workId}
+        delete from `work`  where work_id= #{workId}
     </delete>
+    <select id="followingWork" resultMap="workList">
+        <include refid="work"></include>
+        where w.doctor_id=#{doctorId} and w.time&gt; now()
+    </select>
 </mapper>

@@ -86,6 +86,7 @@
                         async: false,
                         success: function (data) {
                            // window.location.reload()
+                            document.getElementById("addDoctorForm").reset();
                            alert(data)
                         }
                     });
@@ -98,7 +99,7 @@
 </head>
 <div class="row">
     <div class="col-md-12" style="margin: auto">
-        <h1 style="color: #0f0f0f;text-align: center">添加科室</h1>
+        <h1 style="color: #0f0f0f;text-align: center">添加医生</h1>
     </div>
     <div class="col-md-1"></div>
     <div class="col-md-10">

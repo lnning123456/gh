@@ -6,7 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface UserDao {
-    User queryUserByCallOrUsername(User user);
+    User queryUser(User user);
+    User queryByUserId(String userId);
     void addUser(User user);
     void updateUser(User user);
     List<User> queryPageUser(Integer start);

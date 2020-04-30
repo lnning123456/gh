@@ -16,4 +16,5 @@ public class Work {
     Double price;
     Integer remain;
     Integer userCount;
+    Doctor doctor;
 }

@@ -15,7 +15,13 @@
 </head>
 <script src="../boot/js/jquery-2.2.1.min.js"></script>
 <script>
-
+    //获取链接数据
+    function getQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
     function test(data) {
         console.log(data.get("page"));
         return 2;
@@ -31,21 +37,31 @@
         $("#fromButton").click(function () {
             //  console.log(  $("input").val());
             //  console.log(  $("#from").serializeArray());
-            var forData = new FormData;
+          /*  var forData = new FormData;
             forData.append("page", 1);
             var t = test(forData);
             console.log(t);
             console.log($("#img").attr("src"));
             //   $("#img").attr("src","../img/doctor_default.png");
-            console.log($("#img").attr("src"));
-
+            console.log($("#img").attr("src"));*/
+            console.log($("#name").val());
+            var forData = new FormData;
+            forData.append("name", "addName");
+            console.log(forData.get("name"));
+            var data =name.serialize();
+                document.getElementById("from").form('load',forData);
+           // $("#name").val("dfds");
             /*   console.log(new FormData( $("#from")[0]) );*/
         })
 
     });
-
+function pr() {
+    console.log("2");
+}
     function dele() {
         console.log("dele");
+        pr();
+        console.log($("#img").attr("src"));
     }
 
     // console.log($("#img").prop("src"));
@@ -145,7 +161,7 @@
         <button type="button"  id="deleteTrButton">delet</button>
         <button type="button" id="deleteTrButton">delet</button>
     <from id="from" action="${pageContext.request.contextPath }/doctor/addDoctor" method="post">
-        <input type="text" name="name">
+        <input type="text" id="name"  name="name">
         <input id="fromButton" type="button">
     </from>
 

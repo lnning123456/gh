@@ -1,33 +1,63 @@
 package com.ln.service;
 
+import com.ln.dao.DoctorDao;
 import com.ln.dao.OrderDao;
 import com.ln.dao.WorkDao;
+import com.ln.entity.Order;
+import com.ln.entity.User;
 import com.ln.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Service
 public class WorkServiceImpl implements WorkService {
     @Autowired
     WorkDao workDao;
     @Autowired
-OrderDao orderDao;
+    DoctorDao doctorDao;
     @Override
-    public List<Work> queryWorkByDoctor(String doctorId) {
-        return workDao.queryWorkByDoctorId(doctorId);
+    public Map<String, Object> queryWork(Work work, Integer page,String  compare) {
+        HashMap<String, Object> map = new HashMap<>();
+        Integer start = (page - 1) * 5;
+        List<Work> works = workDao.queryWork(work, start,compare);
+        Integer sum = workDao.getWorkCount(work,compare);
+        Integer total = sum % 5 == 0 ? sum / 5 : sum / 5 + 1;
+        map.put("works", works);
+        map.put("doctor", doctorDao.queryDoctorByDoctorId(work.getDoctorId()));
+        map.put("sum", sum);
+        map.put("total", total);
+        map.put("page", page);
+        return map;
     }
 
     @Override
     public String addWork(Work work) {
-        work.setWorkId(new Date().getTime()+"");
+        work.setWorkId(new Date().getTime() + "");
         work.setUserCount(0);
-return "添加成功";
+        workDao.addWork(work);
+        return "添加成功";
+    }
+
+    @Override
+    public String updateWork(Work work) {
+
+        workDao.updateWork(work);
+        return "修改成功";
     }
 
     @Override
     public String deleteWork(String workId) {
-workDao.deleteWork(workId);
-return  "删除成功";
+            workDao.deleteWork(workId);
+            return "删除成功";
+    }
+
+    @Override
+    public List<Work> followingWork(String doctorId) {
+        return workDao.followingWork(doctorId);
     }
 }

@@ -12,6 +12,7 @@ public interface OrderDao {
     void  updateOrder(Order order);
     List<Order> queryOrder(@Param("order") Order order,@Param("start")Integer start);
     Integer   getOrderCount(Order order);
+    List<Order> queryOrderByWorkId(String workId);
 
 
  }

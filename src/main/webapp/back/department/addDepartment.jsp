@@ -28,12 +28,12 @@
             var levels = parseInt($(":radio:checked").val());
             var option;
             if (levels === 1) {
-                $("#department1").empty().attr("disabled", "disabled");
+                $("#parentId").empty().attr("disabled", "disabled");
                 option = "<option >二级科室才可选择</option>";
-                $("#department1").append(option);
+                $("#parentId").append(option);
 
             } else {
-                $("#department1").removeAttr("disabled").empty();
+                $("#parentId").removeAttr("disabled").empty();
                 $.ajax({ //一级科室
                     url: "${pageContext.request.contextPath}/department/queryAllDepartment1",
                     success: function (data) {
@@ -41,28 +41,31 @@
                         for (i = 0; i < data.length; i++) {
                             option = option + "<option value=" + data[i].departmentId + ">" + data[i].departmentName + "</option>";
                         }
-                        $("#department1").append(option);
+                        $("#parentId").append(option);
                     }
                 });
             }
 
 
         });
-        $("button").click(function () {
+        $("#addDepartment").click(function () {
+            var formData = new FormData($("#addDepartmentFrom")[0]);
             var flag = $("#addDepartmentFrom").valid();
-            var levels = parseInt($(":radio:checked").value);
-            var parentId = $("#department1  :selected").val();
-            var departmentName = $("#departmentName").val();
-            console.log("parentId " + parentId);
+
             if (flag) {
                 $.ajax({
                     url: "${pageContext.request.contextPath}/department/addDepartment",
                     datatype: "json",
                     type: "post",
-                    data: {levels: levels, parentId: parentId, departmentName: departmentName},
+                    processData: false,
+                    contentType: false,
+                    data: formData,
                     success: function (data) {
                         //   console.log(data);//972128
-                        alert(data.msg)
+                        document.getElementById("addDepartmentFrom").reset();
+                        $("#parentId").empty().attr("disabled", "disabled").append("<option >二级科室才可选择</option>");
+                        /*$("#parentId").;*/
+                        alert(data)
                     }
                 })
             }
@@ -91,9 +94,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="department1" class="col-sm-2 control-label">上级科室</label>
+                <label for="parentId" class="col-sm-2 control-label">上级科室</label>
                 <div class="col-sm-10 form-inline">
-                    <select disabled="disabled" style="width: 170px" id="department1" name="department1"
+                    <select disabled="disabled" style="width: 170px" id="parentId" name="parentId"
                             class="form-control">
                         <option>二级科室才可选择</option>
                     </select>
@@ -109,7 +112,8 @@
             <div class="form-group">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-10">
-                    <button type="button" class="btn btn-primary">确定添加</button>
+                    <button type="button" id="addDepartment" class="btn btn-primary">确定添加</button>
+                   <%-- <input id="departmentSubmit"  type="" />--%>
                 </div>
             </div>
 

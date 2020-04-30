@@ -15,5 +15,5 @@ public class Order {
     String workId;
     String status;
     Date createTime;
-
+    Work work;
 }

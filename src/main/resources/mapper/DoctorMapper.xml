@@ -4,9 +4,7 @@
     <sql id="doctor">
     select d.doctor_id doctorId,d.doctor_name doctorName,d.department_id
      departmentId,d.position position,d.presentation presentation,d.src src,d.status status,
-
      t.department_id departmentId, t.department_name departmentName,t.levels levels,t.parent_id parentId
-
     from doctor   d left join department t
     on d.department_id=t.department_id
 </sql>
@@ -24,16 +22,15 @@
             <result property="levels" column="levels"/>
             <result property="parentId" column="parentId"/>
         </association>
-
     </resultMap>
-    <select id="queryDoctorByDepartmentId" resultType="Doctor">
+    <select id="queryDoctorByDepartmentId" resultMap="doctorList">
         <include refid="doctor"></include>
         where d.department_id=#{departmentId}
     </select>
     <select id="queryAllDoctor" resultMap="doctorList">
         <include refid="doctor"></include>
     </select>
-    <select id="queryDoctorByDoctorId" resultType="Doctor">
+    <select id="queryDoctorByDoctorId" resultMap="doctorList">
         <include refid="doctor"></include>
         where d.doctor_Id=#{doctorId}
     </select>

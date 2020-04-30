@@ -33,4 +33,26 @@ public class WorkTest {
     public  void dateTest(){
         final Calendar c = Calendar.getInstance();
     }
+    @Test
+    public  void compare(){
+        Work work = new Work();
+        List<Work> works = workDao.queryWork(work, 0, "1");
+        System.out.println(new Date());
+        for (Work work1 : works) {
+            System.out.println("work1 = " + work1);
+        }
+    }
+    @Test
+    public  void getWorkCount(){
+        Work work = new Work();
+        Integer workCount = workDao.getWorkCount(work, "1");
+        System.out.println("workCount = " + workCount);
+    }
+    @Test
+    public  void followingWork(){
+        List<Work> works = workDao.followingWork("1");
+        for (Work work : works) {
+            System.out.println("work = " + work);
+        }
+    }
 }

@@ -2,50 +2,79 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ln.dao.OrderDao">
     <sql id="order">
-        select  order_id orderId,user_id userId,
-        work_id workId,status,create_time createTime
-        from `order`
-
+        select  o.order_id orderId,o.user_id userId,o.work_id workId,
+        o.status status,o.create_time createTime,w.work_id workId,w.time time,
+        w.doctor_id doctorId,w.price price,w.remain remain,w.user_count userCount,
+        d.doctor_id doctorId,d.doctor_name doctorName,d.department_id departmentId,
+        d.position position,d.presentation presentation,d.src src,d.status status
+        from `order` o left join  `work` w
+        on o.work_id=w.work_id
+        left join  doctor d
+        on w.doctor_id=d.doctor_id
     </sql>
+    <resultMap id="orderList" type="Order">
+        <result property="orderId" column="orderId"/>
+        <result property="userId" column="userId"/>
+        <result property="workId" column="workId"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="createTime"/>
+        <association property="work" javaType="Work">
+            <result property="workId" column="workId"/>
+            <result property="time" column="time"/>
+            <result property="doctorId" column="doctorId"/>
+            <result property="price" column="price"/>
+            <result property="remain" column="remain"/>
+            <result property="userCount" column="userCount"/>
+            <association property="doctor" javaType="Doctor">
+                <result property="doctorId" column="doctorId"/>
+                <result property="doctorName" column="doctorName"/>
+                <result property="departmentId" column="departmentId"/>
+                <result property="position" column="position"/>
+                <result property=" presentation" column=" presentation"/>
+                <result property="src" column="src"/>
+                <result property="status" column="status"/>
+            </association>
+        </association>
+    </resultMap>
+
     <insert id="addOrder">
-    insert into  order values (#{orderId},#{userId},#{workId},#{status},#{createTime})
+    insert into  `order` values (#{orderId},#{userId},#{workId},#{status},#{createTime,jdbcType=TIMESTAMP})
 </insert>
     <delete id="deleteOrder">
-    delete  from order where order_id in
+        delete from `order` where order_id in
         <foreach collection="array" open="(" separator="," close=")" item="id">
             #{id}
         </foreach>
-</delete>
+    </delete>
     <update id="updateOrder">
-        update order  set status=#{status} where order_id=#{orderId}
+        update `order`  set status=#{status} where order_id=#{orderId}
     </update>
-    <select id=" queryOrderByUsername" resultType="Order">
+    <select id="queryOrder" resultMap="orderList">
         <include refid="order"></include>
         <where>
-            <if test="order.usernameId!=null">
-                user_id=#{userId}
+            <if test="order.userId!=null">
+                o.user_id=#{order.userId}
             </if>
             <if test="order.status!=null">
-              and  status=#{status}
+                and o.`status`=#{order.status}
             </if>
-           
         </where>
         limit #{start},5
     </select>
-    <select id="getUserCount" resultType="Integer">
-        select count(order_id) from order
+    <select id="getOrderCount" resultType="Integer">
+        select count(order_id) from `order`
         <where>
-            <if test="order.usernameId!=null">
+            <if test="userId!=null">
                 user_id=#{userId}
             </if>
-            <if test="order.status!=null">
-                and  status=#{status}
+            <if test="status!=null">
+                and `status`=#{status}
             </if>
 
         </where>
     </select>
-    <select id="queryOrderByWorkId" resultType="Order">
+    <select id="queryOrderByWorkId" resultMap="orderList">
         <include refid="order"></include>
-      where  work_id=#{workId}
+        where o.work_id=#{workId}
     </select>
 </mapper>
