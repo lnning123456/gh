@@ -30,7 +30,7 @@
                 //提示信息
                 messages: {
                     password: {required: "密码不能为空！"},
-                    name: {required: "用户名不能为空！"},
+                    name: {required: "管理员名不能为空！"},
                     code: {required: "验证码不能为空！"}
                 }
             });

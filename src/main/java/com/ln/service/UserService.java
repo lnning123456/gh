@@ -7,10 +7,10 @@ import java.util.Map;
 
 public interface UserService {
     String userRegister(User user,HttpSession session);
-    String login(User user,HttpSession session);
+    String login(User user, String code,HttpSession session);
     String logout(HttpSession session);
-    Map<String,Object> userList(Integer page);
-    User queryUser(User user);
-    String updateUserPassword(User user);
+    Map<String,Object> userList(User user,Integer page);
+    User queryUserByCall(String call);
+    String updateUserPassword(User user,String oldPassword);
     String updateUserStatus(User user);
 }

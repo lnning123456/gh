@@ -16,38 +16,31 @@ public class UserController {
     UserService userService;
     @RequestMapping("userRegister")
     String userRegister(User user, HttpSession session){
-        System.out.println("user = " + user);
         return userService.userRegister(user,session);
     }
     @RequestMapping("login")
-    String login(User user,HttpSession session){
-        System.out.println("user = " + user);
-        return userService.login(user,session);
+    String login(User user,String code,HttpSession session){
+        return userService.login(user,code,session);
     }
 
     @RequestMapping("logout")
     String logout(HttpSession session){
-        System.out.println("logout");
         return userService.logout(session);
     }
     @RequestMapping("userList")
-    Map<String,Object> userList(Integer page){
-        System.out.println("page = " + page);
-        return  userService.userList(page);
+    Map<String,Object> userList(User user,Integer page){
+        return  userService.userList(user,page);
     }
     @RequestMapping("queryUser")
-    User queryUser(User user){
-        System.out.println("user = " + user);
-        return userService.queryUser(user);
+    User queryUser(String call){
+        return userService.queryUserByCall(call);
     }
     @RequestMapping("updateUserPassword")
-    String updateUserPassword(User user){
-        System.out.println("updateUserPassword user = " + user);
-    return  userService.updateUserPassword(user);
+    String updateUserPassword(User user,String oldPassword){
+    return  userService.updateUserPassword(user,oldPassword);
     }
     @RequestMapping("updateUserStatus")
     String updateUserStatus(User user){
-        System.out.println("updateUserStatus user = " + user);
    return userService.updateUserStatus(user);
     }
 }

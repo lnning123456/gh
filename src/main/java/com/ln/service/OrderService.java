@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface OrderService {
     String  addOrder(Order order);
-    String deleteOrder(String[] orderIds);
+    String deleteOrder(String orderId);
     String updateOrder(Order order);
     Map<String,Object> queryOrder(Order order, Integer start);
 }

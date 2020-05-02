@@ -5,16 +5,9 @@
    select  user_id userId,username,`password`,`call`,`status`
     from  user
 </sql>
-    <select id="queryUser" resultType="User">
+    <select id="queryUserByCall" resultType="User">
         <include refid="user"></include>
-        <where>
-            <if test="username!=null">
-                username=#{username}
-            </if>
-            <if test="call!=null">
-                `call`=#{call}
-            </if>
-        </where>
+        where             `call`=#{call}
     </select>
     <select id="queryByUserId" resultType="User">
         <include refid="user"></include>
@@ -38,10 +31,26 @@
     </update>
     <select id="queryPageUser" resultType="User">
         <include refid="user"></include>
+        <where>
+            <if test="user.username!=null">
+                username=#{user.username}
+            </if>
+            <if test="user.call!=null">
+                call=#{user.call}
+            </if>
+        </where>
         limit #{start},5
     </select>
     <select id="getUserCount" resultType="Integer">
-       select count(user_id)  from user
+       select count(user_id)  from `user`
+        <where>
+            <if test="username!=null">
+                username=#{username}
+            </if>
+            <if test="call!=null">
+                call=#{call}
+            </if>
+        </where>
 
     </select>
 </mapper>

@@ -96,8 +96,6 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                console.log(data);
-
                 //  console.log(data.orders);
                 var tr = null;
                 var td = null;

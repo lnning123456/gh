@@ -29,17 +29,12 @@ public class DoctorController {
    
     @RequestMapping("queryDoctor")
     Map<String,Object> queryDoctor(Doctor doctor, Integer page, Department department) {
-        System.out.println("doctor = " + doctor);
-        System.out.println("page = " + page);
-        System.out.println("department = " + department);
         doctor.setDepartment(department);
         return doctorService.queryDoctor(doctor,page);
     }
    
     @RequestMapping(  "addDoctor")
     String addDoctor(@RequestParam(value = "img") MultipartFile img, HttpSession session, Doctor doctor) {
-        System.out.println("doctor = " + doctor);
-        System.out.println("img = " + img);
        if (!img.isEmpty()) {
            String realPath = session.getServletContext().getRealPath("/img/");
            File file = new File(realPath);
@@ -59,9 +54,8 @@ public class DoctorController {
    
     @RequestMapping("queryDoctorByDoctorId")
     Doctor gotoUpdateDoctor(String doctorId ) {
-        System.out.println("gotoUpdateDoctor doctorId = " + doctorId);
-        Doctor doctor = doctorService.queryDoctorByDoctorId(doctorId);
-        return doctor;
+
+        return  doctorService.queryDoctorByDoctorId(doctorId);
     }
    
     @RequestMapping("updateDoctor")
@@ -78,9 +72,7 @@ public class DoctorController {
                 e.printStackTrace();
             }
             doctor.setSrc(newFileName);
-        }/*else if(img.isEmpty()&&doctor.getSrc()==null){
-            doctor.setSrc("doctor_default.png");
-        }*/
+        }
         return doctorService.updateDoctor(doctor);
     }
 

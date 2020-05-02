@@ -1,4 +1,15 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
+<style type="text/css">
+    label.error {
+        color: red;
+        margin-left: 20px;
+    }
+
+    td {
+        text-align: center;
+        vertical-align: middle;
+    }
+</style>
 <script>
 
     function getDate(strDate) {
@@ -79,6 +90,7 @@
         });
     }
 
+//查找值班
     var works = null;
     var followingDoctorId = $("#followingDoctorId").text();
     $.ajax({
@@ -91,14 +103,13 @@
             works = data;
         }
     });
-
-    console.log(works);
+//初始化界面
     var now = new Date();
     var nowFullYear = now.getFullYear();
     var nowMonth = now.getMonth();
     var nowDate = now.getDate();
-   var  amDate= new Date(nowFullYear, nowMonth, nowDate , 8);
-   var  pmDate= new Date(nowFullYear, nowMonth, nowDate , 2);
+    var amDate = new Date(nowFullYear, nowMonth, nowDate, 8);
+    var pmDate = new Date(nowFullYear, nowMonth, nowDate, 14);
     var td1 = "<td></td>";
     var addTd2 = null;
     var addTd3 = null;
@@ -109,36 +120,93 @@
         for (var j = 0; j < works.length; j++) {
             var time = getDate(works[j].time);
             if (Format(amDate, "yyyy/MM/dd a") === Format(time, "yyyy/MM/dd a")) {
-                addTd2 = "<td>" + works[j].price + "</td>";
+                // addTd2 = "<td><a onclick='updateWork(" + JSON.stringify(works[j]) + ")'>修改</a></td>";
+                addTd2 = "<td>已有值班</td>";
+
             }
             if (Format(pmDate, "yyyy/MM/dd a") === Format(time, "yyyy/MM/dd a")) {
-                addTd3 = "<td>可预约人数：" + works[j].remain + "</td>";
+                //   addTd3 = "<td><a onclick='updateWork(\"" + JSON.stringify(works[j]) + "\")'>修改</a></td>";
+                addTd3 = "<td>已有值班</td>";
             }
         }
-        if(addTd2!=null){
-            td2 = td2 +addTd2;
-        }else {
-            td2 = td2 +"<td></td>";
-        } if(addTd3!=null){
-            td3 = td3 +addTd3;
-        }else {
-            td3 = td3 +"<td></td>";
+        if (addTd2 != null) {
+            td2 = td2 + addTd2;
+        } else {
+            td2 = td2 + "<td><a onclick='addWork(this,\"" + Format(amDate, "yyyy/MM/dd  HH") + "\")'>添加</a></td>";
+
         }
-       addTd2=null;
-        addTd3=null;
+        if (addTd3 != null) {
+            td3 = td3 + addTd3;
+        } else {
+            td3 = td3 + "<td><a onclick='addWork(this,\"" + Format(pmDate, "yyyy/MM/dd  HH") + "\")'>添加</a></td>";
+
+        }
+        addTd2 = null;
+        addTd3 = null;
         amDate = new Date(nowFullYear, nowMonth, nowDate + i, 8);
-        pmDate = new Date(nowFullYear, nowMonth, nowDate + i, 2);
+        pmDate = new Date(nowFullYear, nowMonth, nowDate + i, 14);
     }
     $("#addWorkTable").append("<tr>" + td1 + "</tr><tr>" + td2 + "</tr><tr>" + td3 + "</tr>")
 
-function addWork(time) {
 
-}
+    function addWork(t,time) {
+        $(t).parent().addClass("addWork");
+        time = getDate(time);
+        var showTime = new Date(time.getFullYear(), time.getMonth() - 1, time.getDate(), time.getHours());
+        $("#showTime").val(Format(showTime, "yyyy/MM/dd a"));
+        $("#time").val(Format(showTime, "yyyy/MM/dd HH"));
+        $('#addWorkModal').modal('show');
+    }
+
+    function sureAddWork() {
+
+        $("#addWorkForm").validate({
+            rules: {
+                remain: {required: true, digits: true},
+                price: {required: true, number: true}
+            },
+            //提示信息
+            messages: {
+                remain: {required: "请输入放号数量！", digits: "请输入合法放号数量！"},
+                price: {required: "请输入挂号价格！", number: "请输入合法价格！"}
+            }
+        });
+        var time = getDate($("#time").val());
+        time = new Date(time.getFullYear(), time.getMonth() - 1, time.getDate(), time.getHours());
+        $("#doctorId").val(followingDoctorId);
+        var flag = $("#addWorkForm").valid();
+        var formData = new FormData($("#addWorkForm")[0]);
+        formData.set("time", time);
+        if (flag) {
+            $.ajax({
+                url: "${pageContext.request.contextPath}/work/addWork",
+                datatype: "json",
+                type: "post",
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (data) {
+                    alert(data);
+                    document.getElementById("addWorkForm").reset();
+                    $(".addWork").text("已有值班");
+                    $('#addWorkModal').modal('hide');
+                    //
+                }
+            });
+        }
+    }
+$(function () {
+    $('#addWorkModal').on('hide.bs.modal', function () {
+        $(".addWork").removeClass("addWork")
+    });
+})
 </script>
 <span id="followingDoctorId" style="display: none"><%=request.getParameter("doctorId") %></span>
 <table id="addWorkTable" class="table table-bordered">
 </table>
-<a href="javascript:$('#changeContent').load('doctor/work.jsp?doctorId='+$('#queryDoctorId').text())">返回医生首页</a>
+<div style="text-align: center">
+    <a href="javascript:$('#changeContent').load('doctor/work.jsp?doctorId='+$('#queryDoctorId').text())">返回医生值班</a>
+</div>
 
 <div class="modal fade" id="addWorkModal" tabindex="-1" role="dialog" aria-labelledby="addWorkModal">
     <div class="modal-dialog" role="document">
@@ -146,14 +214,40 @@ function addWork(time) {
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
-                <h4 style="text-align: center;color: red" class="modal-title" id="addWorkLabel">添加值班</h4>
+                <h4 style="text-align: center" class="modal-title" id="addWorkLabel">添加值班</h4>
             </div>
             <div class="modal-body">
 
+                <form id="addWorkForm" class="form-horizontal">
+                    <input style="display: none" type="text" id="doctorId" name="doctorId">
+                    <div class="form-group">
+                        <label for="time" class="col-sm-3 control-label">值班时间：</label>
+                        <div class="col-sm-9 form-inline">
+                            <input type="text" style="width: 150px" class="form-control" id="showTime" name="showTime"
+                                   readonly>
+                            <input type="text" style="width: 150px;display: none " class="form-control" id="time"
+                                   name="time">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remain" class="col-sm-3 control-label">放号数量：</label>
+                        <div class="col-sm-9 form-inline">
+                            <input type="text" style="width: 150px" class="form-control" id="remain" name="remain"
+                                   placeholder="放号数">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="col-sm-3 control-label">挂号价格：</label>
+                        <div class="col-sm-9 form-inline">
+                            <input type="text" style="width: 150px" class="form-control" id="price" name="price"
+                                   placeholder="价格">
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" id="sure" class="btn btn-danger">确定</button>
+                <button type="button" id="sure" onclick="sureAddWork()" class="btn btn-info">确定</button>
             </div>
         </div>
     </div>

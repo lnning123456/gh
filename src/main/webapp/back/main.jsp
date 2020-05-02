@@ -19,7 +19,7 @@
                 $.ajax({
                     url: "${pageContext.request.contextPath}/admin/logout",
                     success: function () {
-                        location.href = "${pageContext.request.contextPath}/back/login.jsp"
+                      alert("退出成功")
                     }
                 })
             })

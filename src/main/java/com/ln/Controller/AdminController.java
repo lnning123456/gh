@@ -15,7 +15,6 @@ public class AdminController {
     @Autowired
     AdminService adminService;
     @RequestMapping("login")
-
     public Map<String, Object> login(String name, String password, String code, HttpSession session) {
         return  adminService.login(name, password, code, session);
     }

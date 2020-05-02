@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OrderDao {
     void  addOrder(Order order);
-    void  deleteOrder(String[] orderIds);
+    void  deleteOrder(String orderId);
     void  updateOrder(Order order);
     List<Order> queryOrder(@Param("order") Order order,@Param("start")Integer start);
     Integer   getOrderCount(Order order);

@@ -23,31 +23,31 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public String addOrder(Order order) {
         Work work = workDao.queryWorkByWorkId(order.getWorkId());
+        //Integer remain=;
         work.setRemain(work.getRemain()-1);
         work.setUserCount(work.getUserCount()+1);
+        System.out.println("work = " + work);
         workDao.updateWork(work);
         order.setCreateTime(new Date());
         order.setOrderId(new Date().getTime()+"");
         order.setStatus("已预约");
         orderDao.addOrder(order);
-        return "挂号成功，请进入个人中心查看";
+        return "ok";
     }
 
     @Override
-    public String deleteOrder(String[] orderIds) {
-        orderDao.deleteOrder(orderIds);
+    public String deleteOrder(String orderId) {
+        orderDao.deleteOrder(orderId);
         return "删除成功";
     }
 
     @Override
     public String updateOrder(Order order) {
         if (order.getStatus().equals("已取消")) {
-            System.out.println("已取消");
             orderDao.updateOrder(order);
             return "取消预约成功";
         } else {
             orderDao.updateOrder(order);
-            System.out.println("已完成");
             return "预约完成";
         }
 

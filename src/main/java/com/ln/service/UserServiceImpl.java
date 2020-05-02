@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String userRegister(User user,HttpSession session) {
-        User queryUser= userDao.queryUser(user);
+        User queryUser= userDao.queryUserByCall(user.getCall());
         if (queryUser.getCall()!=null){
             return "该手机号已被注册，请重新输入";
         }else {
@@ -29,10 +29,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(User user,HttpSession session) {
-        User queryUser = userDao.queryUser(user);
-        if(queryUser==null){
-            return "该用户名或手机号不存在";
+    public String login(User user, String code,HttpSession session) {
+        User queryUser = userDao.queryUserByCall(user.getCall());
+        String imgCode = (String) session.getAttribute("code");
+        if (!imgCode.equals(code)) {
+            return "验证码错误";
+        }else  if(queryUser==null){
+            return "该用手机号不存在";
         }else if(!user.getPassword().equals(queryUser.getPassword())){
             return "密码输入错误";
         }else if(queryUser.getStatus().equals("注销")){
@@ -50,11 +53,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Object> userList(Integer page) {
+    public Map<String, Object> userList(User user,Integer page) {
         HashMap<String, Object> map = new HashMap<>();
         Integer start = (page - 1) * 5;
-        List<User> users = userDao.queryPageUser(start);
-        Integer sum=userDao.getUserCount();
+        List<User> users = userDao.queryPageUser(user,start);
+        Integer sum=userDao.getUserCount(user);
         Integer total = sum % 5 == 0 ? sum / 5 : sum / 5+ 1;
         map.put("users",users);
         map.put("sum",sum);
@@ -64,14 +67,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User queryUser(User user) {
-        return userDao.queryUser(user);
+    public User queryUserByCall(String call) {
+        return userDao.queryUserByCall(call);
     }
 
     @Override
-    public String updateUserPassword(User user) {
-        userDao.updateUser(user);
-        return "密码修改完成";
+    public String updateUserPassword(User user ,String oldPassword) {
+        User updateUser = userDao.queryByUserId(user.getUserId());
+        if (updateUser.getPassword().equals(oldPassword)){
+            userDao.updateUser(user);
+            return "密码修改完成";
+        }
+        return  "密码输入错误";
+
     }
     @Override
     public String updateUserStatus(User user) {

@@ -31,7 +31,7 @@ public class OrderTest {
       @Test
     public  void add(){
         Order order = new Order();
-        order.setWorkId("4");
+        order.setWorkId("3");
         order.setUserId("1");
         String s = orderService.addOrder(order);
         System.out.println("s = " + s);

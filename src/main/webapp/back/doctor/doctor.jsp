@@ -49,17 +49,8 @@
 
         });
 
-
-        /* $("#page").change(function () {
-             var forData = new FormData();
-             forData = queryDoctorMsg();
-             forData.append("page", parseInt($("#page :selected").text()));
-             queryDoctor(forData);
-             console.log(typeof page);
-         });*/
         //模态框关闭
         $('#deleteDoctorModal').on('hide.bs.modal', function () {
-            console.log('模态框关闭了');
             $(".deleteTr").removeClass("deleteTr")
         });
         //确定删除
@@ -125,21 +116,21 @@
     function queryDoctorMsg() {
         var forData = new FormData();
         var doctorName = $("#queryDoctorName").val();
-        console.log(doctorName);
-
-        var departmentName = $("#department1 :selected").text();
-        var department2Name = $("#department2 :selected").text();
+        var department1Id = $("#department1 :selected").val();
+        var department2Id = $("#department2 :selected").val();
+        console.log(department2Id);
+        console.log(department1Id);
         if (doctorName != "") {
             forData.append("doctorName", doctorName);
         }
-        if ($("#department1 :selected").val() != "") {
+        if (department1Id != "" && department2Id == "") {
             forData.append("levels", 1);
-            forData.append("departmentName", departmentName);
-        } else if ($("#department2 :selected").val() != "") {
+            forData.set("departmentId", department1Id);
+        } else if (department2Id != "") {
             forData.append("levels", 2);
-            forData.append("departmentName", department2Name);
+            forData.set("departmentId", department2Id);
         }
-        console.log(forData.get("departmentName"));
+        console.log(forData.get("departmentId"));
         return forData;
     }
 
@@ -152,7 +143,7 @@
     function deleteDoctor(a) {
         var id = $(a).parent().parent().children().eq(0).text();
         console.log($(a).parent().parent().addClass("deleteTr"));
-        console.log(id);
+
         var name = $(a).parent().parent().children().eq(1).text();
         $("#deleteDoctorMsg").empty().append(name);
         $('#deleteDoctorModal').modal('show');
@@ -163,7 +154,6 @@
     function previousPage() {
         var forData = new FormData();
         var page = parseInt($("#page :selected").text());
-        console.log(page);
         if (page === 1) {
             alert("已经是首页")
         } else {
@@ -201,14 +191,15 @@
     }
 
     //修改
-    function  updateDoctor(a) {
+    function updateDoctor(a) {
         var doctorId = $(a).parent().parent().children().eq(0).text();
-        $("#changeContent").load("doctor/updateDoctor.jsp?doctorId="+doctorId)
+        $("#changeContent").load("doctor/updateDoctor.jsp?doctorId=" + doctorId)
     }
+
     //值班
     function doctorWork(a) {
         var doctorId = $(a).parent().parent().children().eq(0).text();
-        $("#changeContent").load("doctor/work.jsp?doctorId="+doctorId)
+        $("#changeContent").load("doctor/work.jsp?doctorId=" + doctorId)
     }
 </script>
 <style type="text/css">
@@ -219,31 +210,28 @@
     }
 </style>
 <div id="doctorDiv">
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <form class="navbar-form " id="queryDoctorFrom">
-                <div class="form-group">
-                    <div class="form-inline">
-                        <select style="width: 170px" id="department1" name="department1" class="form-control">
-                            <option value="">请选择一级科室</option>
-                        </select>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <form class="navbar-form " id="queryDoctorFrom">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <select style="width: 170px" id="department1" name="department1" class="form-control">
+                                <option value="">请选择一级科室</option>
+                            </select>
 
-                        <select style="width: 170px" id="department2" name="department2" class="form-control">
-                            <option value="">请选择二级科室</option>
-                        </select>
-                        <input type="text" class="form-control" id="queryDoctorName" placeholder="输入医生名字">
-
+                            <select style="width: 170px" id="department2" name="department2" class="form-control">
+                                <option value="">请选择二级科室</option>
+                            </select>
+                            <input type="text" class="form-control" id="queryDoctorName" placeholder="输入医生名字">
+                        </div>
                     </div>
+                    <button type="button" id="queryDoctorButton" class="btn btn-primary">查询</button>
+                </form>
 
-
-                </div>
-                <button type="button" id="queryDoctorButton" class="btn btn-primary">查询</button>
-            </form>
-
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
     <table id="doctorTable" class="table table-bordered">
@@ -279,7 +267,7 @@
                 <h4 style="text-align: center;color: red" class="modal-title" id="deleteDoctorLabel">添加值班</h4>
             </div>
             <div class="modal-body">
-确定删除<span id="deleteDoctorMsg"></span>医生
+                确定删除<span id="deleteDoctorMsg"></span>医生
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

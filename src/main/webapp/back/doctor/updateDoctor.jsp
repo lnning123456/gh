@@ -78,7 +78,6 @@
        queryDoctor();
 
         $("#updateDoctorForm").validate({
-            //规定验证规则
             rules: {
                 presentation: {required: true}
             },
@@ -140,8 +139,8 @@
                 <label for="doctorName" class="col-sm-2 control-label">医生名字</label>
                 <div class="col-sm-10 form-inline">
 
-                    <input type="text" style="width: 170px" class="form-control" id="doctorName"
-                           name="doctorName" readonly>
+                    <input type="text" style="width: 170px" class="form-control" id="doctorName" name="doctorName" readonly>
+
 
                 </div>
 

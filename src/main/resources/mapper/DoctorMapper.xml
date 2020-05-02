@@ -44,10 +44,10 @@
         on t.parent_id= t1.department_id
         <where>
             <if test="doctor.department.levels==1 ">
-                t1.department_name=#{doctor.department.departmentName}
+                t1.department_id=#{doctor.departmentId}
             </if>
             <if test="doctor.department.levels==2 ">
-                t.department_name=#{doctor.department.departmentName}
+                t.department_id=#{doctor.departmentId}
             </if>
             <if test="doctor.doctorName!=null">
                 and d.doctor_name=#{doctor.doctorName}
@@ -65,10 +65,10 @@
         on t.parent_id= t1.department_id
         <where>
             <if test="doctor.department.levels==1 ">
-                t1.department_name=#{doctor.department.departmentName}
+                t1.department_id=#{doctor.departmentId}
             </if>
             <if test="doctor.department.levels==2 ">
-                t.department_name=#{doctor.department.departmentName}
+                t.department_id=#{doctor.departmentId}
             </if>
             <if test="doctor.doctorName!=null">
                 and d.doctor_name=#{doctor.doctorName}

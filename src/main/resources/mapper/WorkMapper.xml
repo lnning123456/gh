@@ -70,15 +70,7 @@
     </insert>
     <update id="updateWork">
         update `work` set
-        <if test="price!=null">
-            price=#{peice}
-        </if>
-        <if test="remain!=null">
-            remain=#{remain}
-        </if>
-        <if test="userCount!=null">
-            user_count=#{userCount}
-        </if>
+        remain=#{remain},  user_count=#{userCount}
         where work_id= #{workId}
     </update>
     <delete id="deleteWork">

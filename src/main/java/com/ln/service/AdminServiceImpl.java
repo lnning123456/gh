@@ -28,7 +28,6 @@ public class AdminServiceImpl implements AdminService {
                 if (password.equals(admin.getPassword())) {
                     map.put("msg", "ok");
                     session.setAttribute("admin",admin);
-                    System.out.println("session"+session.getAttribute("admin"));
                     return map;
                 } else {
                     map.put("msg", "密码错误");

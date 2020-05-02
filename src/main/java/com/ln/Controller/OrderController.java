@@ -14,25 +14,18 @@ public class OrderController {
     OrderService orderService;
     @RequestMapping("addOrder")
     String  addOrder(Order order){
-        System.out.println("order = " + order);
         return orderService.addOrder(order);
     }
     @RequestMapping("deleteOrder")
-    String deleteOrder(String[] orderIds){
-        for (String orderId : orderIds) {
-            System.out.println("orderId = " + orderId);
-        }
-        return  orderService.deleteOrder(orderIds);
+    String deleteOrder(String orderId){
+        return  orderService.deleteOrder(orderId);
     }
     @RequestMapping("updateOrder")
     String updateOrder(Order order){
-        System.out.println("updateOrder order = " + order);
         return orderService.updateOrder(order);
     }
     @RequestMapping("queryOrder")
     Map<String,Object> queryOrder(Order order, Integer page){
-        System.out.println("order = " + order);
-        System.out.println("page = " + page);
         return  orderService.queryOrder(order,page);
     }
 }
