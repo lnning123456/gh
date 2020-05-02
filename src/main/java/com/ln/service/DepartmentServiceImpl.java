@@ -7,9 +7,10 @@ import com.ln.entity.Doctor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.crypto.Data;
-import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -78,7 +79,6 @@ public class DepartmentServiceImpl implements DepartmentService {
           }else {
               if(doctors.size()!=0){
                   return  department.getDepartmentName()+"科室下还有"+doctors.size()+"名医生，不能删除";
-
               }else{
                   departmentDao.deleteDepartment(departmentId);
                   return  department.getDepartmentName()+"删除成功";

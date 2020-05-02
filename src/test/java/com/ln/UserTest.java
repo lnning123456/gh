@@ -29,14 +29,16 @@ public class UserTest {
     @Test
     public  void  getCount(){
         User user = new User();
+        user.setCall("65456456");
+        user.setUsername("2312");
         Integer userCount = userDao.getUserCount(user);
         System.out.println("userCount = " + userCount);
     }
     @Test
     public  void  query(){
         User user = new User();
-        //user.setUserId("1");
-     //  user.setUsername("we");
+        user.setUserId("1");
+      user.setUsername("we");
         user.setCall("125475152");
         User user1 = userService.queryUserByCall(user.getCall());
         System.out.println("user1 = " + user1);

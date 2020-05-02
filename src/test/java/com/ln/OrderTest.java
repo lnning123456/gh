@@ -28,14 +28,7 @@ public class OrderTest {
               System.out.println("order1 = " + order1);
           }
       }
-      @Test
-    public  void add(){
-        Order order = new Order();
-        order.setWorkId("3");
-        order.setUserId("1");
-        String s = orderService.addOrder(order);
-        System.out.println("s = " + s);
-    }
+
       @Test
     public  void queryByWorkId(){
         List<Order> orders = orderDao.queryOrderByWorkId("1");

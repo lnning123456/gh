@@ -4,19 +4,15 @@ import com.ln.entity.Department;
 import com.ln.entity.Doctor;
 import com.ln.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -54,7 +50,6 @@ public class DoctorController {
    
     @RequestMapping("queryDoctorByDoctorId")
     Doctor gotoUpdateDoctor(String doctorId ) {
-
         return  doctorService.queryDoctorByDoctorId(doctorId);
     }
    
@@ -80,7 +75,6 @@ public class DoctorController {
    
     @RequestMapping("deleteDoctor")
     String deleteDoctor(String doctorId) {
-        System.out.println("deleteDoctor doctorId = " + doctorId);
         return  doctorService.deleteDoctor(doctorId);
     }
 }

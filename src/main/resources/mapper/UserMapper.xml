@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ln.dao.UserDao">
     <sql id="user">
-   select  user_id userId,username,`password`,`call`,`status`
+   select  user_id userId,username,	`password`,`call`,`status`
     from  user
 </sql>
     <select id="queryUserByCall" resultType="User">
@@ -22,10 +22,10 @@
             password=#{password}
         </if>
         <if test="call!=null">
-            `call`=#{call}
+           `call`=#{call}
         </if>
         <if test="status!=null">
-            status=#{status}
+            `status`=#{status}
         </if>
         where user_id=#{userId}
     </update>
@@ -36,19 +36,19 @@
                 username=#{user.username}
             </if>
             <if test="user.call!=null">
-                call=#{user.call}
+              or  `call`=#{user.call}
             </if>
         </where>
         limit #{start},5
     </select>
     <select id="getUserCount" resultType="Integer">
-       select count(user_id)  from `user`
+       select count(user_id)  from user
         <where>
             <if test="username!=null">
                 username=#{username}
             </if>
             <if test="call!=null">
-                call=#{call}
+               or `call`=#{call}
             </if>
         </where>
 

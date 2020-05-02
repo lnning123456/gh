@@ -29,6 +29,8 @@ public class UserController {
     }
     @RequestMapping("userList")
     Map<String,Object> userList(User user,Integer page){
+        System.out.println("user = " + user);
+        System.out.println("page = " + page);
         return  userService.userList(user,page);
     }
     @RequestMapping("queryUser")

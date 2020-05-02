@@ -22,18 +22,17 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
 
-
     @Override
-    public Map<String,Object> queryDoctor(Doctor doctor, Integer page ) {
+    public Map<String, Object> queryDoctor(Doctor doctor, Integer page) {
         HashMap<String, Object> map = new HashMap<>();
         Integer start = (page - 1) * 5;
         List<Doctor> doctors = doctorDao.queryDoctor(doctor, start);
-        Integer sum=doctorDao.queryDoctorCount(doctor);
-        Integer total = sum % 5== 0 ? sum / 5 : sum / 5+ 1;
-        map.put("doctor",doctors);
-        map.put("sum",sum);
-        map.put("total",total);
-        map.put("page",page);
+        Integer sum = doctorDao.queryDoctorCount(doctor);
+        Integer total = sum % 5 == 0 ? sum / 5 : sum / 5 + 1;
+        map.put("doctor", doctors);
+        map.put("sum", sum);
+        map.put("total", total);
+        map.put("page", page);
         return map;
     }
 
@@ -45,8 +44,7 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public String addDoctor(Doctor doctor) {
-
-        doctor.setDoctorId(new Date().getTime()+"");
+        doctor.setDoctorId(new Date().getTime() + "");
         doctor.setStatus("工作");
         doctorDao.addDoctor(doctor);
         return doctor.getDoctorName() + "添加成功";
@@ -55,12 +53,10 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public String updateDoctor(Doctor doctor) {
         List<Work> works = workDao.queryWorkByDoctorId(doctor.getDoctorId());
-
         doctorDao.updateDoctor(doctor);
-        System.out.println("doctor = " + doctor);
-        if (works.size()!=0&&doctor.getStatus().equals("休息")){
-            return doctor.getDoctorName() + "医生还有"+works.size()+"个值班，不能休息";
-        }else{
+        if (works.size() != 0 && doctor.getStatus().equals("休息")) {
+            return doctor.getDoctorName() + "医生还有" + works.size() + "个值班，不能休息";
+        } else {
             return doctor.getDoctorName() + "修改成功";
         }
 
@@ -70,11 +66,11 @@ public class DoctorServiceImpl implements DoctorService {
     public String deleteDoctor(String doctorId) {
         List<Work> works = workDao.queryWorkByDoctorId(doctorId);
         Doctor doctor = doctorDao.queryDoctorByDoctorId(doctorId);
-        if (works.size()!=0) {
-            return doctor.getDoctorName()+"医生还有"+works.size()+"个值班，不能删除";
+        if (works.size() != 0) {
+            return doctor.getDoctorName() + "医生还有" + works.size() + "个值班，不能删除";
         } else {
             doctorDao.deleteDoctor(doctorId);
-            return doctor.getDoctorName()+"删除成功";
+            return doctor.getDoctorName() + "删除成功";
         }
 
     }

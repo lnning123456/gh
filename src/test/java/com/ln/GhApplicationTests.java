@@ -1,13 +1,13 @@
 package com.ln;
 
-import com.ln.dao.*;
+import com.ln.dao.AdminDao;
+import com.ln.dao.DepartmentDao;
+import com.ln.dao.DoctorDao;
 import com.ln.entity.Admin;
 import com.ln.entity.Department;
 import com.ln.entity.Doctor;
 import com.ln.service.DepartmentService;
 import com.ln.service.DoctorService;
-import com.ln.util.PageService;
-import com.ln.util.PageUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +30,7 @@ public class GhApplicationTests {
     DoctorDao doctorDao;
     @Autowired
     DoctorService doctorService;
-    @Autowired
-    Doctor2Dao doctor2Dao;
-    @Autowired
-    PageUtil pageUtil;
-     @Autowired
-    PageService pageService;
+
     @Test
     public void MyTest() {
         System.out.println("true = " + true);
@@ -185,39 +180,6 @@ public class GhApplicationTests {
         doctor.setDepartmentId("5");
         doctor.setPosition("sfesdf");
         doctorService.addDoctor(doctor);
-    }
-
-    @Test
-    public void count() {
-        Doctor doctor = new Doctor();
-        //    doctor.setDoctorName("华佗");
-        Department department = new Department();
-//department.setLevels(1);
-//department.setDepartmentName("内科");
-        doctor.setDepartment(department);
-      //  Integer count = doctor2Dao.count(doctor);
-        Integer count = pageService.count(doctor2Dao,doctor);
-      //  PageDao p=null;
-       // System.out.println("doctor2Dao = " + p.getClass());
-        System.out.println("count = " + count);
-        // pageUtil.page(doctor2Dao);
-    }
-
-
-    @Test
-    public void query() {
-        Doctor doctor = new Doctor();
-        //    doctor.setDoctorName("华佗");
-        Department department = new Department();
-//department.setLevels(1);
-//department.setDepartmentName("内科");
-        doctor.setDepartment(department);
-        List<Doctor> doctors = doctor2Dao.query(doctor, 1);
-        System.out.println("sacdasfwwf   " + doctors.size());
-        for (Object o : doctors) {
-            System.out.println("o = " + o);
-        }
-
     }
 
     @Test

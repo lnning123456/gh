@@ -2,7 +2,4 @@
     <item name='javax.servlet.http.HttpServletRequest'>
         <annotation name='java.lang.Deprecated'/>
     </item>
-    <item name='javax.servlet.http.HttpServletResponse void sendRedirect(java.lang.String)'>
-        <annotation name='java.lang.Deprecated'/>
-    </item>
 </root>

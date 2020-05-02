@@ -67,17 +67,21 @@
 
             }
 
-
         });
         $('#updateUserModal').on('hide.bs.modal', function () {
             $(".updateId").removeClass("updateId")
         });
 
         $("#queryUserButton").click(function () {
-            var call=$("#queryUserCall").text()
+            var call=$("#queryUserCall").val();
             var formData = new FormData();
             formData.append("page", 1);
             formData.append("call", call);
+            query(formData);
+        });
+        $("#allUser").click(function () {
+            var formData = new FormData();
+            formData.append("page", 1);
             query(formData);
         })
     });
@@ -103,7 +107,6 @@
             alert("已经是首页")
         } else {
             page = page - 1;
-
             formData.append("page", page);
             formData.append("userId", userId);
             query(formData);
@@ -137,7 +140,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
 
-            <span4 id="allUser" class="navbar-text">全部</span4>
+            <a id="allUser" class="navbar-text">全部</a>
             <form class="navbar-form navbar-left " id="queryUserFrom">
                 <div class="form-group">
 

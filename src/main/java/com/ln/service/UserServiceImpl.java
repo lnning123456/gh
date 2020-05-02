@@ -18,12 +18,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String userRegister(User user,HttpSession session) {
-        System.out.println("user = " + user);
         User queryUser= userDao.queryUserByCall(user.getCall());
         if (queryUser!=null){
             return "该手机号已被注册，请重新输入";
         }else {
-
             user.setUserId(new Date().getTime()+"");
             user.setStatus("正常");
             userDao.addUser(user);

@@ -46,8 +46,6 @@ public class OrderServiceImpl implements OrderService {
     public String updateOrder(Order order) {
         if (order.getStatus().equals("已取消")) {
             Work work = workDao.queryWorkByWorkId(order.getWorkId());
-            System.out.println("work = " +order);
-            System.out.println("work = " + work);
             work.setRemain(work.getRemain()+1);
             work.setUserCount(work.getUserCount()-1);
             workDao.updateWork(work);
