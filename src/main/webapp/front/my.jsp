@@ -7,11 +7,12 @@
         <div class="col-xs-2">
             <h3>选择操作</h3>
             <br>
-            <ul>
+            <div class="panel-body">
                 <li> <a href="javascript:$('#myContent').load('order.jsp')">我的预约</a></li>
                <br>
                 <li><a href="javascript:$('#myContent').load('updatePassword.jsp')">修改密码</a></li>
-            </ul>
+
+        </div>
         </div>
         <div id="myContent" class="col-xs-10">
     </div>

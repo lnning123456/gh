@@ -97,6 +97,7 @@
 
 </div>
 <br>
+<div class="container-fluid">
 <nav class="navbar navbar-default" style="background: #79c9ec;">
     <div class="container">
         <div class="row">
@@ -176,6 +177,8 @@
         </div>
     </div>
 </div>
+</div>
+
 
 
 </html>

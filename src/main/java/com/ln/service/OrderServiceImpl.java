@@ -3,14 +3,16 @@ package com.ln.service;
 import com.ln.dao.OrderDao;
 import com.ln.dao.UserDao;
 import com.ln.dao.WorkDao;
-import com.ln.entity.Doctor;
 import com.ln.entity.Order;
 import com.ln.entity.User;
 import com.ln.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -26,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
         //Integer remain=;
         work.setRemain(work.getRemain()-1);
         work.setUserCount(work.getUserCount()+1);
-        System.out.println("work = " + work);
         workDao.updateWork(work);
         order.setCreateTime(new Date());
         order.setOrderId(new Date().getTime()+"");
@@ -44,6 +45,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public String updateOrder(Order order) {
         if (order.getStatus().equals("已取消")) {
+            Work work = workDao.queryWorkByWorkId(order.getWorkId());
+            System.out.println("work = " +order);
+            System.out.println("work = " + work);
+            work.setRemain(work.getRemain()+1);
+            work.setUserCount(work.getUserCount()-1);
+            workDao.updateWork(work);
             orderDao.updateOrder(order);
             return "取消预约成功";
         } else {

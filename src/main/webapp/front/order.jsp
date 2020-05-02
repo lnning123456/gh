@@ -100,7 +100,7 @@
                 var td = null;
                 var option = null;
                 var order = data.orders;
-                $("#user").empty().append(data.user.username + "用户挂号记录");
+
                 for (var i = 0; i < order.length; i++) {
                     var date = getDate(order[i].createTime);
                     var time = Format(date, "yyyy-MM-dd  a");
@@ -108,9 +108,10 @@
                         "<td>" + time + "</td><td>" + order[i].createTime + "</td><td>" + order[i].work.price + "</td>" +
                         "<td>" + order[i].status + "</td>";
                     if (order[i].status === "已预约") {
-                        td = td + "<td><a type='button' onclick='updateOrder(this)' >取消</a></td>";
+                        td = td + "<td><a type='button' onclick='updateOrder(this,\""+order[i].workId+"\")' >取消</a></td>"
+
                     } else {
-                        td = td + "<td><a type='button' onclick='deleteOrder(this)' >删除</a></td>"
+                        td = td + "<td><a type='button' onclick='deleteOrder(this)' >删除</a></td>";
                     }
 
                     tr = tr + "<tr>" + td + "</tr>";
@@ -137,14 +138,15 @@
     formData.append("page", 1);
     query(formData);
     //修改
-    function updateOrder(t) {
+    function updateOrder(t,workId) {
         var orderId = $(t).parent().parent().children().eq(0).text();
+        var workId = workId;
         console.log(orderId);
         $.ajax({
             url: "${pageContext.request.contextPath}/order/updateOrder",
             datatype: "json",
             type: "post",
-            data: {orderId: orderId, status: '已取消'},
+            data: {orderId: orderId, status: '已取消',workId:workId},
             success: function (data) {
                 $(t).parent().parent().children().eq(5).text("已取消");
                 $(t).parent().parent().children().eq(6).html("<a type='button' onclick='deleteOrder(this)' >删除</a>");

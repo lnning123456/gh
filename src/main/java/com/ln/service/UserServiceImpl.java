@@ -1,13 +1,15 @@
 package com.ln.service;
 
 import com.ln.dao.UserDao;
-import com.ln.entity.Order;
 import com.ln.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,10 +18,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String userRegister(User user,HttpSession session) {
+        System.out.println("user = " + user);
         User queryUser= userDao.queryUserByCall(user.getCall());
-        if (queryUser.getCall()!=null){
+        if (queryUser!=null){
             return "该手机号已被注册，请重新输入";
         }else {
+
             user.setUserId(new Date().getTime()+"");
             user.setStatus("正常");
             userDao.addUser(user);

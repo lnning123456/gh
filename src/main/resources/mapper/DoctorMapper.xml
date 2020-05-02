@@ -13,7 +13,7 @@
         <result property="doctorName" column="doctorName"/>
         <result property="departmentId" column="departmentId"/>
         <result property="position" column="position"/>
-        <result property=" presentation" column=" presentation"/>
+        <result property="presentation" column="presentation"/>
         <result property="src" column="src"/>
         <result property="status" column="status"/>
         <association property="department" javaType="Department">

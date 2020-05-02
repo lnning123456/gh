@@ -105,7 +105,6 @@
                 for (var i = 0; i < work.length; i++) {
 
                     var date = getDate(work[i].time);
-                    console.log(work[i].time);
                     var time = Format(date, "yyyy/MM/dd ddd a");
                     td = "<td>" + work[i].workId + "</td>" +
                         "<td>" + time + "</td><td>" + work[i].price + "</td><td>" + work[i].remain + "</td>" +
@@ -142,7 +141,6 @@
     function previousPage() {
         var formData = new FormData();
         var page = parseInt($("#page :selected").text());
-        console.log(page);
         if (page === 1) {
             alert("已经是首页")
         } else {

@@ -171,21 +171,49 @@
     $("#workTable").append("<tr>" + td1 + "</tr><tr>" + td2 + "</tr><tr>" + td3 + "</tr>")
 function  addOrder(workId) {
 
-    console.log(workId);
-    $.ajax({
-        url: "${pageContext.request.contextPath}/order/addOrder",
-        datatype: "json",
-        type: "post",
-        data: {workId:workId,userId:$("#userId").text()},
-        success: function (data) {
-            $('#changeContent').load('addOrderSuccess.jsp');
-           // alert(data)
-        }
-    });
+    $("#orderWorkId").empty().text(workId);
+    $("#orderModal").modal("show")
+
 }
+$(function () {
+    $("#sureOrder").click(function () {
+        $("#orderModal").modal("hide");
+        var workId= $("#orderWorkId").text()
+        $.ajax({
+            url: "${pageContext.request.contextPath}/order/addOrder",
+            datatype: "json",
+            type: "post",
+            data: {workId:workId,userId:$("#userId").text()},
+            success: function (data) {
+                alert("挂号成功");
+
+                $('#changeContent').load('addOrderSuccess.jsp');
+                // alert(data)
+            }
+        });
+    })
+})
 
 </script>
 <span id="doctorId" style="display: none"><%=request.getParameter("doctorId") %></span>
 <table id="doctor" class="table"></table>
     <br>
 <table id="workTable" class="table table-bordered"></table>
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 style="text-align: center" class="modal-title" id="orderLabel">预约挂号</h4>
+            </div>
+           <%-- <div class="modal-body">--%>
+                <span id="orderWorkId" style="display: none"></span>
+            <%--</div>--%>
+            <div class="modal-footer" style="text-align: center">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="sureOrder" class="btn btn-primary">确定</button>
+            </div>
+        </div>
+    </div>
+</div>

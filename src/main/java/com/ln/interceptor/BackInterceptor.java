@@ -1,8 +1,6 @@
-package com.ln;
+package com.ln.interceptor;
 
 import com.ln.entity.Admin;
-import lombok.extern.log4j.Log4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

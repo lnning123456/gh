@@ -33,7 +33,7 @@
             });
             $("#img").change(function () {
                 $("#src").attr("src", URL.createObjectURL($(this)[0].files[0]));
-                console.log($("#src").attr("src"));
+
             });
             $.ajax({
                 url: "${pageContext.request.contextPath}/department/queryAllDepartment1",
@@ -87,6 +87,7 @@
                         success: function (data) {
                            // window.location.reload()
                             document.getElementById("addDoctorForm").reset();
+                            $("#src").attr("src","");
                            alert(data)
                         }
                     });

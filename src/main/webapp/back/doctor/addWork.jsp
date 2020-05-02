@@ -120,12 +120,10 @@
         for (var j = 0; j < works.length; j++) {
             var time = getDate(works[j].time);
             if (Format(amDate, "yyyy/MM/dd a") === Format(time, "yyyy/MM/dd a")) {
-                // addTd2 = "<td><a onclick='updateWork(" + JSON.stringify(works[j]) + ")'>修改</a></td>";
                 addTd2 = "<td>已有值班</td>";
 
             }
             if (Format(pmDate, "yyyy/MM/dd a") === Format(time, "yyyy/MM/dd a")) {
-                //   addTd3 = "<td><a onclick='updateWork(\"" + JSON.stringify(works[j]) + "\")'>修改</a></td>";
                 addTd3 = "<td>已有值班</td>";
             }
         }
