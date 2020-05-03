@@ -193,13 +193,13 @@
     //修改
     function updateDoctor(a) {
         var doctorId = $(a).parent().parent().children().eq(0).text();
-        $("#changeContent").load("doctor/updateDoctor.jsp?doctorId=" + doctorId)
+        $("#changeContent").load("${pageContext.request.contextPath}/back/doctor/updateDoctor?doctorId=" + doctorId)
     }
 
     //值班
     function doctorWork(a) {
         var doctorId = $(a).parent().parent().children().eq(0).text();
-        $("#changeContent").load("doctor/work.jsp?doctorId=" + doctorId)
+        $("#changeContent").load("${pageContext.request.contextPath}/back/doctor/work?doctorId=" + doctorId)
     }
 </script>
 <style type="text/css">

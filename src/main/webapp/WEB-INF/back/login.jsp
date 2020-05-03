@@ -47,7 +47,7 @@
                         success: function (data) {
                             console.log(data);
                             if ('ok' === data.msg) {
-                                location.href = "${pageContext.request.contextPath}/back/main.jsp"
+                                location.href = "${pageContext.request.contextPath}/back/main"
                             } else {
                                 $("#msg").html(data.msg);
                                 console.log(data.msg);

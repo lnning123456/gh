@@ -8,9 +8,9 @@
             <h3>选择操作</h3>
             <br>
             <div class="panel-body">
-                <li> <a href="javascript:$('#myContent').load('order.jsp')">我的预约</a></li>
+                <li> <a href="javascript:$('#myContent').load('${pageContext.request.contextPath}/front/order')">我的预约</a></li>
                <br>
-                <li><a href="javascript:$('#myContent').load('updatePassword.jsp')">修改密码</a></li>
+                <li><a href="javascript:$('#myContent').load('${pageContext.request.contextPath}/front/updatePassword')">修改密码</a></li>
 
         </div>
         </div>

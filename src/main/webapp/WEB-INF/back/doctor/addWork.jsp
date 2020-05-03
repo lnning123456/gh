@@ -203,7 +203,7 @@ $(function () {
 <table id="addWorkTable" class="table table-bordered">
 </table>
 <div style="text-align: center">
-    <a href="javascript:$('#changeContent').load('doctor/work.jsp?doctorId='+$('#queryDoctorId').text())">返回医生值班</a>
+    <a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/back/doctor/work?doctorId='+$('#queryDoctorId').text())">返回医生值班</a>
 </div>
 
 <div class="modal fade" id="addWorkModal" tabindex="-1" role="dialog" aria-labelledby="addWorkModal">

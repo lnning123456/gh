@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.ln.dao")
+
 public class GhApplication {
 
     public static void main(String[] args) {

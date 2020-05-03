@@ -53,10 +53,10 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('department/department.jsp')">科室列表</a></li>
+                            <li><a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/back/department/department')">科室列表</a></li>
                         </div>
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('department/addDepartment.jsp')">科室添加</a>
+                            <li><a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/back/department/addDepartment')">科室添加</a>
                             </li>
                         </div>
                     </div>
@@ -72,10 +72,10 @@
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('doctor/doctor.jsp')">医生列表</a></li>
+                            <li><a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/back/doctor/doctor')">医生列表</a></li>
                         </div>
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('doctor/addDoctor.jsp')">添加医生</a></li>
+                            <li><a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/back/doctor/addDoctor')">添加医生</a></li>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
                          aria-labelledby="headingThree">
                         <div class="panel-body">
-                            <li><a href="javascript:$('#changeContent').load('user/user.jsp')">用户列表</a></li>
+                            <li><a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/back/user/user')">用户列表</a></li>
                         </div>
                     </div>
                 </div>

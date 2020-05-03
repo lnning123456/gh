@@ -38,7 +38,7 @@
                 var doctor = data.doctor;
                 for (var i = 0; i < doctor.length; i++) {
                     tr = tr + "<tr><td  style='width: 120px'>  <img onclick='work(\"" + doctor[i].doctorId + "\")' class='img-responsiv'   style='width: 80px;height: 100px'   src=${pageContext.request.contextPath}/img/" + doctor[i].src + " </td>" +
-                        "<td><h4> <a onclick='work(\"" + doctor[i].doctorId + "\")'>医生姓名</a>：" + doctor[i].doctorName + "</h4>" +
+                        "<td><h4> 医生姓名：<a onclick='work(\"" + doctor[i].doctorId + "\")'>" + doctor[i].doctorName + "</h4></a>" +
                         " <br>医生职位：" + doctor[i].position + "<br>医生简介:" + doctor[i].presentation+ "</td></tr>";
                 }
                 $("#doctorTable ").empty().append(tr);
@@ -138,9 +138,10 @@
         query(formData);
     }
 
-    function work(doctorId) {
-        $('#changeContent').load('work.jsp?doctorId=' + doctorId);
-    }
+   function work(doctorId) {
+
+        $("#changeContent").load("${pageContext.request.contextPath}/front/work?doctorId=" + doctorId);
+   }
 </script>
 <br>
 

@@ -97,7 +97,7 @@
     function order(a) {
         var userId = $(a).parent().parent().children().eq(0).text();
         var username = $(a).parent().parent().children().eq(1).text();
-      $("#changeContent").load("user/order.jsp?userId="+userId)
+      $("#changeContent").load("${pageContext.request.contextPath}/back/user/order?userId="+userId)
     }
     function previousPage() {
         var formData = new FormData();

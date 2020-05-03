@@ -183,7 +183,7 @@
           query(formData);
       });
         $("#addWork").click(function () {
-            $("#workDiv").load("doctor/addWork.jsp?doctorId="+doctorId);
+            $("#workDiv").load("${pageContext.request.contextPath}/back/doctor/addWork?doctorId="+doctorId);
         })
     });
     function deleteWork(t) {

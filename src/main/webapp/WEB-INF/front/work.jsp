@@ -92,7 +92,7 @@
         success: function (data) {
             var doctor=data;
             $("#doctor").append( "<tr><td  style='width: 120px'>  <img  class='img-responsiv'   style='width: 80px;height: 100px'   src=${pageContext.request.contextPath}/img/" + doctor.src + " ></td>" +
-                "<td><h4> <a >医生姓名</a>：" + doctor.doctorName + "</h4>" +
+                "<td><h4> 医生姓名：" + doctor.doctorName + "</h4>" +
                 " <br>医生职位：" + doctor.position + "<br>医生简介:" + doctor.presentation + "</td></tr>")
 
         }
@@ -110,7 +110,7 @@
     });
 
     var doctorId = $("#queryDoctorId").text();
-
+    var userId=$("#userId").text();
 
     //初始化界面
     var now = new Date();
@@ -124,19 +124,20 @@
     var addTd3 = null;
     var td2 = "<td>上午</td>";
     var td3 = "<td>下午</td>";
-    for (var i = 1; i <= 7; i++) {
+    console.log(userId);
+    if(userId!=""){ for (var i = 1; i <= 7; i++) {
         td1 = td1 + "<td>" + Format(amDate, "yyyy/MM/dd  ddd") + "</td>";
         for (var j = 0; j < works.length; j++) {
             var time = getDate(works[j].time);
             if (Format(amDate, "yyyy/MM/dd a") === Format(time, "yyyy/MM/dd a")) {
                 // addTd2 = "<td><a onclick='updateWork(" + JSON.stringify(works[j]) + ")'>修改</a></td>";
-              if(works[j].remain===0){
-                  addTd2 = "<td>价格："+works[j].price+"<br>剩余数量："+works[j].remain+
-                      "<br><button  class='btn btn-info'>预约已满</button></td>";
-              }else{
-                  addTd2 = "<td>价格："+works[j].price+"<br>剩余数量："+works[j].remain+
-                      "<br><button  class='btn btn-info'  onclick='addOrder(\""+works[j].workId+"\")'>预约</button></td>";
-              }
+                if(works[j].remain===0){
+                    addTd2 = "<td>价格："+works[j].price+"<br>剩余数量："+works[j].remain+
+                        "<br><button  class='btn btn-info'>预约已满</button></td>";
+                }else{
+                    addTd2 = "<td>价格："+works[j].price+"<br>剩余数量："+works[j].remain+
+                        "<br><button  class='btn btn-info'  onclick='addOrder(\""+works[j].workId+"\")'>预约</button></td>";
+                }
 
 
             }
@@ -168,7 +169,11 @@
         amDate = new Date(nowFullYear, nowMonth, nowDate + i, 8);
         pmDate = new Date(nowFullYear, nowMonth, nowDate + i, 14);
     }
-    $("#workTable").append("<tr>" + td1 + "</tr><tr>" + td2 + "</tr><tr>" + td3 + "</tr>")
+        $("#workTable").append("<tr>" + td1 + "</tr><tr>" + td2 + "</tr><tr>" + td3 + "</tr>")
+    }else {
+      $("#loginMsg").text("登录可查看医生值班情况")
+    }
+
 function  addOrder(workId) {
 
     $("#orderWorkId").empty().text(workId);
@@ -178,17 +183,17 @@ function  addOrder(workId) {
 $(function () {
     $("#sureOrder").click(function () {
         $("#orderModal").modal("hide");
-        var workId= $("#orderWorkId").text()
+        var workId= $("#orderWorkId").text();
         $.ajax({
             url: "${pageContext.request.contextPath}/order/addOrder",
             datatype: "json",
             type: "post",
-            data: {workId:workId,userId:$("#userId").text()},
+            data: {workId:workId,userId:userId},
             success: function (data) {
                 alert("挂号成功");
 
-                $('#changeContent').load('addOrderSuccess.jsp');
-                // alert(data)
+                $('#changeContent').load('${pageContext.request.contextPath}/front/addOrderSuccess');
+
             }
         });
     })
@@ -196,8 +201,10 @@ $(function () {
 
 </script>
 <span id="doctorId" style="display: none"><%=request.getParameter("doctorId") %></span>
+
 <table id="doctor" class="table"></table>
     <br>
+<h4 style="color: red" id="loginMsg"></h4>
 <table id="workTable" class="table table-bordered"></table>
 <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModal">
     <div class="modal-dialog" role="document">
@@ -207,9 +214,7 @@ $(function () {
                 </button>
                 <h4 style="text-align: center" class="modal-title" id="orderLabel">预约挂号</h4>
             </div>
-           <%-- <div class="modal-body">--%>
                 <span id="orderWorkId" style="display: none"></span>
-            <%--</div>--%>
             <div class="modal-footer" style="text-align: center">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" id="sureOrder" class="btn btn-primary">确定</button>

@@ -10,13 +10,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>线上挂号</title>
     <link rel="stylesheet" href="../boot/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../jqgrid/css/jquery-ui.css">
-    <link rel="stylesheet" href="../jqgrid/css/trirand/ui.jqgrid-bootstrap.css">
     <script src="../boot/js/jquery-2.2.1.min.js"></script>
     <script src="../boot/js/jquery.validate.min.js"></script>
     <script src="../boot/js/jQuerysession.js"></script>
     <script src="../boot/js/bootstrap.min.js"></script>
-    <script type="text/javascript" language="JavaScript"></script>
 </head>
 <style type="text/css">
     label.error {
@@ -25,14 +22,15 @@
     }
 </style>
 <script>
+
     function loginChangeImage() {
         $("#loginCode").prop("src", "/gh/code/code?time=" + new Date().getTime());
-    }
+    };
 
     $(function () {
-        $('#changeContent').load('doctor.jsp');
+        $('#changeContent').load('${pageContext.request.contextPath}/front/doctor');
         $("#mainLocation").click(function () {
-            $('#changeContent').load('doctor.jsp')
+            $('#changeContent').load('${pageContext.request.contextPath}/front/doctor')
         });
         $("#login").click(function () {
             $("#userLoginForm").validate({
@@ -82,15 +80,16 @@
 <br>
 <div style="text-align: right;margin-right: 100px ">
     <span id="userId" style="display: none">${sessionScope.user.userId}</span>
+    <span id="msg" style="display: none"><%=request.getParameter("msg") %></span>
     <c:if test="${sessionScope.user==null}">
         您好,请选择
         <a href="javascript:$('#loginModal').modal('show');loginChangeImage()">登录</a>&nbsp;|&nbsp;
-        <a href="javascript:$('#changeContent').load('register.jsp')" >注册</a>
+        <a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/front/register')" >注册</a>
     </c:if>
     <c:if test="${sessionScope.user!=null}">
         <span >您好,用户: &nbsp;${sessionScope.user.username} </span>
         &nbsp;&nbsp;
-        <a href="javascript:$('#changeContent').load('my.jsp')">个人中心 </a>
+        <a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/front/my')">个人中心 </a>
         &nbsp;&nbsp;
         <a id="logout">退出登录 <span class="glyphicon glyphicon-log-out"></span></a>
     </c:if>
@@ -121,9 +120,6 @@
 <br>
 <div class="row">
     <div class="col-sm-3"></div>
-    <%-- <div id="location" class="col-sm-8" style="position: relative ;left:10px;" >
-         当前位置：<a id="mainLocation">首页</a>
-     </div>--%>
 </div>
 <div class="row">
     <div class="col-sm-3"></div>
