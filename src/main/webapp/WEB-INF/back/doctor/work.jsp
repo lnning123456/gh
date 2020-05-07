@@ -175,7 +175,6 @@
     $(function () {
       $("#compare").change(function () {
           var compare=$("#compare :selected").val();
-          console.log(compare);
           var formData = new FormData();
           formData.append("page",1);
           formData.append("doctorId", doctorId);

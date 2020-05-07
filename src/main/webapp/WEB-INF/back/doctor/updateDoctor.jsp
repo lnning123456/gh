@@ -216,7 +216,7 @@
                 <div class="col-sm-10 form-inline">
                     <button id="updateDoctorButton" type="button" class="btn btn-primary">确定修改</button>
                     <a style="text-align: center"
-                       href="javascript:$('#changeContent').load('doctor/doctor.jsp')">返回医生首页</a>
+                       href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/back/doctor/doctor')">返回医生首页</a>
                 </div>
             </div>
         </form>

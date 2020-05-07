@@ -52,22 +52,29 @@
             <if test="order.userId!=null">
                 o.user_id=#{order.userId}
             </if>
-            <if test="order.status!=null">
-                and o.`status`=#{order.status}
+
+            <if test="compare==1">
+                and   w.time &lt; now()
+            </if>
+            <if test="compare==2">
+                and   w.time &gt; now()
             </if>
         </where>
         limit #{start},5
     </select>
     <select id="getOrderCount" resultType="Integer">
-        select count(order_id) from `order`
+        select count(o.order_id) from `order` o left join  `work` w
+        on  o.work_id=w.work_id
         <where>
-            <if test="userId!=null">
-                user_id=#{userId}
+            <if test="order.userId!=null">
+                user_id=#{order.userId}
             </if>
-            <if test="status!=null">
-                and `status`=#{status}
+            <if test="compare==1">
+                and   w.time &lt; now()
             </if>
-
+            <if test="compare==2">
+                and   w.time &gt; now()
+            </if>
         </where>
     </select>
     <select id="queryOrderByWorkId" resultMap="orderList">

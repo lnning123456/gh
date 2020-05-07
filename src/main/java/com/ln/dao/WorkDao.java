@@ -19,6 +19,6 @@ public interface WorkDao {
     void updateWork(Work work);
 
     void deleteWork(String workId);
-
+//医生接下来的工作
     List<Work> followingWork(String doctorId);
 }

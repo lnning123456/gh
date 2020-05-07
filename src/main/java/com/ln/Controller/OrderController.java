@@ -25,7 +25,8 @@ public class OrderController {
         return orderService.updateOrder(order);
     }
     @RequestMapping("queryOrder")
-    Map<String,Object> queryOrder(Order order, Integer page){
-        return  orderService.queryOrder(order,page);
+    Map<String,Object> queryOrder(Order order, Integer page,String compare){
+        System.out.println("compare = " + compare);
+        return  orderService.queryOrder(order,page,compare);
     }
 }

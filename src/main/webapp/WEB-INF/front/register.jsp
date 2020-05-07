@@ -1,4 +1,5 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
+<!doctype html>
 <script>
     function registerChangeImage() {
         $("#registerCode").prop("src", "/gh/code/code?time=" + new Date().getTime());
@@ -32,6 +33,7 @@
                     success: function (data) {
                         console.log(data);
                         if (data === "ok") {
+                            alert("注册成功");
                             window.location.reload();
                         } else {
                             $("#registerErrorMsg").text(data);
@@ -71,8 +73,7 @@
         <label for="againPassword" class="col-xs-3 control-label">确认密码：</label>
         <div class="col-xs-9 form-inline">
             <input type="password" style="width: 150px" class="form-control" id="againPassword"
-                   name="againPassword"
-                   placeholder="再次输入密码">
+                   name="againPassword" placeholder="再次输入密码">
         </div>
     </div>
     <div class="form-group">

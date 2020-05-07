@@ -1,8 +1,10 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
+<!doctype html>
 <style>
     .queryDepartment {
         color: red;
     }
+
     .location {
         color: red;
     }
@@ -34,12 +36,12 @@
             data: formData,
             success: function (data) {
                 var tr = null;
-                var option= null;
+                var option = null;
                 var doctor = data.doctor;
                 for (var i = 0; i < doctor.length; i++) {
                     tr = tr + "<tr><td  style='width: 120px'>  <img onclick='work(\"" + doctor[i].doctorId + "\")' class='img-responsiv'   style='width: 80px;height: 100px'   src=${pageContext.request.contextPath}/img/" + doctor[i].src + " </td>" +
                         "<td><h4> 医生姓名：<a onclick='work(\"" + doctor[i].doctorId + "\")'>" + doctor[i].doctorName + "</h4></a>" +
-                        " <br>医生职位：" + doctor[i].position + "<br>医生简介:" + doctor[i].presentation+ "</td></tr>";
+                        " <br>医生职位：" + doctor[i].position + "<br>医生简介:" + doctor[i].presentation + "</td></tr>";
                 }
                 $("#doctorTable ").empty().append(tr);
                 $("#sum").empty().append("查到医生数：" + data.sum);
@@ -84,11 +86,13 @@
                 forData.append("levels", 1);
                 query(forData);
                 var department = data.department2;
+                var a = null;
                 $("#departmentDiv").empty().append("科室名:");
                 for (i = 0; i < department.length; i++) {
-                    $("#departmentDiv").append("<a style='font-size:15px;margin-left: 30px' onclick='department2(this,\"" + department[i].departmentId + "\")'>" + department[i].departmentName + "<a>");
+                    a = a + "<a style='font-size:15px;margin-left: 30px' onclick='department2(this,\"" + department[i].departmentId + "\")'>" + department[i].departmentName + "<a>";
                 }
-
+                a = a + "<a  href=\"javascript:$('#changeContent').load('${pageContext.request.contextPath}/front/doctor')\" style='font-size:15px;margin-left: 30px'>返回上一级</a>"
+                $("#departmentDiv").append(a);
             }
         })
     }
@@ -119,29 +123,30 @@
         var formData = new FormData();
         var page = parseInt($("#page :selected").text());
         var total = $("#page option").last().text();
-       total = parseInt(total);
+        total = parseInt(total);
         if (page === total) {
             alert("已经是尾页");
         } else {
             page = page + 1;
-          //  forData = queryDoctorMsg();
+            //  forData = queryDoctorMsg();
             formData.append("page", page);
             query(formData);
         }
     }
+
     //点击
     function page() {
         var page = parseInt($("#page :selected").text());
         var formData = new FormData();
-      //  forData = queryDoctorMsg();
+        //  forData = queryDoctorMsg();
         formData.append("page", page);
         query(formData);
     }
 
-   function work(doctorId) {
+    function work(doctorId) {
 
         $("#changeContent").load("${pageContext.request.contextPath}/front/work?doctorId=" + doctorId);
-   }
+    }
 </script>
 <br>
 
@@ -158,6 +163,6 @@
                 第&nbsp&nbsp
                 <select style="width: 35px" id="page" onchange="page()"></select>
                 &nbsp&nbsp页</span>
-            </span><a onclick="nextPage()">下一页</a>
+    </span><a onclick="nextPage()">下一页</a>
 </div>
 

@@ -18,20 +18,6 @@ public class DepartmentServiceImpl implements DepartmentService {
     DepartmentDao departmentDao;
 @Autowired
     DoctorDao doctorDao;
-   /* @Override
-    public Map<String, Object> queryByPage(Integer page, Integer rows) {
-        System.out.println("department service");
-        Map<String, Object> map = new HashMap<>();
-        Integer records = departmentDao.getLevelsCount(1);
-        Integer total = records % rows == 0 ? records / rows : records / rows + 1;
-        Integer start = (page - 1) * rows;
-        List<Department> departments = departmentDao.queryByPage(1,start, rows);
-        map.put("total", total);
-        map.put("records", records);
-        map.put("page", page);
-        map.put("rows", departments);
-        return map;
-    }*/
 
     @Override
     public List<Department> queryAllDepartment() {

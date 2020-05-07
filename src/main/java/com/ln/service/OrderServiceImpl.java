@@ -59,11 +59,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Map<String, Object> queryOrder(Order order, Integer page) {
+    public Map<String, Object> queryOrder(Order order, Integer page,String compare) {
         HashMap<String, Object> map = new HashMap<>();
         Integer start = (page - 1) * 5;
-        List<Order> orders = orderDao.queryOrder(order, start);
-        Integer sum=orderDao.getOrderCount(order);
+        List<Order> orders = orderDao.queryOrder(order, start,compare);
+        Integer sum=orderDao.getOrderCount(order,compare);
         Integer total = sum % 5 == 0 ? sum / 5 : sum / 5+ 1;
         if (order.getUserId()!=null){
             User user = userDao.queryByUserId(order.getUserId());

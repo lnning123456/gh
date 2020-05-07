@@ -25,7 +25,7 @@
 
     function loginChangeImage() {
         $("#loginCode").prop("src", "/gh/code/code?time=" + new Date().getTime());
-    };
+    }
 
     $(function () {
         $('#changeContent').load('${pageContext.request.contextPath}/front/doctor');
@@ -69,6 +69,8 @@
             $.ajax({
                 url: "${pageContext.request.contextPath}/user/logout",
                 success: function (data) {
+
+                    alert("退出成功");
                     window.location.reload();
                 }
             });
@@ -83,7 +85,7 @@
     <span id="msg" style="display: none"><%=request.getParameter("msg") %></span>
     <c:if test="${sessionScope.user==null}">
         您好,请选择
-        <a href="javascript:$('#loginModal').modal('show');loginChangeImage()">登录</a>&nbsp;|&nbsp;
+        <a href="javascript:$('#loginModal').modal('show')">登录</a>&nbsp;|&nbsp;
         <a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/front/register')" >注册</a>
     </c:if>
     <c:if test="${sessionScope.user!=null}">

@@ -96,14 +96,13 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                //  console.log(data.orders);
+                  console.log(data.orders);
                 var tr = null;
                 var td = null;
                 var option = null;
                 var order = data.orders;
-                $("#user").empty().append(data.user.username + "用户挂号记录");
                 for (var i = 0; i < order.length; i++) {
-                    var date = getDate(order[i].createTime);
+                    var date = getDate(order[i].work.time);
                     var time = Format(date, "yyyy-MM-dd  a");
                     td = "<td>" + order[i].orderId + "</td><td>" + order[i].work.doctor.doctorName + "</td>" +
                         "<td>" + time + "</td><td>" + order[i].createTime + "</td><td>" + order[i].work.price + "</td>" +
@@ -188,12 +187,42 @@
          formData.append("userId", userId);
          query(formData);
     }
-
+$(function () {
+    $("#compare").change(function () {
+        var compare=$("#compare :selected").val();
+        console.log(compare);
+        var formData = new FormData();
+        formData.append("userId", userId);
+        formData.append("page", 1);
+        formData.append("compare", compare);
+        query(formData);
+    });
+})
 
 </script>
 <span id="requestUserId" style="display: none"><%=request.getParameter("userId")%></span>
 <h3 id="doctor"></h3>
 <div id="orderDiv">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <form class="navbar-form  " id="queryWorkFrom">
+                    <div class="form-group">
+                        <div class="form-inline">
+                            <label for="compare" class="control-label">选择时间：</label>
+                            <select style="width: 170px" id="compare" name="compare" class="form-control">
+                                <option value="">全部</option>
+                                <option value="1">已完成</option>
+                                <option value="2">已预约</option>
+                            </select>
+
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </nav>
     <table id="orderTable" class="table table-bordered">
         <tr>
             <td>订单编号</td>
@@ -219,6 +248,6 @@
         </tr>
     </table>
     <div style="text-align: center">
-        <a href="javascript:$('#changeContent').load('user/user.jsp')">返回用户首页</a>
+        <a href="javascript:$('#changeContent').load('${pageContext.request.contextPath}/back/user/user')">返回用户首页</a>
     </div>
 </div>

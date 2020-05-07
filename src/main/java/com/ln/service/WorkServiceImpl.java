@@ -1,10 +1,8 @@
 package com.ln.service;
 
 import com.ln.dao.DoctorDao;
-import com.ln.dao.OrderDao;
 import com.ln.dao.WorkDao;
-import com.ln.entity.Order;
-import com.ln.entity.User;
+import com.ln.entity.Doctor;
 import com.ln.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,10 +35,16 @@ public class WorkServiceImpl implements WorkService {
 
     @Override
     public String addWork(Work work) {
-        work.setWorkId(new Date().getTime() + "");
-        work.setUserCount(0);
-        workDao.addWork(work);
-        return "添加成功";
+        Doctor doctor = doctorDao.queryDoctorByDoctorId(work.getDoctorId());
+        if(doctor.getStatus().equals("休息")){
+            return doctor.getDoctorName()+"医生目前在休息，添加工作失败";
+        }else {
+            work.setWorkId(new Date().getTime() + "");
+            work.setUserCount(0);
+            workDao.addWork(work);
+            return "添加成功";
+        }
+
     }
 
     @Override

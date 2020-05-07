@@ -1,5 +1,5 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; utf-8" %>
-
+<!doctype html>
     <script>
     //字符串转换时间
     function getDate(strDate) {
@@ -102,7 +102,7 @@
                 var order = data.orders;
 
                 for (var i = 0; i < order.length; i++) {
-                    var date = getDate(order[i].createTime);
+                    var date = getDate(order[i].work.time);
                     var time = Format(date, "yyyy-MM-dd  a");
                     td = "<td>" + order[i].orderId + "</td><td>" + order[i].work.doctor.doctorName + "</td>" +
                         "<td>" + time + "</td><td>" + order[i].createTime + "</td><td>" + order[i].work.price + "</td>" +
@@ -201,12 +201,40 @@
         formData.append("userId", userId);
         query(formData);
     }
-
+    $(function () {
+        $("#compare").change(function () {
+            var compare=$("#compare :selected").val();
+            var formData = new FormData();
+            formData.append("userId", userId);
+            formData.append("page", 1);
+            formData.append("compare", compare);
+            query(formData);
+        });
+    })
 
 </script>
 
 
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <form class="navbar-form  " id="queryWorkFrom">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label for="compare" class="control-label">选择时间：</label>
+                        <select style="width: 170px" id="compare" name="compare" class="form-control">
+                            <option value="">全部</option>
+                            <option value="1">已完成</option>
+                            <option value="2">已预约</option>
+                        </select>
 
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</nav>
 <table id="orderTable" class="table table-bordered">
     <tr>
         <td>订单编号</td>

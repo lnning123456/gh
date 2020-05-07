@@ -23,7 +23,7 @@ public class OrderTest {
           Order order = new Order();
          order.setUserId("1");
        //   order.setStatus("已预约");
-          List<Order> orders = orderDao.queryOrder(order,0);
+          List<Order> orders = orderDao.queryOrder(order,0,"1");
           for (Order order1 : orders) {
               System.out.println("order1 = " + order1);
           }
@@ -42,7 +42,7 @@ public class OrderTest {
         Order order = new Order();
         order.setUserId("1");
         //   order.setStatus("已预约");
-        Integer orderCount = orderDao.getOrderCount(order);
+        Integer orderCount = orderDao.getOrderCount(order,"1");
         System.out.println("orderCount = " + orderCount);
     }
     @Test
